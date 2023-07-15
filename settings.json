@@ -1,0 +1,7 @@
+{
+    "BASE_URL": "https://192.168.1.48:3000/",
+    "BASE_URL_SOCKET": "wss://192.168.1.48:2096",
+    "BASE_URL_SOCKET_SYS": "wss://192.168.1.48:2087",
+	"BASE_URL_SOCKET_NAP": "wss://192.168.1.48:2083"
+}
+
