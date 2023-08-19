@@ -1,6 +1,6 @@
 /*=========================================================================================
   File Name: store.js
-  Description: Vuex store
+  Description:  store
   ----------------------------------------------------------------------------------------
   Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
   Author: Pixinvent

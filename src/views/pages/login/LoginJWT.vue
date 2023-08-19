@@ -62,7 +62,7 @@ export default {
         let userDetails = {
           username: this.username,
           password: this.password
-        };
+        };    
         const response = await AuthenticationService.loginAdmin(userDetails)
         this.$vs.loading.close()
 

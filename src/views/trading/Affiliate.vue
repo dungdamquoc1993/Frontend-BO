@@ -1361,7 +1361,7 @@ export default {
         this.linkDk = window.location.origin + '/register?r='+ Ref;
         this.codeGioiThieu = Ref;
 
-        this.isVip = getData.vip
+        this.isVip = true // getData.vip
 
         this.vip_lv = getData.vip_lv
 

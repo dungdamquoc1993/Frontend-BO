@@ -12,8 +12,6 @@
 <template>
   <div class="relative">
     <div class="vx-navbar-wrapper" :class="classObj">
-      
-
       <vs-navbar class="vx-navbar navbar-custom navbar-skelton" :color="navbarColorLocal" :class="textColor">
         
         <!-- SM - OPEN SIDEBAR BUTTON -->

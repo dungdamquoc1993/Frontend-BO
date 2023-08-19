@@ -25,6 +25,10 @@ module.exports = {
       chunks: ["chunk-vendors", "chunk-common", "portal"], //portal
     }
   },
+
+  configureWebpack: {
+    devtool: 'source-map'
+  },
   
   productionSourceMap: false,
 

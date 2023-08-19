@@ -1618,15 +1618,6 @@ export default {
                 var counter = Number(boPrice.candleClose)
 
 
-                // var o = {
-                //     x: boPrice.date,
-                //     open: boPrice.open.toFixed(2) * 1,
-                //     close: boPrice.close.toFixed(2) * 1,
-                //     high: boPrice.high.toFixed(2) * 1,
-                //     low: boPrice.low.toFixed(2) * 1,
-                //     vol: boPrice.volume.toFixed(2) * 1,
-                //     color: color
-                // };
                 var o = {
                     x: boPrice.date,
                     open: boPrice.open.toFixed(2) * 1,
@@ -1712,13 +1703,6 @@ export default {
 
             }
 
-            //let offset = -lengthp - lengthp * counter / (wholeTime);
-            //let progressBar = $('.e-c-progress')
-            //let pointer = $('#e-pointer')
-            //progressBar.css('stroke-dashoffset', offset)
-            //pointer.css("transform", `rotate(${360 * counter / (wholeTime)}deg)`)
-
-
         },
 
         getColor(openPrice, closePrice) {
@@ -1741,7 +1725,6 @@ export default {
                 "candleClose": "05",
                 "type": "watting"
             }
-            //this.updateCandleStickChart(ob);
             const { dataMax } = chartGet.xAxis[0].getExtremes(); //dataMin
             console.log(chartGet.xAxis[0]);
             chartGet.xAxis[0].setExtremes(listData[110]['date'], dataMax, false);
@@ -2014,8 +1997,6 @@ export default {
             // var audio = new Audio(sound);
             // audio.play();
 
-
-
         },
 
         getUserInfo() {
@@ -2079,7 +2060,6 @@ export default {
 
         if (!connected) {
 
-            //console.log(SETTINGS.BASE_URL_SOCKET);
             connected = true;
 
             this.connection = new WebSocket(SETTINGS.BASE_URL_SOCKET);
@@ -5453,7 +5433,6 @@ export default {
                   "candleClose": "05",
                   "type": "watting"
               }
-          //this.updateCandleStickChart(ob);
            const { dataMax } = chartGet.xAxis[0].getExtremes(); //dataMin
            console.log(chartGet.xAxis[0]);
            chartGet.xAxis[0].setExtremes(listData[110]['date'], dataMax, false);

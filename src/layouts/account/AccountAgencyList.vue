@@ -321,8 +321,8 @@ export default {
           
         }
       })
-    },
-    deleteMultiple(){
+    }, 
+    deleteMultiple(){ // ko trigger
       for(var i = this.selectedUser.length - 1; i >= 0 ;i--){
           let id = this.selectedUser[i]['id'];
           AuthenticationService.deleteMember(id)

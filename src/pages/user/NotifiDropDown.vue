@@ -133,7 +133,6 @@ export default {
 
     getListNotifi(){
         //this.openLoadingInDiv();
-
         this.unreadNotifications = [];
         let obj = {
             e: getData.email

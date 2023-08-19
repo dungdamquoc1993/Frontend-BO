@@ -34,7 +34,6 @@
                                     <router-link to="/forgot-password" class="mb-5 inline-block float-right cursor-pointer">Quên mật khẩu?</router-link>
                                     <vs-button color="success" class="w-full" type="filled" :disabled="!disabledLogin" @click="loginForm">Đăng nhập</vs-button>
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="loginForm white mt-0" v-else>
@@ -780,38 +779,6 @@ export default {
             this.ldFrom = false;
             let g = res.data;
             if(g.success == 1){
-                // this.$vs.notify({
-                //     text: 'Đăng nhập thành công.',
-                //     iconPack: 'feather',
-                //     icon: 'icon-check',
-                //     color: 'success'
-                // });
-
-                // let gData = d.data;
-                
-                // getData.uid= gData.id,
-                // getData.email= gData.email,
-                // getData.profile_image= gData.profile_image,
-                // getData.displayName= gData.nick_name,
-                // getData.uidLive= gData.order[1].u_id,
-                // getData.uidDemo= gData.order[0].u_id,
-                // getData.vip= gData.vip,
-                // getData.vip_lv= gData.level_vip,
-                // getData.pen_commiss= gData.pending_commission,
-                // getData.ref= gData.ref,
-                // getData.c2fa= gData.fa2,
-                // getData.id_front= gData.id_front,
-                // getData.id_back= gData.id_back,
-                // getData.first_name= gData.first_name,
-                // getData.last_name= gData.last_name,
-                // getData.verify= gData.verify,
-                // getData.num_secu= gData.num_secury,
-                // getData.country= gData.c,
-                // getData.blLive = gData.order[1].balance
-                // getData.blDemo = gData.order[0].balance
-                // getData.balance = gData.balance,
-                // getData.mkt = gData.mkt
-
                 if(g.g_2fa){
                     this.isG2FA = g.g_2fa
                     this.saveToken = g.token

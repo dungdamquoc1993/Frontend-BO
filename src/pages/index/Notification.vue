@@ -220,6 +220,7 @@ import moment from "moment";
 
 export default {
   data() {
+    alert('im trigger at Notification.vue')
     return {
       unreadNotifications: []
     };
@@ -236,7 +237,6 @@ export default {
     let obj = {
       e: getData.email
     };
-
     AuthenticationService.getListNotifi(obj).then(res => {
       this.$vs.loading.close("#loading-corners > .con-vs-loading");
       if (res.data.success) {

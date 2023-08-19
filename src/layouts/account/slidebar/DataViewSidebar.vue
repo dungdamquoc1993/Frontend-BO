@@ -108,7 +108,7 @@
 
         <!-- CATEGORY -->
         <template v-if="superUser == 1">
-            <p class="mt-2">Bạn không thể sử Quyền của chính bạn</p>
+            <p class="mt-2">Bạn không thể sửa Quyền của chính bạn</p>
         </template>
         <template v-else>
             <vs-select v-model="dataPermission" label="Quyền" class="mt-5 w-full" name="item-category" v-validate="'required'">
@@ -259,18 +259,10 @@ export default {
         this.isLevelVIP = level_vip;
         this.initValues()
       }
-      // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
   },
   data() {
     return {
-
-    //   dataId: null,
-    //   dataName: "",
-    //   dataCategory: null,
-    //   dataImg: null,
-    //   dataOrder_status: "pending",
-    //   dataPrice: 0,
         dm: SETTINGS.BASE_URL,
 
         superUser: 0,
@@ -312,25 +304,12 @@ export default {
 
       isLevelVIP: 0,
 
-    //   order_status_choices: [
-    //     {text:'Pending',value:'pending'},
-    //     {text:'Canceled',value:'canceled'},
-    //     {text:'Delivered',value:'delivered'},
-    //     {text:'On Hold',value:'on_hold'}
-    //   ],
       settings: { // perfectscrollbar settings
           maxScrollbarLength: 60,
           wheelSpeed: .60,
       },
     }
   },
-//   filters: {
-//     currencydecimal (val) {
-//       if(val == 'BTC') return val.toFixed(6)
-//       if(val == 'ETH') return val.toFixed(4)
-//       return val.toFixed(2)
-//     }
-//   },
   computed: {
     isSidebarActiveLocal: {
       get() {

@@ -292,9 +292,9 @@ export default {
     return ApiAdmin().post("api/setup/saveRateCommission", obj);
   },
 
-  saveRateCommission(obj) {
-    return ApiAdmin().post("api/setup/saveRateCommission", obj);
-  },
+  // saveRateCommission(obj) {
+  //   return ApiAdmin().post("api/setup/saveRateCommission", obj);
+  // },
 
   //==========
 

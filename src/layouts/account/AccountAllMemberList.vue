@@ -173,8 +173,6 @@
                       <vx-tooltip style="float: left" :title="tr.nick_name" color="danger" text="Xóa tài khoản">
                           <vs-button color="dark" type="line" icon-pack="feather" icon="icon-trash" @click="openPopDelete({id: tr.id, email: tr.email, index: indextr})"></vs-button>
                       </vx-tooltip>
-                      
-
                     <!-- <feather-icon icon="DollarSignIcon" svgClasses="w-5 h-5 hover:text-success stroke-current" @click.stop="addMoneyUser({id: tr.id, type: 'addMoney'})" />  
                     <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editUser(tr)" />
                     <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteUser(tr.id)" /> -->
@@ -508,7 +506,6 @@ export default {
     },
     editUser(data) {
       delete data["type"]
-      // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
       
