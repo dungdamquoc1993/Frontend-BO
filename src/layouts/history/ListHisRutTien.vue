@@ -442,77 +442,91 @@ export default {
     },
 
     doneRefuseWithdra(id, index, amount, email, fee) {
-      let obj = {
-        id: id,
-        amount: amount,
-        email: email,
-        fee: fee,
-      };
-
-      AuthenticationService.doneRefuseWithDrawalByID(obj).then((resp) => {
-        let d = resp.data;
-        if (d.success == 1) {
-          this.productsFake[index].status = 2;
-          return this.$vs.notify({
-            text: "Đã hoàn trả lại số tiền",
-            color: "success",
-            iconPack: "feather",
-            icon: "icon-check",
-          });
-        }
+      return this.$vs.notify({
+        text: 'This API is deprecated doneRefuseWithdrawal ListHisRutTien.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
       });
+
+      // let obj = {
+      //   id: id,
+      //   amount: amount,
+      //   email: email,
+      //   fee: fee,
+      // };
+
+      // AuthenticationService.doneRefuseWithDrawalByID(obj).then((resp) => {
+      //   let d = resp.data;
+      //   if (d.success == 1) {
+      //     this.productsFake[index].status = 2;
+      //     return this.$vs.notify({
+      //       text: "Đã hoàn trả lại số tiền",
+      //       color: "success",
+      //       iconPack: "feather",
+      //       icon: "icon-check",
+      //     });
+      //   }
+      // });
     },
 
     doneWithdra(id, index, val, address, amount, network) {
-      let obj = {
-        id: id,
-        val: val,
-        amount: amount,
-        address: address,
-        network: network,
-      };
+      return this.$vs.notify({
+        text: 'This API is deprecated doneWithdrawal ListHisRutTien.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
+      });
 
-      //this.clickDone = true;
-      this.$vs.notify({
-        text: "Đang thực hiện yêu cầu!",
-        color: "warning",
-        iconPack: "feather",
-        icon: "icon-check",
-      });
-      AuthenticationService.doneWithDrawalByID(obj).then((resp) => {
-        //this.clickDone = false;
-        let d = resp.data;
-        if (d.success) {
-          let gd = d.data;
-          if (gd.success == 1) {
-            this.productsFake[index].status = 1;
-            this.$vs.notify({
-              text: "Đã quy đổi thành số tiền là: " + gd.price_trans,
-              color: "success",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-            this.reloadList();
-            return this.$vs.notify({
-              text: "Thao tác thành công",
-              color: "success",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          } else {
-            this.reloadList();
-            return this.$vs.notify({
-              text: "Thao tác thành công",
-              color: "danger",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          }
-        } else {
-          localStorage.removeItem("token");
-          this.$router.push("/pages/login").catch(() => {});
-        }
-      });
+      // let obj = {
+      //   id: id,
+      //   val: val,
+      //   amount: amount,
+      //   address: address,
+      //   network: network,
+      // };
+
+      // //this.clickDone = true;
+      // this.$vs.notify({
+      //   text: "Đang thực hiện yêu cầu!",
+      //   color: "warning",
+      //   iconPack: "feather",
+      //   icon: "icon-check",
+      // });
+      // AuthenticationService.doneWithDrawalByID(obj).then((resp) => {
+      //   //this.clickDone = false;
+      //   let d = resp.data;
+      //   if (d.success) {
+      //     let gd = d.data;
+      //     if (gd.success == 1) {
+      //       this.productsFake[index].status = 1;
+      //       this.$vs.notify({
+      //         text: "Đã quy đổi thành số tiền là: " + gd.price_trans,
+      //         color: "success",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //       this.reloadList();
+      //       return this.$vs.notify({
+      //         text: "Thao tác thành công",
+      //         color: "success",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     } else {
+      //       this.reloadList();
+      //       return this.$vs.notify({
+      //         text: "Thao tác thành công",
+      //         color: "danger",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     }
+      //   } else {
+      //     localStorage.removeItem("token");
+      //     this.$router.push("/pages/login").catch(() => {});
+      //   }
+      // });
     },
 
     deleteWithdra(id, index, val) {

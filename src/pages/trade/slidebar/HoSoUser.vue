@@ -17,8 +17,6 @@
 
     <VuePerfectScrollbar style="height: calc(var(--vh, 1vh) * 100 - 16px - 45px - 10px);" class="scroll-area--data-list-add-new">
       
-      
-
       <div class="p-4">
           <div class="vx-vx-row mb-3">
             <div class="vx-col w-full">

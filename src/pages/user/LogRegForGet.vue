@@ -358,6 +358,7 @@ export default {
         emailForgot: '',
         emailReg: '',
         emailReset: '',
+        tokenReset: '',
         email: '',
         password: '',
         passwordReg: '',
@@ -560,6 +561,7 @@ export default {
 
             let obj = {
                 email: this.emailReset,
+                token: this.tokenReset,
                 password: this.passwordReset,
                 //code_secure: this.codeReset
             }
@@ -892,8 +894,10 @@ export default {
         this.activeResetPass = true
         this.slepShowSlide()
         let gr = this.$route.query.e
+        let t = this.$route.query.t
         if(gr != undefined){
             this.emailReset = gr
+            this.tokenReset = t
         }
     }
   },

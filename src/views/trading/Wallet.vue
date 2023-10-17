@@ -24,19 +24,19 @@
       <div class="w-full" style="padding: 0 4rem">
         <div class="container">
           <vs-tabs>
-            <vs-tab label="Nạp tiền" @click="
+            <vs-tab label="Lịch Sử Nạp Tiền" @click="
               getListHisTrade(),
               (showVC = false),
               (showVGD = false),
               (showNT = true)
               "></vs-tab>
-            <vs-tab label="Ví chính" @click="
+            <vs-tab label="Lịch Sử Rút tiền" @click="
               getListHisTrade(),
               (showVC = true),
               (showVGD = false),
               (showNT = false)
               "></vs-tab>
-            <vs-tab label="Ví giao dịch" @click="
+            <vs-tab label="Nạp Tiền" @click="
               getListHisTradeWGD(),
               (showVGD = true),
               (showVC = false),
@@ -77,16 +77,18 @@
                       </p>
                       <div class="flex items-center">
                         <vs-button class="my-4 mr-2" icon-pack="feather" icon="icon-copy" type="relief"
-                          v-clipboard:copy="'VietinBank - Ngân Hàng TMCP Công Thương Việt Nam'" @click="saoChep">VietinBank - Ngân Hàng Thương Việt Nam</vs-button>
+                          v-clipboard:copy="'VietinBank - Ngân Hàng TMCP Công Thương Việt Nam'"
+                          @click="saoChep">VietinBank - Ngân Hàng Thương Việt Nam</vs-button>
                       </div>
                       <div class="flex items-center">
                         <vs-button class="my-4 mr-2" icon-pack="feather" icon="icon-copy" type="relief"
                           v-clipboard:copy="'sondz'" @click="saoChep">
-beneficiary account number: sondz</vs-button>
+                          beneficiary account number: sondz</vs-button>
                       </div>
                       <div class="flex items-center">
                         <vs-button class="my-4 mr-2" icon-pack="feather" icon="icon-copy" type="relief"
-                          v-clipboard:copy="'CHUA DAT TEN'" @click="saoChep">Đại diện tổ chức nhận khoản thanh toán :**********</vs-button>
+                          v-clipboard:copy="'CHUA DAT TEN'" @click="saoChep">Đại diện tổ chức nhận khoản thanh toán
+                          :**********</vs-button>
                       </div>
 
                     </div>
@@ -808,10 +810,10 @@ beneficiary account number: sondz</vs-button>
                       <span class="price flex items-center mb:sm-3 mb-2">
                         <span class="text-3xl font-bold">${{ formatPrice(blObj.blLive, 2) }}</span>
                       </span>
-                      <button @click="popupTransferActive = true" type="button"
+                      <button @click="showPopTrans()" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
                         <span class="iconSubmit iconSubmitLive"></span>
-                        <span>Chuyển Tiền</span>
+                        <span>Ví Tiền</span>
                       </button>
                     </div>
                   </div>
@@ -1095,6 +1097,10 @@ export default {
     },
   },
   methods: {
+    showPopTrans() {
+      alert(`line 1101 src/views/trading/Wallet.vue show modal nạp rút tiền`)
+      this.popupTransferActive = true
+    },
     popupBill(tr) {
       this.popupBillActive = true;
 
@@ -1327,95 +1333,99 @@ export default {
     },
 
     clickTransMoney() {
-      let amount = this.enterAmount.toString();
-      amount = this.replaceAll(amount, ",", "");
-      amount = this.replaceAll(amount.toString(), "-", "");
+      this.$vs.notify({
+        text: 'This API is deprecated usdt-to-live, live-to-usdt Wallet.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
+      });
+      // let amount = this.enterAmount.toString();
+      // amount = this.replaceAll(amount, ",", "");
+      // amount = this.replaceAll(amount.toString(), "-", "");
+      // if (!this.isNumber(amount) || amount <= 0) {
+      //   return this.$vs.notify({
+      //     text: "Giá trị không hợp lệ",
+      //     color: "danger",
+      //     position: "top-right",
+      //     iconPack: "feather",
+      //     icon: "icon-x-circle",
+      //   });
+      // }
+      // if (this.typeChange) {
+      //   // nếu true thì live to wallet
 
-      if (!this.isNumber(amount) || amount <= 0) {
-        return this.$vs.notify({
-          text: "Giá trị không hợp lệ",
-          color: "danger",
-          position: "top-right",
-          iconPack: "feather",
-          icon: "icon-x-circle",
-        });
-      }
+      //   // gửi tiền từ live tới tài khoản chính
+      //   let obj = {
+      //     email: getData.email,
+      //     m: amount,
+      //   };
 
-      if (this.typeChange) {
-        // nếu true thì live to wallet
+      //   AuthenticationService.sendMoneyLiveToUsdt(obj).then((res) => {
+      //     if (res.data.success) {
+      //       getData.blLive -= amount;
+      //       getData.balance += amount;
 
-        // gửi tiền từ live tới tài khoản chính
-        let obj = {
-          email: getData.email,
-          m: amount,
-        };
+      //       this.amountAcc = getData.blLive;
+      //       this.amountAccLive = getData.balance;
 
-        AuthenticationService.sendMoneyLiveToUsdt(obj).then((res) => {
-          if (res.data.success) {
-            getData.blLive -= amount;
-            getData.balance += amount;
+      //       // reload lại lịch sử
+      //       this.getListHisTradeWGD();
 
-            this.amountAcc = getData.blLive;
-            this.amountAccLive = getData.balance;
+      //       return this.$vs.notify({
+      //         text: "Chuyển tiền thành công",
+      //         color: "success",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     } else {
+      //       return this.$vs.notify({
+      //         text: "Số dư của bạn không đủ",
+      //         color: "danger",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-x-circle",
+      //       });
+      //     }
+      //   });
+      // } else {
+      //   // wallet to live
 
-            // reload lại lịch sử
-            this.getListHisTradeWGD();
+      //   // gửi tiền từ tài khoản chính tới live
+      //   let obj = {
+      //     email: getData.email,
+      //     m: amount,
+      //   };
 
-            return this.$vs.notify({
-              text: "Chuyển tiền thành công",
-              color: "success",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          } else {
-            return this.$vs.notify({
-              text: "Số dư của bạn không đủ",
-              color: "danger",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-x-circle",
-            });
-          }
-        });
-      } else {
-        // wallet to live
+      //   AuthenticationService.sendMoneyUsdtToLive(obj).then((res) => {
+      //     if (res.data.success) {
+      //       getData.blLive += amount;
+      //       getData.balance -= amount;
 
-        // gửi tiền từ tài khoản chính tới live
-        let obj = {
-          email: getData.email,
-          m: amount,
-        };
+      //       this.amountAcc = getData.balance;
+      //       this.amountAccLive = getData.blLive;
 
-        AuthenticationService.sendMoneyUsdtToLive(obj).then((res) => {
-          if (res.data.success) {
-            getData.blLive += amount;
-            getData.balance -= amount;
+      //       // reload lại lịch sử
+      //       this.getListHisTradeWGD();
 
-            this.amountAcc = getData.balance;
-            this.amountAccLive = getData.blLive;
-
-            // reload lại lịch sử
-            this.getListHisTradeWGD();
-
-            return this.$vs.notify({
-              text: "Chuyển tiền thành công",
-              color: "success",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          } else {
-            return this.$vs.notify({
-              text: "Số dư của bạn không đủ",
-              color: "danger",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-x-circle",
-            });
-          }
-        });
-      }
+      //       return this.$vs.notify({
+      //         text: "Chuyển tiền thành công",
+      //         color: "success",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     } else {
+      //       return this.$vs.notify({
+      //         text: "Số dư của bạn không đủ",
+      //         color: "danger",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-x-circle",
+      //       });
+      //     }
+      //   });
+      // }
     },
 
     getListHisTrade() {
@@ -1501,28 +1511,35 @@ export default {
     },
 
     getBalanceWallet() {
-      AuthenticationService.getBalanceWallet().then((res) => {
-        let d = res.data;
-        if (d.success == 3 || d.success == 4) {
-          localStorage.removeItem("token");
-          this.$router.push("/login").catch(() => { });
-          return;
-        }
-        if (d.success) {
-          let mU = d.data.usdt;
-          let mE = d.data.eth;
-          let mB = d.data.btc;
-          let mP = d.data.paypal;
-
-          this.balanceUSDT = mU;
-          this.balanceETH = mE;
-          this.balanceBTC = mB;
-          this.balancePaypal = mP;
-
-          // mặc định hiển thị tiền đầu vào
-          this.getAmount = this.balancePaypal;
-        }
+      return this.$vs.notify({
+        text: 'This API is deprecated balance-wallet Wallet.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
       });
+
+      // AuthenticationService.getBalanceWallet().then((res) => {
+      //   let d = res.data;
+      //   if (d.success == 3 || d.success == 4) {
+      //     localStorage.removeItem("token");
+      //     this.$router.push("/login").catch(() => { });
+      //     return;
+      //   }
+      //   if (d.success) {
+      //     let mU = d.data.usdt;
+      //     let mE = d.data.eth;
+      //     let mB = d.data.btc;
+      //     let mP = d.data.paypal;
+
+      //     this.balanceUSDT = mU;
+      //     this.balanceETH = mE;
+      //     this.balanceBTC = mB;
+      //     this.balancePaypal = mP;
+
+      //     // mặc định hiển thị tiền đầu vào
+      //     this.getAmount = this.balancePaypal;
+      //   }
+      // });
     },
 
     getSysWallet() {

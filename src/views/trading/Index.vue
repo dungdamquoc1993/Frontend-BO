@@ -2059,7 +2059,6 @@ export default {
         this.balanceForuser = getData.isAccount ? getData.blLive : getData.blDemo
 
         if (!connected) {
-
             connected = true;
 
             this.connection = new WebSocket(SETTINGS.BASE_URL_SOCKET);
@@ -4985,7 +4984,10 @@ export default {
       //     (e = "oscillators" === t ? this.gaugeMeterOs : "movingAverages" === t ? this.gaugeMeterMa : this.gaugeMeterSu) && e.series && (e.series[0].points[0].update(this[t].meter.numberValue, !1), e.redraw())
       // },
       sendMessage(message) {
+        if(message.type) {
+          message.token = `${localStorage.getItem('tokenUser')}`
           this.connection.send(JSON.stringify(message));
+        }
       },
   
       // convertTextState(t) {
@@ -5705,9 +5707,6 @@ export default {
           // }
           // var audio = new Audio(sound);
           // audio.play();
-  
-  
-  
       },
   
       getUserInfo(){
@@ -5753,8 +5752,6 @@ export default {
     },
     created() {
   
-  
-  
       //let token = localStorage.getItem('token')
       //this.$store.dispatch('setToken', token)
   
@@ -5770,16 +5767,12 @@ export default {
       this.balanceForuser = getData.isAccount ? getData.blLive : getData.blDemo
   
       if(!connected){
-  
-          //console.log(SETTINGS.BASE_URL_SOCKET);
-          connected = true;
-  
-          this.connection = new WebSocket(SETTINGS.BASE_URL_SOCKET);
+          connected = true; 
+          this.connection = new WebSocket(SETTINGS.BASE_URL_SOCKET); 
   
           //this.$store.connected = this.connection
   
           this.connection.onopen = function() {
-              //console.log("Successfully connected to the echo websocket server...")
               this.onWindowLoad();
               this.getUserInfo();
           }.bind(this);
@@ -5879,8 +5872,6 @@ export default {
   
                   let indicato = data.load
   
-  
-  
                   this.StaOscillators(indicato.Oscillators)
                   this.StaSummary(indicato.Summary)
                   this.StaMovingAverages(indicato.Moving)
@@ -5975,16 +5966,18 @@ export default {
               this.betOpen.l.bet[0].items = [];
               localStorage.removeItem('stateOpen');
           }
+
+          this.connection.onerror = function(event) {
+              alert(`connect to server caught error`)
+          }
+
   
           //window.addEventListener("load", this.onWindowLoad);
   
       }else{
           //this.sendMessage({type: 'getListData'});
           this.$router.go(this.$router.currentRoute);
-  
       }
-  
-  
     },
     mounted() {
       this.addSound();

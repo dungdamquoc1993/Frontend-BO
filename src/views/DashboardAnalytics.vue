@@ -352,12 +352,6 @@ export default {
 
               this.dataGet = obj;
               
-  
-              //let tt = obj.tsTNFEE + obj.tsFee
-        
-              //this.rateTNFE = (obj.tsTNFEE/tt)*100
-
-
             }else if(res.data.success == 4){
                 localStorage.removeItem('token')
                 this.$router.push('/pages/login').catch(() => {})

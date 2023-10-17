@@ -17,7 +17,6 @@
           <vs-switch v-model="cellAutoWidth">Cell Auto Width</vs-switch>
         </div>
     </vs-prompt>
-
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
     <div id="loading-corners" class="vs-con-loading__container">
 
@@ -120,7 +119,8 @@
                       <p>
                           <!--Địa chỉ BTC: <span style="color: #f8a037" @click="clickGetAddress(tr.address_BTC, tr.privateKey_BTC, tr.wif_BTC)">{{ tr.address_BTC }}</span><br>
                           Địa chỉ ETH: <span style="color: #627eea" @click="clickGetAddress(tr.address_ETH, tr.privateKey_ETH, '')">{{ tr.address_ETH }}</span><br>-->
-                          -- Địa chỉ USDT: <span style="color: #26a17b" @click="clickGetAddress(tr.address_USDT, tr.privateKey_USDT, '')">{{ tr.address_USDT }}</span>
+                          -- Địa chỉ USDT: cái này điền sau
+                          <!-- <span style="color: #26a17b" @click="clickGetAddress(tr.address_USDT, tr.privateKey_USDT, '')">{{ tr.address_USDT }}</span> -->
                           <br>
                           *** Tổng CHƠI: <span class="italic" style="color: #ff9900">${{ formatPrice(tr.pricePlay, 2) }}</span><br>
                           *** Tổng THẮNG: <span class="italic" style="color: #10ff00">${{ formatPrice(tr.priceWin, 2) }}</span><br>
@@ -142,11 +142,11 @@
 
                 <vs-td>
                   <p class="user-price">
-                  <img width="20" :src="require('@/assets/images/sky/ic_vnd.png')"> {{ formatPrice(tr.money_vn, 0) }} đ<br>
-                  <IconCrypto style="width: 20px" coinname="BTC" color="color" format="svg" /> ${{ formatPrice(tr.money_btc, 6) }}<br>
-                  <IconCrypto style="width: 20px" coinname="ETH" color="color" format="svg" /> ${{ formatPrice(tr.money_eth, 4) }}<br>
-                  <IconCrypto style="width: 20px" coinname="USDT" color="color" format="svg" /> ${{ formatPrice(tr.money_usdt, 2) }}<br>
-                  <img width="20" :src="require('@/assets/images/sky/icon_bank/paypal-mini.png')">${{ formatPrice(tr.money_paypal, 2) }}
+                  <img width="20" :src="require('@/assets/images/sky/ic_vnd.png')"> vnd_balance <br>
+                  <IconCrypto style="width: 20px" coinname="BTC" color="color" format="svg" /> btc_balance <br>
+                  <IconCrypto style="width: 20px" coinname="ETH" color="color" format="svg" /> eth_balance <br>
+                  <IconCrypto style="width: 20px" coinname="USDT" color="color" format="svg" /> usdt_balance <br>
+                  <img width="20" :src="require('@/assets/images/sky/icon_bank/paypal-mini.png')"> paypal_balance
                   </p>
                 </vs-td>
       
@@ -216,7 +216,7 @@ import vSelect from 'vue-select'
 import AuthenticationService from '@/services/AuthenticationService'
 import moment from 'moment'
 import Vue from 'vue'
-import { VTree, VSelectTree}  from 'vue-tree-halower'
+import { VTree}  from 'vue-tree-halower'
 
 export default {
   components: {
@@ -287,32 +287,15 @@ export default {
               "first_name": "Ares",
               "last_name": "BO",
               "profile_image": "https://vi.vuejs.org/images/logo.png",
-              "money_vn": 100.00,
-              "money_btc": 0.000000,
-              "money_eth": 0.0100,
-              "money_usdt": 1.00,
-              "money_paypal": 0.00,
+              // "money_vn": 100.00,
+              // "money_btc": 0.000000,
+              // "money_eth": 0.0100,
+              // "money_usdt": 1.00,
+              // "money_paypal": 0.00,
               "manage_supers": 1,
               "pending_commission": 0.00,
               "active_2fa": 0,
               "created_at": "00:00:00 02-04-2021"
-            },
-            {
-              "id": 2,
-              "email": "abc@gmail.com",
-              "nick_name": "SkyPlaza 3",
-              "first_name": "KK",
-              "last_name": "Ares",
-              "profile_image": "https://vi.vuejs.org/images/logo.png",
-              "money_vn": 100.00,
-              "money_btc": 0.000000,
-              "money_eth": 0.0100,
-              "money_usdt": 1.00,
-              "money_paypal": 0.00,
-              "manage_supers": 0,
-              "pending_commission": 0.00,
-              "active_2fa": 1,
-              "created_at": "01:00:00 02-04-2021"
             },
         ],
       itemsPerPage: 10,

@@ -9,7 +9,6 @@
 
 
 <template>
-
     <div class="deposit_widthdraw ">
         <div class="headerTab"> 
             <ul class="listTab mb-0 pl-0" style="pointer-events: none;">
@@ -188,7 +187,6 @@
     </div>
 </template>
 
-
 <script>
 
 import getData from '@/pages/trade/navbar/components/data.json'
@@ -291,141 +289,145 @@ export default {
         },
 
         WithDrawalPaypal(){
-
-            if(!getData.c2fa){
-                 return this.$vs.notify({
-                    text:'Bạn phải bật 2FA để yêu cầu rút tiền',
-                    color:'danger',
-                    position:'top-right',
-                    iconPack: 'feather',
-                    icon:'icon-x-circle'})
-            }
-
-            // đây là số tiền nhập
-            let amount = Number(this.amount)
+            return this.$vs.notify({
+                text: 'This API is deprecated withdrawalPaypalNoiBo withdrawalPaypalAccount NapRutTien.vue',
+                color: 'warning',
+                iconPack: 'feather',
+                icon: 'icon-check'
+            });
             
-            if(amount <= 0 || amount == ''){
-                return this.$vs.notify({
-                    text:'Giá trị không hợp lệ',
-                    color:'danger',
-                    position:'top-right',
-                    iconPack: 'feather',
-                    icon:'icon-x-circle'})
-            }
+            // if(!getData.c2fa){
+            //      return this.$vs.notify({
+            //         text:'Bạn phải bật 2FA để yêu cầu rút tiền',
+            //         color:'danger',
+            //         position:'top-right',
+            //         iconPack: 'feather',
+            //         icon:'icon-x-circle'})
+            // }
 
-            if(amount < getSetSys.minWithdrawalPaypal){
-              return this.$vs.notify({
-                      text: `Số tiền rút tối thiểu là $${getSetSys.minWithdrawalPaypal}.`,
-                      color:'danger',
-                      position:'top-right',
-                      iconPack: 'feather',
-                      icon:'icon-x-circle'
-                  });
-            }
-
-            // mặc định rút nội bộ
-
-            let obj = {
-                amS: amount,
-                nick: getData.displayName,
-                gc: this.noteRut
-            }
+            // // đây là số tiền nhập
+            // let amount = Number(this.amount)
             
-            if(this.isActiveSelectTransPaypal){  // rút Nội bộ
+            // if(amount <= 0 || amount == ''){
+            //     return this.$vs.notify({
+            //         text:'Giá trị không hợp lệ',
+            //         color:'danger',
+            //         position:'top-right',
+            //         iconPack: 'feather',
+            //         icon:'icon-x-circle'})
+            // }
+
+            // if(amount < getSetSys.minWithdrawalPaypal){
+            //   return this.$vs.notify({
+            //           text: `Số tiền rút tối thiểu là $${getSetSys.minWithdrawalPaypal}.`,
+            //           color:'danger',
+            //           position:'top-right',
+            //           iconPack: 'feather',
+            //           icon:'icon-x-circle'
+            //       });
+            // }
+
+            // // mặc định rút nội bộ
+
+            // let obj = {
+            //     amS: amount,
+            //     nick: getData.displayName,
+            //     gc: this.noteRut
+            // }
+            
+            // if(this.isActiveSelectTransPaypal){  // rút Nội bộ
                 
 
-                let phi = getSetSys.feeRutPaypalNoiBo;
-                let tongphi = amount + Number(phi);
+            //     let phi = getSetSys.feeRutPaypalNoiBo;
+            //     let tongphi = amount + Number(phi);
                 
-                // kiểm tra số tiền gốc = số tiền nhập hay không
-                if(this.getAmount < tongphi){
-                    return this.$vs.notify({
-                        text: 'Số dư không đủ.',
-                        color:'danger',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-x-circle'
-                    });
-                }
+            //     // kiểm tra số tiền gốc = số tiền nhập hay không
+            //     if(this.getAmount < tongphi){
+            //         return this.$vs.notify({
+            //             text: 'Số dư không đủ.',
+            //             color:'danger',
+            //             position:'top-right',
+            //             iconPack: 'feather',
+            //             icon:'icon-x-circle'
+            //         });
+            //     }
                 
-                AuthenticationService.withdrawalPaypalNoiBo(obj)
-                .then((res) => {
-                    let d = res.data
+            //     AuthenticationService.withdrawalPaypalNoiBo(obj)
+            //     .then((res) => {
+            //         let d = res.data
 
-                    if(d.success == 3 || d.success == 4){
-                        localStorage.removeItem('token')
-                        this.$router.push('/login').catch(() => {})
-                        return
-                    }
+            //         if(d.success == 3 || d.success == 4){
+            //             localStorage.removeItem('token')
+            //             this.$router.push('/login').catch(() => {})
+            //             return
+            //         }
                     
-                    if(res.data.success){
-                        return this.$vs.notify({
-                            text: 'Rút tiền thành công.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'success',
-                            position:'top-right',
-                        });
-                    }else{
-                        return this.$vs.notify({
-                            text: 'Số dư không đủ.',
-                            color:'danger',
-                            position:'top-right',
-                            iconPack: 'feather',
-                            icon:'icon-x-circle'
-                        });
-                    }
-                })
+            //         if(res.data.success){
+            //             return this.$vs.notify({
+            //                 text: 'Rút tiền thành công.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'success',
+            //                 position:'top-right',
+            //             });
+            //         }else{
+            //             return this.$vs.notify({
+            //                 text: 'Số dư không đủ.',
+            //                 color:'danger',
+            //                 position:'top-right',
+            //                 iconPack: 'feather',
+            //                 icon:'icon-x-circle'
+            //             });
+            //         }
+            //     })
 
-            }
-            else
-            { 
+            // }
+            // else
+            // { 
 
-                let phi = getSetSys.feeRutPaypalAcc
-                let tongphi = amount + phi
+            //     let phi = getSetSys.feeRutPaypalAcc
+            //     let tongphi = amount + phi
                 
-                // kiểm tra số tiền gốc = số tiền nhập hay không
-                if(this.getAmount < tongphi){
-                    return this.$vs.notify({
-                        text: 'Số dư không đủ.',
-                        color:'danger',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-x-circle'
-                    });
-                }
+            //     // kiểm tra số tiền gốc = số tiền nhập hay không
+            //     if(this.getAmount < tongphi){
+            //         return this.$vs.notify({
+            //             text: 'Số dư không đủ.',
+            //             color:'danger',
+            //             position:'top-right',
+            //             iconPack: 'feather',
+            //             icon:'icon-x-circle'
+            //         });
+            //     }
                 
-                AuthenticationService.withdrawalPaypalAccount(obj)
-                .then((res) => {
-                    let d = res.data
+            //     AuthenticationService.withdrawalPaypalAccount(obj)
+            //     .then((res) => {
+            //         let d = res.data
 
-                    if(d.success == 3 || d.success == 4){
-                        localStorage.removeItem('token')
-                        this.$router.push('/login').catch(() => {})
-                        return
-                    }
+            //         if(d.success == 3 || d.success == 4){
+            //             localStorage.removeItem('token')
+            //             this.$router.push('/login').catch(() => {})
+            //             return
+            //         }
                     
-                    if(res.data.success){
-                        return this.$vs.notify({
-                            text: 'Rút tiền thành công.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'success',
-                            position:'top-right',
-                        });
-                    }else{
-                        return this.$vs.notify({
-                            text: 'Số dư không đủ.',
-                            color:'danger',
-                            position:'top-right',
-                            iconPack: 'feather',
-                            icon:'icon-x-circle'
-                        });
-                    }
-                })
-            }
-            
-            
+            //         if(res.data.success){
+            //             return this.$vs.notify({
+            //                 text: 'Rút tiền thành công.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'success',
+            //                 position:'top-right',
+            //             });
+            //         }else{
+            //             return this.$vs.notify({
+            //                 text: 'Số dư không đủ.',
+            //                 color:'danger',
+            //                 position:'top-right',
+            //                 iconPack: 'feather',
+            //                 icon:'icon-x-circle'
+            //             });
+            //         }
+            //     })
+            // }
         },
 
         CopyAddress(){
@@ -550,244 +552,248 @@ export default {
         },
 
         WithdrawalOKPay(){
-
-            if(!getData.c2fa){
-                 return this.$vs.notify({
-                    text:'Bạn phải bật 2FA để yêu cầu rút tiền',
-                    color:'danger',
-                    position:'top-right',
-                    iconPack: 'feather',
-                    icon:'icon-x-circle'})
-            }
+            return this.$vs.notify({
+                text: 'This API is deprecated withdrawal, withdrawal-erc, withdrawal-bsc NapRutTien.vue',
+                color: 'warning',
+                iconPack: 'feather',
+                icon: 'icon-check'
+            });
+            // if(!getData.c2fa){
+            //      return this.$vs.notify({
+            //         text:'Bạn phải bật 2FA để yêu cầu rút tiền',
+            //         color:'danger',
+            //         position:'top-right',
+            //         iconPack: 'feather',
+            //         icon:'icon-x-circle'})
+            // }
 
             
-            // mặc định rút nội bộ
+            // // mặc định rút nội bộ
 
-            let amount = Number(this.amount);
+            // let amount = Number(this.amount);
 
-            let obj = {
-                amS: amount,
-                nick: getData.displayName,
-                gc: this.noteRut,
-                address: this.adddressWithDrawal,
-                nw: '',
-                code: this.code2FA
-            }
+            // let obj = {
+            //     amS: amount,
+            //     nick: getData.displayName,
+            //     gc: this.noteRut,
+            //     address: this.adddressWithDrawal,
+            //     nw: '',
+            //     code: this.code2FA
+            // }
             
-            if(this.isActiveSelectTransNB){  // rút Nội bộ
+            // if(this.isActiveSelectTransNB){  // rút Nội bộ
                 
 
-                let phi = getSetSys.feeRutUSDTNoiBo;
-                let tongphi = amount + Number(phi);
+            //     let phi = getSetSys.feeRutUSDTNoiBo;
+            //     let tongphi = amount + Number(phi);
                 
-                // kiểm tra số tiền gốc = số tiền nhập hay không
-                if(Number(this.getAmount) < tongphi){
-                    return this.$vs.notify({
-                        text: 'Số dư không đủ.',
-                        color:'danger',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-x-circle'
-                    });
-                }
+            //     // kiểm tra số tiền gốc = số tiền nhập hay không
+            //     if(Number(this.getAmount) < tongphi){
+            //         return this.$vs.notify({
+            //             text: 'Số dư không đủ.',
+            //             color:'danger',
+            //             position:'top-right',
+            //             iconPack: 'feather',
+            //             icon:'icon-x-circle'
+            //         });
+            //     }
 
-                obj.nw = 'nb';
+            //     obj.nw = 'nb';
                 
-                AuthenticationService.withdrawalUserNoiBo(obj)
-                .then((res) => {
-                    let d = res.data
+            //     AuthenticationService.withdrawalUserNoiBo(obj)
+            //     .then((res) => {
+            //         let d = res.data
                     
 
-                    if(d.success == 3 || d.success == 4){
-                        localStorage.removeItem('token')
-                        return this.$router.push('/login').catch(() => {})
-                    }
+            //         if(d.success == 3 || d.success == 4){
+            //             localStorage.removeItem('token')
+            //             return this.$router.push('/login').catch(() => {})
+            //         }
 
-                    if(d.success == 5){
-                        return this.$vs.notify({
-                            text: 'Biệt danh không đúng hoặc không tồn tại.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'danger',
-                            position:'top-right',
-                        });
-                    }
+            //         if(d.success == 5){
+            //             return this.$vs.notify({
+            //                 text: 'Biệt danh không đúng hoặc không tồn tại.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'danger',
+            //                 position:'top-right',
+            //             });
+            //         }
 
                     
-                    if(d.success == 2){
-                        return this.$vs.notify({
-                            text: 'Mã 2FA không chính xác.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'danger',
-                            position:'top-right',
-                        });
-                    }
+            //         if(d.success == 2){
+            //             return this.$vs.notify({
+            //                 text: 'Mã 2FA không chính xác.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'danger',
+            //                 position:'top-right',
+            //             });
+            //         }
                     
-                    if(res.data.success == 1){
+            //         if(res.data.success == 1){
                         
-                        getData.balance -= tongphi;
-                        getData.balanceUSDT -= tongphi;
+            //             getData.balance -= tongphi;
+            //             getData.balanceUSDT -= tongphi;
 
-                        return this.$vs.notify({
-                            text: 'Rút tiền thành công.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'success',
-                            position:'top-right',
-                        });
-                    }else if(res.data.success === 10){
-                        return this.$vs.notify({
-                            text: 'Tài khoản chưa được xác minh.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'danger',
-                            position:'top-right',
-                        });
-                    }else{
-                        return this.$vs.notify({
-                            text: 'Không tìm thấy người nhận.',
-                            color:'danger',
-                            position:'top-right',
-                            iconPack: 'feather',
-                            icon:'icon-x-circle'
-                        });
-                    }
-                })
+            //             return this.$vs.notify({
+            //                 text: 'Rút tiền thành công.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'success',
+            //                 position:'top-right',
+            //             });
+            //         }else if(res.data.success === 10){
+            //             return this.$vs.notify({
+            //                 text: 'Tài khoản chưa được xác minh.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'danger',
+            //                 position:'top-right',
+            //             });
+            //         }else{
+            //             return this.$vs.notify({
+            //                 text: 'Không tìm thấy người nhận.',
+            //                 color:'danger',
+            //                 position:'top-right',
+            //                 iconPack: 'feather',
+            //                 icon:'icon-x-circle'
+            //             });
+            //         }
+            //     })
 
-            }else if(this.isActiveSelectTransBEP20){ // rút BEP20 (BSC)
+            // }else if(this.isActiveSelectTransBEP20){ // rút BEP20 (BSC)
             
 
-                let phi = getSetSys.feeRutUSDTBEP20;
-                let tongphi = amount + Number(phi);
+            //     let phi = getSetSys.feeRutUSDTBEP20;
+            //     let tongphi = amount + Number(phi);
 
         
-                // kiểm tra số tiền gốc = số tiền nhập hay không
+            //     // kiểm tra số tiền gốc = số tiền nhập hay không
 
-                if(Number(this.getAmount) < tongphi){
-                    return this.$vs.notify({
-                        text: 'Số dư không đủ.',
-                        color:'danger',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-x-circle'
-                    });
-                }
+            //     if(Number(this.getAmount) < tongphi){
+            //         return this.$vs.notify({
+            //             text: 'Số dư không đủ.',
+            //             color:'danger',
+            //             position:'top-right',
+            //             iconPack: 'feather',
+            //             icon:'icon-x-circle'
+            //         });
+            //     }
 
-                obj.nw = 'bep20';
+            //     obj.nw = 'bep20';
                 
-                AuthenticationService.withdrawalUsdtBSC(obj)
-                .then((res) => {
-                    let d = res.data;
+            //     AuthenticationService.withdrawalUsdtBSC(obj)
+            //     .then((res) => {
+            //         let d = res.data;
 
-                    if(d.success == 3 || d.success == 4){
-                        localStorage.removeItem('token')
-                        this.$router.push('/login').catch(() => {})
-                        return
-                    }
+            //         if(d.success == 3 || d.success == 4){
+            //             localStorage.removeItem('token')
+            //             this.$router.push('/login').catch(() => {})
+            //             return
+            //         }
 
-                    // cập nhật lại tiền ví nếu thành công
-                    this.balanceUSDT = this.formatPrice(Number(this.balanceUSDT) - tongphi, 2)
-                    this.getAmount = this.balanceUSDT;
+            //         // cập nhật lại tiền ví nếu thành công
+            //         this.balanceUSDT = this.formatPrice(Number(this.balanceUSDT) - tongphi, 2)
+            //         this.getAmount = this.balanceUSDT;
 
                     
                     
-                    if(res.data.success == 1){
+            //         if(res.data.success == 1){
 
-                        getData.balance -= tongphi;
-                        getData.balanceUSDT -= tongphi;
+            //             getData.balance -= tongphi;
+            //             getData.balanceUSDT -= tongphi;
 
-                        return this.$vs.notify({
-                            text: 'Rút tiền thành công.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'success',
-                            position:'top-right',
-                        });
-                    }else if(res.data.success === 10){
-                        return this.$vs.notify({
-                            text: 'Tài khoản chưa được xác minh.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'danger',
-                            position:'top-right',
-                        });
-                    }else if(res.data.success === 2){
-                        return this.$vs.notify({
-                            text: 'Mã 2Fa không đúng.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'danger',
-                            position:'top-right',
-                        });
-                    }else{
-                        return this.$vs.notify({
-                            text: 'Số dư không đủ.',
-                            color:'danger',
-                            position:'top-right',
-                            iconPack: 'feather',
-                            icon:'icon-x-circle'
-                        });
-                    }
-                })
-            }else if(this.isActiveSelectTransERC20){  // rút ERC 20
+            //             return this.$vs.notify({
+            //                 text: 'Rút tiền thành công.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'success',
+            //                 position:'top-right',
+            //             });
+            //         }else if(res.data.success === 10){
+            //             return this.$vs.notify({
+            //                 text: 'Tài khoản chưa được xác minh.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'danger',
+            //                 position:'top-right',
+            //             });
+            //         }else if(res.data.success === 2){
+            //             return this.$vs.notify({
+            //                 text: 'Mã 2Fa không đúng.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'danger',
+            //                 position:'top-right',
+            //             });
+            //         }else{
+            //             return this.$vs.notify({
+            //                 text: 'Số dư không đủ.',
+            //                 color:'danger',
+            //                 position:'top-right',
+            //                 iconPack: 'feather',
+            //                 icon:'icon-x-circle'
+            //             });
+            //         }
+            //     })
+            // }else if(this.isActiveSelectTransERC20){  // rút ERC 20
                 
-                let phi = getSetSys.feeRutUSDTERC20
-                let tongphi = amount + Number(phi)
+            //     let phi = getSetSys.feeRutUSDTERC20
+            //     let tongphi = amount + Number(phi)
                 
-                // kiểm tra số tiền gốc = số tiền nhập hay không
-                if(Number(this.getAmount) < tongphi){
-                    return this.$vs.notify({
-                        text: 'Số dư không đủ.',
-                        color:'danger',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-x-circle'
-                    });
-                }
+            //     // kiểm tra số tiền gốc = số tiền nhập hay không
+            //     if(Number(this.getAmount) < tongphi){
+            //         return this.$vs.notify({
+            //             text: 'Số dư không đủ.',
+            //             color:'danger',
+            //             position:'top-right',
+            //             iconPack: 'feather',
+            //             icon:'icon-x-circle'
+            //         });
+            //     }
 
-                obj.nw = 'erc20';
+            //     obj.nw = 'erc20';
                 
-                AuthenticationService.withdrawalUsdtERC(obj)
-                .then((res) => {
-                    let d = res.data
+            //     AuthenticationService.withdrawalUsdtERC(obj)
+            //     .then((res) => {
+            //         let d = res.data
 
-                    if(d.success == 3 || d.success == 4){
-                        localStorage.removeItem('token')
-                        this.$router.push('/login').catch(() => {})
-                        return
-                    }
+            //         if(d.success == 3 || d.success == 4){
+            //             localStorage.removeItem('token')
+            //             this.$router.push('/login').catch(() => {})
+            //             return
+            //         }
 
-                    // cập nhật lại tiền ví nếu thành công
-                    this.balanceUSDT = this.formatPrice(Number(this.balanceUSDT) - tongphi, 2)
-                    this.getAmount = this.balanceUSDT
+            //         // cập nhật lại tiền ví nếu thành công
+            //         this.balanceUSDT = this.formatPrice(Number(this.balanceUSDT) - tongphi, 2)
+            //         this.getAmount = this.balanceUSDT
 
                     
                     
-                    if(res.data.success){
-                        getData.balance -= tongphi;
-                        getData.balanceUSDT -= tongphi;
+            //         if(res.data.success){
+            //             getData.balance -= tongphi;
+            //             getData.balanceUSDT -= tongphi;
 
-                        return this.$vs.notify({
-                            text: 'Rút tiền thành công.',
-                            iconPack: 'feather',
-                            icon: 'icon-check',
-                            color: 'success',
-                            position:'top-right',
-                        });
-                    }else{
-                        return this.$vs.notify({
-                            text: 'Số dư không đủ.',
-                            color:'danger',
-                            position:'top-right',
-                            iconPack: 'feather',
-                            icon:'icon-x-circle'
-                        });
-                    }
-                })
+            //             return this.$vs.notify({
+            //                 text: 'Rút tiền thành công.',
+            //                 iconPack: 'feather',
+            //                 icon: 'icon-check',
+            //                 color: 'success',
+            //                 position:'top-right',
+            //             });
+            //         }else{
+            //             return this.$vs.notify({
+            //                 text: 'Số dư không đủ.',
+            //                 color:'danger',
+            //                 position:'top-right',
+            //                 iconPack: 'feather',
+            //                 icon:'icon-x-circle'
+            //             });
+            //         }
+            //     })
                 
-            }
-            
+            // }
         },
 
         selectTypePay(val){
@@ -837,7 +843,6 @@ export default {
                     return
                 }
                 this.textAddress = d.a
-
                 var canvas = document.querySelector('canvas')
 
                 QRCode.toCanvas(canvas, d.a, { 
@@ -853,29 +858,36 @@ export default {
         },
 
         getBalanceWallet(){
-            AuthenticationService.getBalanceWallet()
-            .then((res) => {
-                let d = res.data
-                if(d.success == 3 || d.success == 4){
-                    localStorage.removeItem('token')
-                    this.$router.push('/login').catch(() => {})
-                    return
-                }
-                if(d.success){
-                    let mU = d.data.usdt
-                    let mE = d.data.eth
-                    let mB = d.data.btc
-                    let mP = d.data.paypal
+            return this.$vs.notify({
+                text: 'This API is deprecated balance-wallet ',
+                color: 'warning',
+                iconPack: 'feather',
+                icon: 'icon-check'
+            });
 
-                    this.balanceUSDT = this.formatPrice(mU, 2)
-                    this.balanceETH = this.formatPrice(mE, 4)
-                    this.balanceBTC = this.formatPrice(mB, 6)
-                    this.balancePaypal = this.formatPrice(mP, 2)
+            // AuthenticationService.getBalanceWallet()
+            // .then((res) => {    
+            //     let d = res.data
+            //     if(d.success == 3 || d.success == 4){
+            //         localStorage.removeItem('token')
+            //         this.$router.push('/login').catch(() => {})
+            //         return
+            //     }
+            //     if(d.success){
+            //         let mU = d.data.usdt
+            //         let mE = d.data.eth
+            //         let mB = d.data.btc
+            //         let mP = d.data.paypal
 
-                    // mặc định hiển thị tiền đầu vào
-                    this.getAmount = this.balanceUSDT
-                }
-            })
+            //         this.balanceUSDT = this.formatPrice(mU, 2)
+            //         this.balanceETH = this.formatPrice(mE, 4)
+            //         this.balanceBTC = this.formatPrice(mB, 6)
+            //         this.balancePaypal = this.formatPrice(mP, 2)
+
+            //         // mặc định hiển thị tiền đầu vào
+            //         this.getAmount = this.balanceUSDT
+            //     }
+            // })
         },
 
         formatPrice(value, minimum) {
@@ -890,7 +902,6 @@ export default {
     mounted() {
     },
     created() {
-        
         // lấy số tiền mặc định của ví
         this.getAmount = this.amountPaypal
 
@@ -904,7 +915,6 @@ export default {
     },
 }
 </script>
-
 
 <style scoped>
 

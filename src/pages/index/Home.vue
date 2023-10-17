@@ -388,6 +388,7 @@
         </footer>
         <log-reg-for-get/>
     </div>
+    
 </template>
 
 <script>

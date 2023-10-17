@@ -529,42 +529,48 @@ export default {
     },
     // not use
     submitDataUpdateMoney() {
-      const obj = {
-        id: this.dataId,
-        money_btc: this.addDataMoneyBTC,
-        money_eth: this.addDataMoneyETH,
-        money_usdt: this.addDataMoneyETH,
-        money_vn: this.addDataMoneyVN,
-      }
-      AuthenticationService.updatePriceMember(obj)
-        .then((resp) => {
-          if (resp.data.success) {
-            return this.$vs.notify({
-              text: 'Đã cộng tiền thành công cho ' + this.dataNick,
-              color: 'success',
-              iconPack: 'feather',
-              position: 'top-right',
-              icon: 'icon-check'
-            });
-          } else {
-            if (!resp.data.l) {
-              return this.$vs.notify({
-                text: 'Thời gian đăng nhập đã hết, vui lòng đăng nhập lại để sử dụng',
-                color: 'danger',
-                iconPack: 'feather',
-                position: 'top-right',
-                icon: 'icon-alert-circle'
-              });
-            }
-            return this.$vs.notify({
-              text: resp.data.message,
-              color: 'danger',
-              iconPack: 'feather',
-              position: 'top-right',
-              icon: 'icon-alert-circle'
-            });
-          }
-        })
+      return this.$vs.notify({
+        text: 'This API is deprecated',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
+      });
+      // const obj = {
+      //   id: this.dataId,
+      //   money_btc: this.addDataMoneyBTC,
+      //   money_eth: this.addDataMoneyETH,
+      //   money_usdt: this.addDataMoneyETH,
+      //   money_vn: this.addDataMoneyVN,
+      // }
+      // AuthenticationService.updatePriceMember(obj)
+      //   .then((resp) => {
+      //     if (resp.data.success) {
+      //       return this.$vs.notify({
+      //         text: 'Đã cộng tiền thành công cho ' + this.dataNick,
+      //         color: 'success',
+      //         iconPack: 'feather',
+      //         position: 'top-right',
+      //         icon: 'icon-check'
+      //       });
+      //     } else {
+      //       if (!resp.data.l) {
+      //         return this.$vs.notify({
+      //           text: 'Thời gian đăng nhập đã hết, vui lòng đăng nhập lại để sử dụng',
+      //           color: 'danger',
+      //           iconPack: 'feather',
+      //           position: 'top-right',
+      //           icon: 'icon-alert-circle'
+      //         });
+      //       }
+      //       return this.$vs.notify({
+      //         text: resp.data.message,
+      //         color: 'danger',
+      //         iconPack: 'feather',
+      //         position: 'top-right',
+      //         icon: 'icon-alert-circle'
+      //       });
+      //     }
+      //   })
     },
     // not use
     submitDataUpdateUser() {

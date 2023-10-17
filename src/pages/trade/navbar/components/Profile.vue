@@ -1,36 +1,25 @@
 <template>
-  <div
-    class="the-navbar__user-meta flex items-center text-acc"
-    v-if="activeUserInfo.displayName != ''"
-  >
+  <div class="the-navbar__user-meta flex items-center text-acc" v-if="activeUserInfo.displayName != ''">
     <!--<div class="the-navbar__user-meta flex items-center"> -->
     <!-- <div class="text-right leading-tight hidden sm:block">
       <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
      <small>Available</small>
     </div> -->
-    <div
-      class="con-img ml-3 mr-3"
-      style="border-radius: 3px; padding: 0.375rem 0.75rem"
-    >
+    <div class="con-img ml-3 mr-3" style="border-radius: 3px; padding: 0.375rem 0.75rem">
       <vs-dropdown vs-custom-content vs-trigger-click>
         <div class="text-left cursor-pointer" style="font-weight: bold">
           <p class="text-sm" style="color: #c1c1c1">
             {{ isAcc ? "Tài khoản Thực" : "Tài khoản Demo" }}
           </p>
           <p>
-            <span class="text-money"
-              >$
+            <span class="text-money">$
               {{
                 isAcc
-                  ? this.formatPrice(blObj.blLive, 2)
-                  : this.formatPrice(blObj.blDemo, 2)
-              }}</span
-            >
+                ? this.formatPrice(blObj.blLive, 2)
+                : this.formatPrice(blObj.blDemo, 2)
+              }}</span>
             <span class="float-right">
-              <feather-icon
-                icon="ChevronDownIcon"
-                svgClasses="w-6 h-6 text-down"
-              />
+              <feather-icon icon="ChevronDownIcon" svgClasses="w-6 h-6 text-down" />
             </span>
           </p>
         </div>
@@ -38,18 +27,9 @@
           <div class="accLive mb-3">
             <span style="font-size: 12px; color: #d6d6d6">Tài khoản Thực</span>
             <div class="balance cursor-pointer" @click="changeAccount(1)">
-              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px"
-                >$ {{ formatPrice(blObj.blLive, 2) }}</span
-              >
-              <span
-                class="reloadBalance absolute"
-                style="right: 10px; z-index: 99999"
-                @click="clickShowPopTrans()"
-              >
-                <feather-icon
-                  icon="LinkIcon"
-                  class="cursor-pointer w-4"
-                ></feather-icon>
+              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">$ {{ formatPrice(blObj.blLive, 2) }}</span>
+              <span class="reloadBalance absolute" style="right: 10px; z-index: 99999" @click="clickShowPopTrans()">
+                <feather-icon icon="LinkIcon" class="cursor-pointer w-4"></feather-icon>
               </span>
             </div>
           </div>
@@ -57,15 +37,10 @@
           <div class="accDemo mt-3">
             <span style="font-size: 12px; color: #d6d6d6">Tài khoản Demo</span>
             <div class="balance cursor-pointer" @click="changeAccount(0)">
-              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px"
-                >$ {{ formatPrice(blObj.blDemo, 2) }}</span
-              >
+              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">$ {{ formatPrice(blObj.blDemo, 2) }}</span>
               <span class="reloadBalance absolute z-10" style="right: 10px">
-                <feather-icon
-                  icon="RefreshCwIcon"
-                  @click.stop="reloadBalanceDemo()"
-                  class="cursor-pointer w-4"
-                ></feather-icon>
+                <feather-icon icon="RefreshCwIcon" @click.stop="reloadBalanceDemo()"
+                  class="cursor-pointer w-4"></feather-icon>
               </span>
             </div>
           </div>
@@ -73,39 +48,19 @@
       </vs-dropdown>
     </div>
     <div class="con-img ml-3 mr-3">
-      <vs-button
-        color="success"
-        icon-pack="feather"
-        icon="icon-dollar-sign"
-        type="relief"
-        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()"
-        >Nạp Nhanh</vs-button
-      >
+      <vs-button color="success" icon-pack="feather" icon="icon-dollar-sign" type="relief"
+        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()">Nạp Nhanh</vs-button>
       <!-- <vs-button type="line" icon-pack="feather" :color="colorNT" icon="icon-dollar-sign" @click.stop="viewNapTien()">Nạp nhanh</vs-button> -->
     </div>
     <!--<div class="con-img ml-3">
       <vs-button type="line" icon-pack="feather" :color="colorRT" icon="icon-dollar-sign" @click.stop="viewRutTien()">Rút tiền</vs-button>
     </div> -->
-    <div
-      class="con-img ml-3 mr-3 cursor-pointer msetting"
-      @click="popupActiveCaiDat = true"
-    >
-      <feather-icon
-        icon="SettingsIcon"
-        svgClasses="w-5 h-5"
-        class="block text-center h-5"
-      />
+    <div class="con-img ml-3 mr-3 cursor-pointer msetting" @click="clickShowPopCaiDat()">
+      <feather-icon icon="SettingsIcon" svgClasses="w-5 h-5" class="block text-center h-5" />
       <span>Cài Đặt</span>
     </div>
-    <div
-      class="con-img ml-3 mr-3 cursor-pointer mhoso"
-      @click.stop="viewHoSo()"
-    >
-      <feather-icon
-        icon="UserIcon"
-        svgClasses="w-5 h-5"
-        class="block text-center h-5"
-      />
+    <div class="con-img ml-3 mr-3 cursor-pointer mhoso" @click.stop="viewHoSo()">
+      <feather-icon icon="UserIcon" svgClasses="w-5 h-5" class="block text-center h-5" />
       <span>Hồ Sơ</span>
     </div>
     <div class="con-img ml-3 mr-3 text-center relative cursor-pointer mTT">
@@ -128,60 +83,47 @@
       </div>
     </div> -->
 
-    <ho-so-user-info
-      :isSidebarActive="addNewDataSidebar"
-      @closeSidebar="toggleDataSidebar"
-      :data="sidebarData"
-    />
+    <ho-so-user-info :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
     <!-- <his-order-bet :isSidebarActive="addSidebarHisOrder" @closeSidebar="toggleDataSidebarHisOrder"/> -->
 
     <!-- <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-
       <div class="con-img ml-3">
         <feather-icon icon="UserIcon" svgClasses="w-8 h-8" />
         <img v-if="activeUserInfo.photoURL" key="onlineImg" :src="activeUserInfo.photoURL" alt="user-img" width="40" height="40" class="rounded-full shadow-md cursor-pointer block" />
       </div>
-
       <vs-dropdown-menu class="vx-navbar-dropdown">
         <ul style="min-width: 9rem">
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/pages/profile').catch(() => {})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Profile</span>
           </li>
-         
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/email').catch(() => {})">
             <feather-icon icon="MailIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Inbox</span>
           </li>
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/todo').catch(() => {})">
             <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Tasks</span>
           </li>
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/chat').catch(() => {})">
             <feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Chat</span>
           </li>
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/eCommerce/wish-list').catch(() => {})">
             <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Wish List</span>
           </li>
-
           <vs-divider class="m-1" />
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="logout">
@@ -191,44 +133,23 @@
         </ul>
       </vs-dropdown-menu>
     </vs-dropdown>-->
-    <vs-popup
-      class="qDeposit"
-      title="Nạp Nhanh"
-      :active.sync="popupActiveNapNhanh"
-    >
+    <vs-popup class="qDeposit" title="Nạp Nhanh" :active.sync="popupActiveNapNhanh">
       <div class="relative">
-        <vs-button
-          color="#38495d"
-          type="filled"
-          class="w-full text-left"
-          @click="showPopWalSL = !showPopWalSL"
-        >
+        <vs-button color="#38495d" type="filled" class="w-full text-left" @click="showPopWalSL = !showPopWalSL">
           <span class="icon USDT"></span>
           <span class="white">{{ balanceUSDT }}</span>
-          <feather-icon
-            class="material-icons right-0"
-            icon="ChevronDownIcon"
-            svgClasses="w-4 h-4"
-            style="top: -3px; position: absolute !important"
-          />
+          <feather-icon class="material-icons right-0" icon="ChevronDownIcon" svgClasses="w-4 h-4"
+            style="top: -3px; position: absolute !important" />
         </vs-button>
         <div class="listWallShow w-full" :class="{ block: showPopWalSL }">
-          <span
-            class="drop cursor-pointer w-full block"
-            @click="selectWallet('usdt')"
-          >
+          <span class="drop cursor-pointer w-full block" @click="selectWallet('usdt')">
             <span class="icon USDT"></span>
             <span class="white">{{ balanceUSDT }}</span>
           </span>
         </div>
         <p class="white mt-4 mb-2 text-xs">Tiền Nạp</p>
         <div class="relative">
-          <vs-input
-            class="w-full"
-            placeholder="Vui lòng nhập tiền nạp"
-            @keyup="ttThucNhan"
-            v-model="enterMoneyDeposit"
-          />
+          <vs-input class="w-full" placeholder="Vui lòng nhập tiền nạp" @keyup="ttThucNhan" v-model="enterMoneyDeposit" />
           <span class="allIn cursor-pointer" @click="allEnterWallet()">
             <span class="uppercase">Tất cả</span>
           </span>
@@ -244,96 +165,45 @@
           </p>
         </div>
 
-        <vs-button
-          class="w-full"
-          color="success"
-          icon-pack="feather"
-          type="relief"
-          @click="(popupActiveNapNhanh = false), submitDeposit()"
-          >Nạp tiền ngay</vs-button
-        >
+        <vs-button class="w-full" color="success" icon-pack="feather" type="relief"
+          @click="(popupActiveNapNhanh = false), submitDeposit()">Nạp tiền ngay</vs-button>
 
         <p class="noticeDeposit text-center mt-2">
           <small>*Giá báo có thể thay đổi</small>
         </p>
       </div>
     </vs-popup>
-    <vs-popup
-      class="text-center"
-      title="Chuyển tiền"
-      :active.sync="popupTransferActive"
-    >
+    <vs-popup class="text-center" title="Chuyển tiền" :active.sync="popupTransferActive">
       <div class="header flex">
         <div class="leftHeader flex flex-col items-center">
-          <span
-            class="text-sm mb-2 font-bold white"
-            v-html="textWalletHtml"
-          ></span>
+          <span class="text-sm mb-2 font-bold white" v-html="textWalletHtml"></span>
           <span class="text-3xl font-bold">{{
             formatPrice(amountAcc, 2)
           }}</span>
         </div>
         <div class="rightHeader flex flex-col items-center">
-          <span
-            class="text-sm mb-2 font-bold white"
-            v-html="textAccLive"
-          ></span>
+          <span class="text-sm mb-2 font-bold white" v-html="textAccLive"></span>
           <span class="text-3xl font-bold">{{
             formatPrice(amountAccLive, 2)
           }}</span>
         </div>
         <div @click="changeTransMoney" class="changeAmount cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            viewBox="0 0 30 30"
-            class="iconTransfer"
-          >
-            <g
-              id="Group_10897"
-              data-name="Group 10897"
-              transform="translate(-559.431 -202.553)"
-            >
-              <g
-                id="Group_4613"
-                data-name="Group 4613"
-                transform="translate(559.431 202.553)"
-              >
-                <g
-                  id="Rectangle_2919"
-                  data-name="Rectangle 2919"
-                  transform="translate(0)"
-                  fill="#e9f0fa"
-                  stroke="#e5e5e5"
-                  stroke-width="1"
-                >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" class="iconTransfer">
+            <g id="Group_10897" data-name="Group 10897" transform="translate(-559.431 -202.553)">
+              <g id="Group_4613" data-name="Group 4613" transform="translate(559.431 202.553)">
+                <g id="Rectangle_2919" data-name="Rectangle 2919" transform="translate(0)" fill="#e9f0fa" stroke="#e5e5e5"
+                  stroke-width="1">
                   <rect width="30" height="30" rx="15" stroke="none"></rect>
-                  <rect
-                    x="0.5"
-                    y="0.5"
-                    width="29"
-                    height="29"
-                    rx="14.5"
-                    fill="none"
-                  ></rect>
+                  <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" fill="none"></rect>
                 </g>
               </g>
               <g id="conversion" transform="translate(567.976 210.905)">
-                <path
-                  id="Path_13963"
-                  data-name="Path 13963"
+                <path id="Path_13963" data-name="Path 13963"
                   d="M13.474,6.51H1V5.376H12.1l-3.4-3.4.8-.8,4.37,4.37a.567.567,0,0,1-.4.968Z"
-                  transform="translate(-1 -1.172)"
-                  fill="#031219"
-                ></path>
-                <path
-                  id="Path_13964"
-                  data-name="Path 13964"
+                  transform="translate(-1 -1.172)" fill="#031219"></path>
+                <path id="Path_13964" data-name="Path 13964"
                   d="M5.536,33.338l-4.37-4.37a.567.567,0,0,1,.4-.968H14.041v1.134H2.936l3.4,3.4Z"
-                  transform="translate(-1 -20.395)"
-                  fill="#031219"
-                ></path>
+                  transform="translate(-1 -20.395)" fill="#031219"></path>
               </g>
             </g>
           </svg>
@@ -341,27 +211,14 @@
       </div>
       <div class="content flex flex-col items-center">
         <div class="inputGroup mb-3 w-3/4 relative">
-          <vs-input
-            class="inputx text-left w-full"
-            placeholder="Nhập số tiền"
-            v-model="enterAmount"
-          />
+          <vs-input class="inputx text-left w-full" placeholder="Nhập số tiền" v-model="enterAmount" />
           <div class="input-append">
-            <button
-              type="button"
-              class="btn cursor-pointer"
-              @click="enterAllMoney"
-            >
+            <button type="button" class="btn cursor-pointer" @click="enterAllMoney">
               Tất cả
             </button>
           </div>
         </div>
-        <vs-button
-          @click="clickTransMoney"
-          color="rgb(62, 201, 214)"
-          type="filled"
-          >Chuyển Tiền</vs-button
-        >
+        <vs-button @click="clickTransMoney" color="rgb(62, 201, 214)" type="filled">Chuyển Tiền</vs-button>
       </div>
     </vs-popup>
   </div>
@@ -450,102 +307,111 @@ export default {
   },
   methods: {
     clickShowPopTrans() {
+      alert('line 319 src/pages/trade/navbar/components/Profile.vue, show modal nạp rút tiền tab rút tiền')
       this.popupTransferActive = true;
 
       this.amountAcc = getData.balance;
       this.amountAccLive = getData.blLive;
     },
 
+    clickShowPopCaiDat() {
+      alert('line 318 src/pages/trade/navbar/components/Profile.vue, show modal đổi ngôn ngữ và tiền tệ')
+    },
+
     clickTransMoney() {
-      let amount = this.enterAmount.toString();
-      amount = this.replaceAll(amount, ",", "");
-      amount = this.replaceAll(amount.toString(), "-", "");
+      this.$vs.notify({
+        text: 'This API is deprecated usdt-to-live, live-to-usdt Profile.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
+      });
+      // let amount = this.enterAmount.toString();
+      // amount = this.replaceAll(amount, ",", "");
+      // amount = this.replaceAll(amount.toString(), "-", "");
+      // if (!this.isNumber(amount) || amount <= 0) {
+      //   return this.$vs.notify({
+      //     text: "Giá trị không hợp lệ",
+      //     color: "danger",
+      //     position: "top-right",
+      //     iconPack: "feather",
+      //     icon: "icon-x-circle",
+      //   });
+      // }
+      // if (this.typeChange) {
+      //   // nếu true thì live to wallet
 
-      if (!this.isNumber(amount) || amount <= 0) {
-        return this.$vs.notify({
-          text: "Giá trị không hợp lệ",
-          color: "danger",
-          position: "top-right",
-          iconPack: "feather",
-          icon: "icon-x-circle",
-        });
-      }
+      //   // gửi tiền từ live tới tài khoản chính
+      //   let obj = {
+      //     email: getData.email,
+      //     m: amount,
+      //   };
 
-      if (this.typeChange) {
-        // nếu true thì live to wallet
+      //   AuthenticationService.sendMoneyLiveToUsdt(obj).then((res) => {
+      //     if (res.data.success) {
+      //       getData.blLive -= amount;
+      //       getData.balance += amount;
 
-        // gửi tiền từ live tới tài khoản chính
-        let obj = {
-          email: getData.email,
-          m: amount,
-        };
+      //       this.amountAcc = getData.blLive;
+      //       this.amountAccLive = getData.balance;
 
-        AuthenticationService.sendMoneyLiveToUsdt(obj).then((res) => {
-          if (res.data.success) {
-            getData.blLive -= amount;
-            getData.balance += amount;
+      //       // reload lại lịch sử
+      //       this.getListHisTradeWGD();
 
-            this.amountAcc = getData.blLive;
-            this.amountAccLive = getData.balance;
+      //       return this.$vs.notify({
+      //         text: "Chuyển tiền thành công",
+      //         color: "success",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     } else {
+      //       return this.$vs.notify({
+      //         text: "Số dư của bạn không đủ",
+      //         color: "danger",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-x-circle",
+      //       });
+      //     }
+      //   });
+      // } else {
+      //   // wallet to live
 
-            // reload lại lịch sử
-            this.getListHisTradeWGD();
+      //   // gửi tiền từ tài khoản chính tới live
+      //   let obj = {
+      //     email: getData.email,
+      //     m: amount,
+      //   };
 
-            return this.$vs.notify({
-              text: "Chuyển tiền thành công",
-              color: "success",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          } else {
-            return this.$vs.notify({
-              text: "Số dư của bạn không đủ",
-              color: "danger",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-x-circle",
-            });
-          }
-        });
-      } else {
-        // wallet to live
+      //   AuthenticationService.sendMoneyUsdtToLive(obj).then((res) => {
+      //     if (res.data.success) {
+      //       getData.blLive = getData.blLive + amount;
+      //       getData.balance = getData.balance - amount;
 
-        // gửi tiền từ tài khoản chính tới live
-        let obj = {
-          email: getData.email,
-          m: amount,
-        };
+      //       this.amountAcc = getData.balance;
+      //       this.amountAccLive = getData.blLive;
 
-        AuthenticationService.sendMoneyUsdtToLive(obj).then((res) => {
-          if (res.data.success) {
-            getData.blLive = getData.blLive + amount;
-            getData.balance = getData.balance - amount;
+      //       // reload lại lịch sử
+      //       this.getListHisTradeWGD();
 
-            this.amountAcc = getData.balance;
-            this.amountAccLive = getData.blLive;
-
-            // reload lại lịch sử
-            this.getListHisTradeWGD();
-
-            return this.$vs.notify({
-              text: "Chuyển tiền thành công",
-              color: "success",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-check",
-            });
-          } else {
-            return this.$vs.notify({
-              text: "Số dư của bạn không đủ",
-              color: "danger",
-              position: "top-right",
-              iconPack: "feather",
-              icon: "icon-x-circle",
-            });
-          }
-        });
-      }
+      //       return this.$vs.notify({
+      //         text: "Chuyển tiền thành công",
+      //         color: "success",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-check",
+      //       });
+      //     } else {
+      //       return this.$vs.notify({
+      //         text: "Số dư của bạn không đủ",
+      //         color: "danger",
+      //         position: "top-right",
+      //         iconPack: "feather",
+      //         icon: "icon-x-circle",
+      //       });
+      //     }
+      //   });
+      // }
     },
 
     changeTransMoney() {
@@ -642,65 +508,66 @@ export default {
     },
 
     submitDeposit() {
-      let amount = this.ttNhan;
-
-      amount = this.replaceAll(amount.toString(), ",", "");
-      amount = this.replaceAll(amount.toString(), "-", "");
-
-      if (amount <= 0) {
-        return this.$vs.notify({
-          text: "Giá trị không hợp lệ",
-          color: "danger",
-          position: "top-right",
-          iconPack: "feather",
-          icon: "icon-x-circle",
-        });
-      }
-
-      if (amount < 11) {
-        return this.$vs.notify({
-          text: "Số tiền tối thiểu không đủ",
-          color: "danger",
-          position: "top-right",
-          iconPack: "feather",
-          icon: "icon-x-circle",
-        });
-      }
-
-      let obj = {
-        money: amount,
-        id: getData.uidLive,
-      };
-
-      AuthenticationService.depositWallet(obj).then((res) => {
-        if (res.data.success == 1) {
-          getData.balance -= amount;
-          getData.blLive += amount;
-
-          this.$vs.notify({
-            text: "Nạp tiền thành công.",
-            iconPack: "feather",
-            icon: "icon-check",
-            color: "success",
-          });
-        } else if (res.data.success == 3) {
-          this.$vs.notify({
-            text: "Số dư bạn không đủ.",
-            color: "danger",
-            position: "top-right",
-            iconPack: "feather",
-            icon: "icon-x-circle",
-          });
-        } else {
-          this.$vs.notify({
-            text: "Giá trị không hợp lệ",
-            color: "danger",
-            position: "top-right",
-            iconPack: "feather",
-            icon: "icon-x-circle",
-          });
-        }
+      this.$vs.notify({
+        text: 'This API is deprecated usdt-wallet Profile.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
       });
+      // let amount = this.ttNhan;
+      // amount = this.replaceAll(amount.toString(), ",", "");
+      // amount = this.replaceAll(amount.toString(), "-", "");
+      // if (amount <= 0) {
+      //   return this.$vs.notify({
+      //     text: "Giá trị không hợp lệ",
+      //     color: "danger",
+      //     position: "top-right",
+      //     iconPack: "feather",
+      //     icon: "icon-x-circle",
+      //   });
+      // }
+      // if (amount < 11) {
+      //   return this.$vs.notify({
+      //     text: "Số tiền tối thiểu không đủ",
+      //     color: "danger",
+      //     position: "top-right",
+      //     iconPack: "feather",
+      //     icon: "icon-x-circle",
+      //   });
+      // }
+      // let obj = {
+      //   money: amount,
+      //   id: getData.uidLive,
+      // };
+      // AuthenticationService.depositWallet(obj).then((res) => {
+      //   if (res.data.success == 1) {
+      //     getData.balance -= amount;
+      //     getData.blLive += amount;
+
+      //     this.$vs.notify({
+      //       text: "Nạp tiền thành công.",
+      //       iconPack: "feather",
+      //       icon: "icon-check",
+      //       color: "success",
+      //     });
+      //   } else if (res.data.success == 3) {
+      //     this.$vs.notify({
+      //       text: "Số dư bạn không đủ.",
+      //       color: "danger",
+      //       position: "top-right",
+      //       iconPack: "feather",
+      //       icon: "icon-x-circle",
+      //     });
+      //   } else {
+      //     this.$vs.notify({
+      //       text: "Giá trị không hợp lệ",
+      //       color: "danger",
+      //       position: "top-right",
+      //       iconPack: "feather",
+      //       icon: "icon-x-circle",
+      //     });
+      //   }
+      // });
     },
 
     submitDepositRequest() {
@@ -782,12 +649,20 @@ export default {
     },
 
     getBalanceWalletClick() {
-      AuthenticationService.getBalanceWallet().then((res) => {
-        if (res.data.success) {
-          let mU = res.data.data.usdt;
-          this.balanceUSDT = this.formatPrice(mU, 2);
-        }
+      alert(`show modal nạp rút tiền`)
+      return this.$vs.notify({
+        text: 'This API is deprecated balance-wallet Profile.vue',
+        color: 'warning',
+        iconPack: 'feather',
+        icon: 'icon-check'
       });
+
+      // AuthenticationService.getBalanceWallet().then((res) => {
+      //   if (res.data.success) {
+      //     let mU = res.data.data.usdt;
+      //     this.balanceUSDT = this.formatPrice(mU, 2);
+      //   }
+      // });
     },
 
     changeAccount(val) {
@@ -857,7 +732,7 @@ export default {
       localStorage.removeItem("tokenUser");
 
       // This is just for demo Purpose. If user clicks on logout -> redirect
-      this.$router.push("/login").catch(() => {});
+      this.$router.push("/login").catch(() => { });
     },
   },
   created() {
@@ -1009,6 +884,7 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
+
   .msetting,
   .mhoso,
   .ttM {
@@ -1055,10 +931,12 @@ export default {
   .text-acc {
     zoom: 0.8;
   }
+
   .text-down {
     width: 1.2rem !important;
     height: 1.2rem !important;
   }
+
   .vs-tabs--li button.vs-tabs--btn {
     font-size: 12px;
   }
@@ -1138,19 +1016,21 @@ export default {
 .qDeposit .vs-popup {
   width: 300px !important;
 }
+
 .qDeposit .vs-button--text {
   width: 100%;
 }
-.qDeposit .vs-button--text > span.icon,
-.qDeposit .listWallShow .drop > span.icon {
+
+.qDeposit .vs-button--text>span.icon,
+.qDeposit .listWallShow .drop>span.icon {
   width: 20px;
   height: 20px;
   overflow: hidden;
   margin-right: 4px;
 }
 
-.qDeposit .vs-button--text > span,
-.qDeposit .listWallShow .drop > span {
+.qDeposit .vs-button--text>span,
+.qDeposit .listWallShow .drop>span {
   line-height: 20px;
   display: inline-block;
   vertical-align: middle;

@@ -1,409 +1,442 @@
 <template>
-  <div id="exchangePage">
-    <div class="container">
-        <div class="vx-row">
-            <div class="w-full">
-                <div class="exchange-currency">
-                    <h4 class="exchange-currency-title color-white font-bold mb-3 pt-4 capitalize">Chuyển đổi tiền tệ</h4>
-                    <div class="vx-row boxExchange">
-                        <div class="vx-col w-full lg:w-4/12">
-                            <div class="send">
-                                <div class="inputAmount mt-0 mb-1">
-                                    <div class="flex justify-between items-center"><span class="font-bold font-12-m color-white">Gửi:</span>
-                                        <div class="inputLabel absolute right-0">
-                                            <a href="javascript:;" class="butt text-center" @click="ttClickAmount(1)">Một nửa</a> 
-                                            <a href="javascript:;" class="butt text-center" @click="ttClickAmount(2)">Tất cả</a>
+    <div id="exchangePage">
+        <div class="container">
+            <div class="vx-row">
+                <div class="w-full">
+                    <div class="exchange-currency">
+                        <h4 class="exchange-currency-title color-white font-bold mb-3 pt-4 capitalize">Chuyển đổi tiền tệ
+                        </h4>
+                        <div class="vx-row boxExchange">
+                            <div class="vx-col w-full lg:w-4/12">
+                                <div class="send">
+                                    <div class="inputAmount mt-0 mb-1">
+                                        <div class="flex justify-between items-center"><span
+                                                class="font-bold font-12-m color-white">Gửi:</span>
+                                            <div class="inputLabel absolute right-0">
+                                                <a href="javascript:;" class="butt text-center"
+                                                    @click="ttClickAmount(1)">Một nửa</a>
+                                                <a href="javascript:;" class="butt text-center"
+                                                    @click="ttClickAmount(2)">Tất cả</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div :class="`wrap-input-exchange ${isCoinOne}`">
-                                    <div class="inputAmount">
-                                        <form>
-                                            <input type="number" step="0.000001" @keyup="convertMoney" v-model="amountEnterOne" class="form-control">
-                                        </form>
-                                    </div>
-                                    <div class="boxSelectUnit">
-                                        <div :class="`selectedUnit ${isCoinOne}`">
-                                            <div :class="`icon ${isCoinOne}`"></div> <span class="color-white font-bold">{{ isCoinOne }}</span>
-                                            <div class="info"><span class="titleUnit"></span>
-                                                <div class="amount"><span class="label">Số dư của bạn :</span> <span class="number px-1">
+                                    <div :class="`wrap-input-exchange ${isCoinOne}`">
+                                        <div class="inputAmount">
+                                            <form>
+                                                <input type="number" step="0.000001" @keyup="convertMoney"
+                                                    v-model="amountEnterOne" class="form-control">
+                                            </form>
+                                        </div>
+                                        <div class="boxSelectUnit">
+                                            <div :class="`selectedUnit ${isCoinOne}`">
+                                                <div :class="`icon ${isCoinOne}`"></div> <span
+                                                    class="color-white font-bold">{{ isCoinOne }}</span>
+                                                <div class="info"><span class="titleUnit"></span>
+                                                    <div class="amount"><span class="label">Số dư của bạn :</span> <span
+                                                            class="number px-1">
                                                             {{ balanceOne }}
                                                         </span> <span :class="`symb ${isCoinOne}`">{{ isCoinOne }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!---->
                                         </div>
-                                        <!---->
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="vx-col w-full lg:w-1/12">
-                            <div class="flex items-center justify-center">
-                                <div class="buttonExchange" style="margin-top: 50px;">
-                                    <button class="p-0 cursor-pointer" @click="transCoin">
-                                        <div class="butt"><img src="data:image/png;base64,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">
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="vx-col w-full lg:w-4/12">
-                            <div class="receive">
-                                <span class="inputAmount font-bold mt-0 mb-1 inline-block color-white">Nhận</span>
-                                <div :class="`wrap-input-exchange hasitem ${isCoinTwo}`">
-                                    <div class="inputAmount">
-                                        <input type="text" value="" disabled="disabled" readonly="readonly" placeholder="0" v-model="amountEnterTwo" class="form-control">
+                            <div class="vx-col w-full lg:w-1/12">
+                                <div class="flex items-center justify-center">
+                                    <div class="buttonExchange" style="margin-top: 50px;">
+                                        <button class="p-0 cursor-pointer" @click="transCoin">
+                                            <div class="butt"><img
+                                                    src="data:image/png;base64,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">
+                                            </div>
+                                        </button>
                                     </div>
-                                    <div class="boxSelectUnit "><!-- activeSelectItem -->
-                                        <div :class="`selectedUnit hasitem ${isCoinTwo}`">
-                                            <div :class="`icon ${isCoinTwo}`"></div>
-                                            <div class="info"><span class="titleUnit">{{ isCoinTwo }}</span>
-                                                <div class="amount"><span class="label">Số dư của bạn :</span> <span class="number px-1">
+                                </div>
+
+                            </div>
+                            <div class="vx-col w-full lg:w-4/12">
+                                <div class="receive">
+                                    <span class="inputAmount font-bold mt-0 mb-1 inline-block color-white">Nhận</span>
+                                    <div :class="`wrap-input-exchange hasitem ${isCoinTwo}`">
+                                        <div class="inputAmount">
+                                            <input type="text" value="" disabled="disabled" readonly="readonly"
+                                                placeholder="0" v-model="amountEnterTwo" class="form-control">
+                                        </div>
+                                        <div class="boxSelectUnit "><!-- activeSelectItem -->
+                                            <div :class="`selectedUnit hasitem ${isCoinTwo}`">
+                                                <div :class="`icon ${isCoinTwo}`"></div>
+                                                <div class="info"><span class="titleUnit">{{ isCoinTwo }}</span>
+                                                    <div class="amount"><span class="label">Số dư của bạn :</span> <span
+                                                            class="number px-1">
                                                             {{ balanceTwo }}
                                                         </span> <span :class="`symb ${isCoinTwo}`">{{ isCoinTwo }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="listUnits shadow">
-                                            <div class="itemSelectUnit ETH">
-                                                <div class="icon ETH"></div>
-                                                <div class="info"><span class="titleUnit">Ethereum</span>
-                                                    <!-- <div class="amount">
+                                            <div class="listUnits shadow">
+                                                <div class="itemSelectUnit ETH">
+                                                    <div class="icon ETH"></div>
+                                                    <div class="info"><span class="titleUnit">Ethereum</span>
+                                                        <!-- <div class="amount">
                                                         <span class="label">Số dư của bạn :</span> <span class="number">0</span> 
                                                         <span class="symb ETH">ETH</span>
                                                     </div> -->
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!---->
-                                            <!---->
-                                            <div class="itemSelectUnit USDT">
-                                                <div class="icon USDT"></div>
-                                                <div class="info">
-                                                    <span class="titleUnit">USD</span>
+                                                <!---->
+                                                <!---->
+                                                <div class="itemSelectUnit USDT">
+                                                    <div class="icon USDT"></div>
+                                                    <div class="info">
+                                                        <span class="titleUnit">USD</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
-                            
-                        </div>
-                        <div class="vx-col w-full lg:w-3/12">
-                            <div class="flex items-center md:mt-2 lg:mt-6 xl:mt-6">
-                                <!---->
-                                <!---->
-                                <vs-button id="button-with-loading" class="vs-con-loading__container buttonCommon greenButton button investor md:w-full" type="filled" :disabled="disButtonTrans" @click="exChangeSubmit">{{ ssDownSend }}</vs-button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="processExchange"><span class="font-12 color-white">Giá trị chuyển đổi nhỏ nhất là {{ minAmountTrans + ' ' + isCoinOne }}</span>
-                    </div>
-                </div>
-                <div class="historyEx lg:mb-4">
-                    <h4 class="mb-3 history-title">Lịch sử đổi tiền</h4>
-                    <div class="history-body relative" :class="{'ld-loading': isLoading}">
-                        <table class="table listHis ex w-full">
-                            <div class="loading">
-                                <div class="loading">
-                                    <div class="loading__ring">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z"></path></svg>
-                                    </div>
-                                    <div class="loading__ring">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z"></path></svg>
-                                    </div>
+                            <div class="vx-col w-full lg:w-3/12">
+                                <div class="flex items-center md:mt-2 lg:mt-6 xl:mt-6">
+                                    <!---->
+                                    <!---->
+                                    <vs-button id="button-with-loading"
+                                        class="vs-con-loading__container buttonCommon greenButton button investor md:w-full"
+                                        type="filled" :disabled="disButtonTrans" @click="exChangeSubmit">{{ ssDownSend
+                                        }}</vs-button>
                                 </div>
                             </div>
-                            <thead class="header">
-                                <tr>
-                                    <th>Thời gian</th>
-                                    <th>Đã gửi</th>
-                                    <th>Đã nhận</th>
-                                    <th>Từ</th>
-                                    <th>Đến</th>
-                                </tr>
-                            </thead>
-                            <tbody v-if="dataHisEx.length == 0">
-                                <tr>
-                                    <td colspan="5" class="text-center">Không có dữ liệu</td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr :key="indextr" v-for="(tr, indextr) in dataHisEx">
-                                    <td>
-                                        <span>{{ formatDateEx(tr.created_at) }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="red">- {{ formatPrice(tr.send, 2) }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="green">+ {{ formatPrice(tr.receive, 2) }}</span>
-                                    </td>
-                                    <td>
-                                        <span :class="`icon ${tr.from_e.toUpperCase()}`"></span>
-                                        {{ tr.from_e.toUpperCase() }}
-                                    </td>
-                                     <td>
-                                        <span :class="`icon ${tr.to_e.toUpperCase()}`"></span>
-                                        {{ tr.to_e.toUpperCase() }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <vs-pagination v-if="totalExH > 0" class="mt-4 mb-2" :total="totalExH" v-model="currentxEx" @input="clickPageEx"></vs-pagination>
+                        </div>
+                        <div class="processExchange"><span class="font-12 color-white">Giá trị chuyển đổi nhỏ nhất là {{
+                            minAmountTrans + ' ' + isCoinOne }}</span>
+                        </div>
+                    </div>
+                    <div class="historyEx lg:mb-4">
+                        <h4 class="mb-3 history-title">Lịch sử đổi tiền</h4>
+                        <div class="history-body relative" :class="{ 'ld-loading': isLoading }">
+                            <table class="table listHis ex w-full">
+                                <div class="loading">
+                                    <div class="loading">
+                                        <div class="loading__ring">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
+                                                viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;"
+                                                xml:space="preserve">
+                                                <path
+                                                    d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <div class="loading__ring">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
+                                                viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;"
+                                                xml:space="preserve">
+                                                <path
+                                                    d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <thead class="header">
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Đã gửi</th>
+                                        <th>Đã nhận</th>
+                                        <th>Từ</th>
+                                        <th>Đến</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="dataHisEx.length == 0">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Không có dữ liệu</td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr :key="indextr" v-for="(tr, indextr) in dataHisEx">
+                                        <td>
+                                            <span>{{ formatDateEx(tr.created_at) }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="red">- {{ formatPrice(tr.send, 2) }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="green">+ {{ formatPrice(tr.receive, 2) }}</span>
+                                        </td>
+                                        <td>
+                                            <span :class="`icon ${tr.from_e.toUpperCase()}`"></span>
+                                            {{ tr.from_e.toUpperCase() }}
+                                        </td>
+                                        <td>
+                                            <span :class="`icon ${tr.to_e.toUpperCase()}`"></span>
+                                            {{ tr.to_e.toUpperCase() }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <vs-pagination v-if="totalExH > 0" class="mt-4 mb-2" :total="totalExH" v-model="currentxEx"
+                                @input="clickPageEx"></vs-pagination>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
 
-  </div>
+
+    </div>
 </template>
 
 <script>
 
 import AuthenticationService from '@/services/AuthenticationService'
-import getData from '@/pages/trade/navbar/components/data.json'
 import moment from 'moment'
 
 export default {
-components: {
-    
-},
-  data () {
-    return {
-        currentxEx: 0,
-        totalExH: 0,
-        isLoading: false,
+    components: {
 
-        minAmountTrans: 11,
-
-        amountEnterOne: 1,
-        amountEnterTwo: 0,
-
-        balanceOne: 0,
-        balanceTwo: 0,
-
-        isCoinOne: 'PAYPAL',
-        isCoinTwo: 'USDT',
-
-        disButtonTrans: false,
-
-        ssDownSend: 'Đổi',
-        backgroundLoading:'primary',
-        colorLoading: '#fff',
-        
-        totalRCT: 0,
-        currentxCT: 0,
-        dataHisEx: {}
-    }
-  },
-  methods: {
-
-    replaceAll(str, find, replace) {
-        return Number(str.replace(new RegExp(find, 'g'), replace));
     },
+    data() {
+        return {
+            currentxEx: 0,
+            totalExH: 0,
+            isLoading: false,
 
-    convertMoney(){
-          let mE = this.amountEnterOne == '' ? 0 : Number(this.amountEnterOne)
-          this.amountEnterTwo = this.formatPrice(mE * 1, 2) // 1 là giá trị quy đổi ( mặc định USDT là 1)
+            minAmountTrans: 11,
 
-          
-    },
+            amountEnterOne: 1,
+            amountEnterTwo: 0,
 
-    ttClickAmount(v){
-        if(v == 1){ // thêm vào 1 nữa số tiền
-        this.amountEnterOne = Number(this.balanceOne) / 2
-        }else{ // thêm vào tất cả
-        this.amountEnterOne = Number(this.balanceOne)
+            balanceOne: 0,
+            balanceTwo: 0,
+
+            isCoinOne: 'PAYPAL',
+            isCoinTwo: 'USDT',
+
+            disButtonTrans: false,
+
+            ssDownSend: 'Đổi',
+            backgroundLoading: 'primary',
+            colorLoading: '#fff',
+
+            totalRCT: 0,
+            currentxCT: 0,
+            dataHisEx: {}
         }
-        this.convertMoney();
     },
+    methods: {
 
-    transCoin(){
+        replaceAll(str, find, replace) {
+            return Number(str.replace(new RegExp(find, 'g'), replace));
+        },
 
-          if(this.isCoinOne == 'PAYPAL'){
-              this.isCoinOne = 'USDT'
-              this.isCoinTwo = 'PAYPAL'
-              let o = this.balanceOne
-              let t = this.balanceTwo
+        convertMoney() {
+            let mE = this.amountEnterOne == '' ? 0 : Number(this.amountEnterOne)
+            this.amountEnterTwo = this.formatPrice(mE * 1, 2) // 1 là giá trị quy đổi ( mặc định USDT là 1)
 
-              this.balanceOne = t
-              this.balanceTwo = o
 
-          }else{
-              this.isCoinOne = 'PAYPAL'
-              this.isCoinTwo = 'USDT'
+        },
 
-              let o = this.balanceOne
-              let t = this.balanceTwo
-
-              this.balanceOne = t
-              this.balanceTwo = o
-          }
-          this.balanceOne = this.replaceAll(this.balanceOne.toString(), ',', '');
-          
-      },
-
-      sendCodeSecure(){
-        this.disButtonTrans = true
-
-        this.$vs.loading({
-            //background: this.backgroundLoading,
-            color: this.colorLoading,
-            container: "#button-with-loading",
-            scale: 0.45
-        })
-        let giay = 10
-        let countD = setInterval(() => {
-            this.ssDownSend = giay + 's'
-            if(giay == 0){
-                this.disButtonTrans = false
-                this.$vs.loading.close("#button-with-loading > .con-vs-loading")
-                this.ssDownSend = 'Đổi'
-                clearInterval(countD)
+        ttClickAmount(v) {
+            if (v == 1) { // thêm vào 1 nữa số tiền
+                this.amountEnterOne = Number(this.balanceOne) / 2
+            } else { // thêm vào tất cả
+                this.amountEnterOne = Number(this.balanceOne)
             }
-            giay--
-        }, 1000)
-    },
+            this.convertMoney();
+        },
 
-    exChangeSubmit(){
-          let am = this.amountEnterOne == '' ? 0 : Number(this.amountEnterOne)
-          let adf = this.minAmountTrans
-          
-          // kiểm tra nếu số tiền đổi nhỏ hơn 11 USD và có nhỏ hơn số tiền hiện có hay không
-          if(am < adf){
-              return this.$vs.notify({
+        transCoin() {
+
+            if (this.isCoinOne == 'PAYPAL') {
+                this.isCoinOne = 'USDT'
+                this.isCoinTwo = 'PAYPAL'
+                let o = this.balanceOne
+                let t = this.balanceTwo
+
+                this.balanceOne = t
+                this.balanceTwo = o
+
+            } else {
+                this.isCoinOne = 'PAYPAL'
+                this.isCoinTwo = 'USDT'
+
+                let o = this.balanceOne
+                let t = this.balanceTwo
+
+                this.balanceOne = t
+                this.balanceTwo = o
+            }
+            this.balanceOne = this.replaceAll(this.balanceOne.toString(), ',', '');
+
+        },
+
+        sendCodeSecure() {
+            this.disButtonTrans = true
+
+            this.$vs.loading({
+                //background: this.backgroundLoading,
+                color: this.colorLoading,
+                container: "#button-with-loading",
+                scale: 0.45
+            })
+            let giay = 10
+            let countD = setInterval(() => {
+                this.ssDownSend = giay + 's'
+                if (giay == 0) {
+                    this.disButtonTrans = false
+                    this.$vs.loading.close("#button-with-loading > .con-vs-loading")
+                    this.ssDownSend = 'Đổi'
+                    clearInterval(countD)
+                }
+                giay--
+            }, 1000)
+        },
+
+        exChangeSubmit() {
+            let am = this.amountEnterOne == '' ? 0 : Number(this.amountEnterOne)
+            let adf = this.minAmountTrans
+
+            // kiểm tra nếu số tiền đổi nhỏ hơn 11 USD và có nhỏ hơn số tiền hiện có hay không
+            if (am < adf) {
+                return this.$vs.notify({
                     text: `Giá trị chuyển đổi nhỏ nhất là ${adf} ${this.isCoinOne}`,
-                    color:'danger',
-                    position:'top-right',
+                    color: 'danger',
+                    position: 'top-right',
                     iconPack: 'feather',
-                    icon:'icon-x-circle'
+                    icon: 'icon-x-circle'
                 })
-          }
+            }
 
 
-          let dfBalance = Number(this.balanceOne)
+            let dfBalance = Number(this.balanceOne)
 
-          if(am > dfBalance){
-              return this.$vs.notify({
+            if (am > dfBalance) {
+                return this.$vs.notify({
                     text: 'Số dư không đủ để chuyển đổi',
-                    color:'danger',
-                    position:'top-right',
+                    color: 'danger',
+                    position: 'top-right',
                     iconPack: 'feather',
-                    icon:'icon-x-circle'
+                    icon: 'icon-x-circle'
                 })
-          }
-          
+            }
+
             // thực hiện quy trình chuyển đổi
-            
+
             this.sendCodeSecure()
 
             let obj = {
                 t_s: this.isCoinOne,
                 t_r: this.isCoinTwo,
                 a: am,
-                
+
             }
             AuthenticationService.transWallet(obj)
-            .then((res) => {
-                let d = res.data 
-                if(d.success == 3 || d.success == 4){
-                    localStorage.removeItem('token')
-                    this.$router.push('/login').catch(() => {})
-                    return
-                }
+                .then((res) => {
+                    let d = res.data
+                    if (d.success == 3 || d.success == 4) {
+                        localStorage.removeItem('token')
+                        this.$router.push('/login').catch(() => { })
+                        return
+                    }
 
-                if(d.success == 1){
+                    if (d.success == 1) {
 
-                    this.balanceOne = this.formatPrice(dfBalance - am, 2)
-                    this.balanceTwo = this.formatPrice(Number(this.balanceTwo) + am, 2)
+                        this.balanceOne = this.formatPrice(dfBalance - am, 2)
+                        this.balanceTwo = this.formatPrice(Number(this.balanceTwo) + am, 2)
 
-                    return this.$vs.notify({
-                        text:'Chuyển đổi thành công',
-                        color:'success',
-                        position:'top-right',
-                        iconPack: 'feather',
-                        icon:'icon-check'
-                    })
+                        return this.$vs.notify({
+                            text: 'Chuyển đổi thành công',
+                            color: 'success',
+                            position: 'top-right',
+                            iconPack: 'feather',
+                            icon: 'icon-check'
+                        })
 
-                }
+                    }
 
-            }) 
-          
-    },
+                })
 
-    getBalanceWallet(){
-        
-        AuthenticationService.getBalanceWallet()
-        .then((res) => {
-            let d = res.data
-            if(d.success == 3 || d.success == 4){
-                localStorage.removeItem('token')
-                this.$router.push('/login').catch(() => {})
-                return
+        },
+
+        getBalanceWallet() {
+            return this.$vs.notify({
+                text: 'This API is deprecated balance-wallet',
+                color: 'warning',
+                iconPack: 'feather',
+                icon: 'icon-check'
+            });
+
+            // AuthenticationService.getBalanceWallet()
+            // .then((res) => {
+            //     let d = res.data
+            //     if(d.success == 3 || d.success == 4){
+            //         localStorage.removeItem('token')
+            //         this.$router.push('/login').catch(() => {})
+            //         return
+            //     }
+            //     if(d.success){
+            //         //let mU = d.data.usdt
+            //         //let mE = d.data.eth
+            //        // let mB = d.data.btc
+            //         let mP = d.data.paypal
+
+            //         //this.balanceUSDT = this.formatPrice(mU, 2)
+            //         //this.balanceETH = this.formatPrice(mE, 4)
+            //         //this.balanceBTC = this.formatPrice(mB, 6)
+            //         this.balanceOne = this.formatPrice(mP, 2)
+
+            //         this.balanceTwo = this.formatPrice(getData.balance, 2)
+            //     }
+            // })
+        },
+
+        getExChange() {
+            AuthenticationService.getExChangeUser()
+                .then((res) => {
+                    let d = res.data
+                    if (d.success == 3 || d.success == 4) {
+                        localStorage.removeItem('token')
+                        this.$router.push('/login').catch(() => { })
+                        return
+                    }
+                    if (d.success) {
+                        let c = (d.count / 10).toString()
+                        this.totalExH = Number(c.split(".")[0])
+                        this.dataHisEx = d.data
+                    }
+                })
+        },
+
+        formatPrice(value, minimum) {
+            var formatter = new Intl.NumberFormat('en-US', {
+                //style: 'currency',
+                //currency: '',
+                minimumFractionDigits: minimum
+            });
+            return formatter.format(value);
+        },
+
+        formatDateEx(value) {
+            if (value) {
+                return moment(String(value)).format('MM/DD/YYYY HH:mm:ss')
             }
-            if(d.success){
-                //let mU = d.data.usdt
-                //let mE = d.data.eth
-               // let mB = d.data.btc
-                let mP = d.data.paypal
+        },
 
-                //this.balanceUSDT = this.formatPrice(mU, 2)
-                //this.balanceETH = this.formatPrice(mE, 4)
-                //this.balanceBTC = this.formatPrice(mB, 6)
-                this.balanceOne = this.formatPrice(mP, 2)
-
-                this.balanceTwo = this.formatPrice(getData.balance, 2)
-            }
-        })
     },
 
-    getExChange(){
-        AuthenticationService.getExChangeUser()
-        .then((res) => {
-            let d = res.data
-            if(d.success == 3 || d.success == 4){
-                localStorage.removeItem('token')
-                this.$router.push('/login').catch(() => {})
-                return
-            }
-            if(d.success){
-                let c = (d.count / 10).toString()
-                this.totalExH = Number(c.split(".")[0])
-                this.dataHisEx = d.data
-            }
-        })
+    mounted() {
+        this.getExChange()
+        this.getBalanceWallet()
     },
-    
-    formatPrice(value, minimum) {
-        var formatter = new Intl.NumberFormat('en-US', {
-            //style: 'currency',
-            //currency: '',
-            minimumFractionDigits: minimum
-        });
-        return formatter.format(value);
-    },
-
-    formatDateEx(value){
-      if (value) {
-          return moment(String(value)).format('MM/DD/YYYY HH:mm:ss')
-      }
-    },
-    
-  },
-
-  mounted() {
-      this.getExChange()
-      this.getBalanceWallet()
-  },
 }
 </script>
 
 
 <style scoped>
-
 .historyEx .table.ex {
     color: #fff;
     background-color: #232323;
@@ -412,7 +445,7 @@ components: {
 .historyEx .table.ex tbody tr td:first-child {
     padding-left: 1.5rem;
 }
-    
+
 .historyEx .table.ex tbody tr td span.icon {
     padding-left: 30px;
     background-size: 20px;
@@ -440,7 +473,7 @@ components: {
     font-size: 15px;
 }
 
-.exchange-currency .boxExchange .inputAmount .inputLabel .butt.USD:focus, 
+.exchange-currency .boxExchange .inputAmount .inputLabel .butt.USD:focus,
 .exchange-currency .boxExchange .inputAmount .inputLabel .butt.USD:active {
     border: 1px solid #F0972D;
     background-color: #F0972D;
@@ -765,7 +798,7 @@ components: {
     position: relative;
 }
 
-.exchange-currency .boxExchange .send, 
+.exchange-currency .boxExchange .send,
 .exchange-currency .boxExchange .receive {
     width: 100%;
 }
@@ -803,7 +836,7 @@ components: {
     max-width: 90px;
 }
 
-.history .box-result .block-col p > span {
+.history .box-result .block-col p>span {
     line-height: 30px;
 }
 
@@ -821,11 +854,11 @@ components: {
     font-size: 14px;
 }
 
-.history .box-result .block-col > span {
+.history .box-result .block-col>span {
     line-height: 30px;
 }
 
-.history .box-result .block-col.note span{
+.history .box-result .block-col.note span {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -847,7 +880,7 @@ components: {
     position: relative;
 }
 
-.history .box-result .block-col > span {
+.history .box-result .block-col>span {
     line-height: 30px;
 }
 
@@ -865,20 +898,15 @@ components: {
     max-width: 110px;
 }
 
-.history-body{
+.history-body {
     background: #232323;
     border-radius: 5px;
     border: none;
     padding: 0 !important;
     border: 1px solid rgba(255, 255, 255, 0.15);
-}
+}</style>
 
-
-</style>
-
-<style>
-.content .inputGroup input {
+<style>.content .inputGroup input {
     background: #fff;
     color: #545454;
-}
-</style>
+}</style>
