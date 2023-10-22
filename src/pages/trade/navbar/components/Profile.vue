@@ -649,7 +649,7 @@ export default {
     },
 
     getBalanceWalletClick() {
-      alert(`show modal nạp rút tiền`)
+      alert(`line 652 src/pages/trade/navbar/components/Profile.vue show modal nạp rút tiền`)
       return this.$vs.notify({
         text: 'This API is deprecated balance-wallet Profile.vue',
         color: 'warning',

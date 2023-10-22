@@ -1,8 +1,19 @@
 import Api from "@/services/Api";
 import ApiAdmin from "@/services/ApiAdmin";
+import ApiPayment from "./ApiPayment";
 
 export default {
   //=========== USER
+  getDepositCryptoHistoryByUserid(obj) {
+    return ApiPayment.get(`/api/payments/getDepositCryptoHistoryByUserid`, obj);
+  },
+  
+  getWithdrawCryptoHistoryByUserid(obj) {
+    return ApiPayment.get(
+      `/api/payments/getWithdrawCryptoHistoryByUserid`,
+      obj
+    );
+  },
 
   loginUser(obj) {
     return Api().post("api/users/login", obj);
