@@ -428,19 +428,22 @@
         <vs-tab label="Mua Crypto">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
-              <button class="btn-crypto"> 
-                <span>MoonPay</span> 
-              </button>
-               <button class="btn-crypto"> 
-                <span>MoonPay</span> 
-              </button>
-               <button class="btn-crypto"> 
-                <span>MoonPay</span> 
-              </button>
-               <button class="btn-crypto"> 
-                <span>MoonPay</span> 
-              </button>
+              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto" style="background-color: #f0b90b;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/binace.svg"/>
+              </a>
+              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod" class="btn-crypto" style="background-color: #fff;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/bybit.png"/>
+              </a>
+              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto" style="background-color: #cf4444;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/okx.svg"/>
+              </a>
+              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/kucoin.svg"/>
+              </a>
             </div>
+            <p class="mt-5 text-withdraw">
+              Tuyên bố miễn trừ trách nhiệm: Các dịch vụ bên thứ ba ở trên có thể được sử dụng để mua tiền điện tử có thể được sử dụng để chơi trên Stake. Bằng cách đăng ký trên nền tảng của họ, bạn cũng chấp nhận các điều khoản dịch vụ của họ và sẽ được yêu cầu vượt qua quy trình KYC của họ, quy trình này chạy độc lập với quy trình của chúng tôi.
+            </p>
           </div>
         </vs-tab>
       </vs-tabs>
@@ -1602,6 +1605,7 @@ export default {
   cursor: pointer;
 } 
 .btn-crypto:hover {
+  opacity: 0.9;
   background-color: #1fff20;
 }
 .scrollX {
