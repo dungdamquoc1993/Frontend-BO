@@ -47,7 +47,7 @@
 
           <div class="showV" :class="{ block: showNT }">
             <div>
-              <div class="history-body history-body-2">
+              <!-- <div class="history-body history-body-2">
                 <div class="flex justify-between flex-col items-baseline lg:flex-row">
                   <h4 class="text-2xl color-white font-bold mb-3">
                     Nạp Ví:
@@ -94,7 +94,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="history lg:mb-4">
                 <h4 class="mb-3 my-4 history-title">Lịch sử giao dịch</h4>
                 <div class="history-body relative" :class="{ 'ld-loading': isLoading }">
@@ -134,110 +134,40 @@
                   </vs-tabs>
                   <div class="showHisM" :class="{ block: showHisUSD }">
                     <div class="history-content">
-                      <div class="box-result">
-                        <ul class="nav nav-tabs">
-                          <li class="box-result-header">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>Thời gian</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <span>Giá trị</span>
-                              </div>
-                              <div class="block-col type">
-                                <span>Loại</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <span>Txid/Mô tả</span>
-                              </div>
-                              <div class="block-col note">
-                                <span>Ghi chú</span>
-                              </div>
-                              <div class="block-col status">
-                                <span>Tình trạng</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="item" v-if="dataHisWallet.length == 0">
-                            <div class="w-full text-center">
-                              <span>Không có dữ liệu</span>
-                            </div>
-                          </li>
-                          <li class="item" v-else :key="indextr" v-for="(tr, indextr) in dataHisWallet">
-                            <div class="flex" style="padding: 0 1.5rem" @click="popupBill(tr)">
-                              <div class="block-col time">
-                                <span>{{
-                                  formatDateWallet(tr.created_at)
-                                }}</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <div v-if="blObj.displayName.toUpperCase() ==
-                                    tr.from_u.toUpperCase()
-                                    ">
-                                  <span class="red" v-if="tr.type_key == 'rt' ||
-                                    tr.type_key == 'ct' ||
-                                    tr.type_key == 'ctsa' ||
-                                    tr.type_key == 'nn' ||
-                                    tr.type_key == 'mv'
-                                    ">-{{ formatPrice(tr.amount, 2) }}</span>
-                                  <span class="green" v-else>+{{ formatPrice(tr.amount, 2) }}</span>
-                                </div>
-                                <div v-else-if="blObj.displayName.toUpperCase() ==
-                                  tr.to_u.toUpperCase()
-                                  ">
-                                  <span class="green">+{{ formatPrice(tr.amount, 2) }}</span>
-                                </div>
-                              </div>
-                              <div class="block-col type">
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'rt'">Rút tiền</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'nt'">Nạp tiền
-                                  {{ tr.paypal_order_id ? "Paypal" : "" }}</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'ct' ||
-                                  tr.type_key == 'ctsa' ||
-                                  tr.type_key == 'ctas'
-                                  ">Chuyển tiền</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'nn'">Nạp nhanh</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'mv'">Mua VIP</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <p class="text-left">
-                                  <span class="item-txid-desc">{{
-                                    tr.type_key == "ctsa" ||
-                                    tr.type_key == "ctas"
-                                    ? ""
-                                    : tr.from_u + ":"
-                                  }}
-                                    {{ tr.type }}</span>
-                                </p>
-                              </div>
-                              <div class="block-col note">
-                                <span>{{ tr.note ? tr.note : "-" }}</span>
-                              </div>
-                              <div class="block-col status text-center">
-                                <span v-if="tr.status == 2">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hủy
-                                </span>
-                                <span v-if="tr.status == 1">
-                                  <span class="green">
-                                    <feather-icon icon="CheckIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hoàn tất
-                                </span>
-                                <span v-if="tr.status == 0">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Đợi
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <vs-pagination v-if="totalRUSDT > 0" class="mt-4 mb-2" :total="totalRUSDT"
-                            v-model="currentxUSDT" @input="clickPageUSDT"></vs-pagination>
-                        </ul>
+                      <div class="box-result table-custom">
+                        <div class="center">
+                          <vs-table :max-items="maxHisWallet" pagination :data="dataHisWallet">
+                            <template slot="thead">
+                                <vs-th> Thời gian </vs-th>
+                                <vs-th> Giá trị </vs-th>
+                                <vs-th> Loại </vs-th>
+                                <vs-th> Txid/Mô tả </vs-th>
+                                <vs-th> Tiền điện tử </vs-th>
+                            </template>
+                            <template slot-scope="{data}">
+                              <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                                <vs-td :data="formatDateWallet(tr.created_at)">
+                                  {{ formatDateWallet(tr.created_at) }}
+                                </vs-td>
+                                <vs-td :data="formatPrice(tr.amount, 2) ">
+                                  {{ formatPrice(tr.amount, 2) }}
+                                </vs-td>
+                                <vs-td :data="tr.token_name">
+                                  {{ tr.token_name.toUpperCase() }}
+                                </vs-td>
+                                <vs-td :data="tr.hash">
+                                  <div class="tooltip">
+                                    {{ formatTxHash(tr.tx_hash) }}
+                                    <span class="tooltiptext">{{ tr.tx_hash}}</span>
+                                  </div>
+                                </vs-td>
+                                <vs-td :data="tr.crypto_price">
+                                  {{ tr.crypto_price }}
+                                </vs-td>
+                              </vs-tr>
+                            </template>
+                          </vs-table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -324,7 +254,7 @@
                                   </span>
                                   Đợi
                                 </span>
-                                <span v-else="tr.status">
+                                <span v-else-if="tr.status">
                                   <span class="red">
                                     <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
                                   </span>
@@ -348,216 +278,6 @@
 
           <div class="showV" :class="{ block: showVC }">
             <div class="box-coin-wrapper">
-              <div class="flex justify-between flex-col items-baseline lg:flex-row">
-                <h4 class="text-2xl color-white font-bold mb-3">
-                  Tài khoản chính:
-                </h4>
-
-              </div>
-              <div class="vx-row mt-2">
-                <div class="vx-col w-full lg:w-1/2 mb-3" v-if="getSetSys.isActiveWalletUSDT">
-                  <div class="boxCoin">
-                    <div class="boxCoin-body">
-                      <div class="leftBox flex flex-col sm:flex-row">
-                        <div class="flex items-center">
-                          <span class="curency-icon USDT"></span>
-                          <span class="uppercase font-bold block sm:hidden">USDT</span>
-                        </div>
-                        <div class="flex flex-col">
-                          <span class="uppercase font-bold">USDT</span>
-                          <span class="capitalize colorGray">Tether</span>
-                        </div>
-                      </div>
-                      <div class="rightBox">
-                        <div class="flex flex-col items-end">
-                          <span class="font-bold">{{
-                            formatPrice(balanceUSDT, 2)
-                          }}</span>
-                          <span class="colorGray">~${{
-                            formatPrice(
-                              balanceUSDT * getSetSys.quotePriceUSDT,
-                              2
-                            )
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="boxCoinFooter">
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAABHNCSVQICAgIfAhkiAAAAiJJREFUWIXt1jF22kAQgOF/9uWFZ1fKCaIbBJeCRj5ByAkin8DQgZq4Ajp8A5MbOCcwLpDK2DewTxDoXGlSrCEWkkASkJci02nfrvbb1e6MhGNGHAaofkPFwdDDG06LuspRIfPwF4Kzfj55/4Gzq0VeV3M0RNz3UwiAl5dmUffjQSrGf8hm/DOQdzt7xH0XlY+ocZDEnvjW6P7vQaLwEiVAsSddlPVtj8KtV/EwkGjQASaAW5xltHdIRBYShwHKzY4xz7RG14dEpCHlEAC3mZZoMAHpoix2pfL1XAkTBAdlSnt4YTd/HjYRfpazay+1I3ljhQtInlBzl25PzsG4mQUrZ3ZHRCely45I+myYxEE3soByA/I9uwYJgK+ZdpM4hnnYBPHLKYAEN/XsjWegOddZshPmtak+4o1nBiEojbDxOdNy0uig+ljxPRZx2vABDGhhRcwNoUkcpvFnVwtOG34lzArxmgYMKp8qQQASJvaT1sRsICxk85+hTNgxd7UwOQgLQZeVIXUxBYhXCA+1IGUwb2/TFoR9VRReA5e1MQDKAjinPcwuKu77qDi0RtmMnIJUyqo1MSXC2IF5CalirD5T3Hd39s2FAKh094ZYzBJv/FQf0h4+2EK1T+gSpVN39J9q5Q2noL36CPHrno80BLDlXb8AzxUQ94g290HAttofDbooAVJQApQfGG53/gTtDVmFvQUuKg6iNhl549khJn8bvwEod96NMQX8+QAAAABJRU5ErkJggg=="
-                          alt="" />
-                        <a href="javascript:;" @click.stop="
-                        (showVC = false),
-                          (showVGD = false),
-                          (showNT = true),
-                          (getSetSys.isDepositOpen = false),
-                          (getSetSys.isWithdraOpen = true)
-                          ">Nạp Tiền</a>
-                      </div>
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAdCAYAAAC9pNwMAAAABHNCSVQICAgIfAhkiAAAAhJJREFUSInFlk160lAUht+TZC6uQFyB2YFxymNqdtAoYVy6gtIVFMdCDStoBB+nhRVIV2DdAcwhxwGW34RwA9VvlOfc79z33txzf4QTS2sNFye9Ayogbel3rrN88gzQe5DKKqixDLofnw2cCd0DPwl4LzQHfjT4IGgG/CiwEXQLXhqsQVgltX8aQVe6tsqCSZ1wF6o9lNFmiEtguuU7d/L61VrDxdZzwEW0CtKTfqe1MqSPyPq4tSf9bqh+NNwCj5mLh6ND4MUiJg87YH0feQhXiHqrqIDirvtkcBurH1WAANJYBrdx3iTkx5ex1hoetrYQnWDPmxtrrP6nELG+5nWANXstSfyY2w6oHw0R3i4DKe/ke2e47bPWEpp7oQCpc7e33UAWLH/vzQF+V/3oXoOwTCVvaLHGou2Dt7Tgkdq/1K8nIAn2bCRJPDEFW+rXA0TemKVJBZEQIWHmuMX+DDBCUCbxWFmoVP8PeL30/yn49FovtCnObJwNVv19FEbSzaWyZyHKN5QRqmFexTsgY+BVebB1ASyPy7+gwoK1IE1KQxdy1Y+apkkWdpqwc20ZSrjRs/qFEViSeILSKrYW0l8auZ8+1I8ShA+lmKoPMuganWCr7bSoxtEeby4Ue+4VGze1czPoWdQCrg6kfpZ+17iwMsGwfMg1UQJEtrfaFDTGmreLHgXG4K1BVJ5uoKyXRFn9AQcq1fTcDi0cAAAAAElFTkSuQmCC"
-                          alt="" />
-                        <a href="javascript:;" @click.stop="
-                          showPopNapRutTien(),
-                          (getSetSys.isDepositOpen = false),
-                          (getSetSys.isWithdraOpen = true)
-                          ">Rút Tiền</a>
-                      </div>
-                      <!--<div>
-                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAcCAYAAACQ0cTtAAAABHNCSVQICAgIfAhkiAAAAaxJREFUSIm11cFt2zAUxvH/EyRdK2/ADeINmkwQd4IoE9gB4qK3IrcCMRB1A3eCJBPE2cDZgCPIx1pqXg9V7CqWRDZh30kQHvijyE+kEKDMfJuj3CBagnyy1+m6qy8KgQEFQgZiUB7MfDv+f5hquXsWsj4wDCYyATYuUIJgQDPwCviwe6mUCCcve+jEzOd6gv46QyVziqIGxLTe/QXGztnq8y2I5xp0NDVLCoxce9aZqn8uIQNXQKrkDuXp3Zjy44/pUeaLGurauDu1QDh6DdlFmntjXhO63C4RzvoggMGAeEPzbQHDEIQ7rqYuCHq+zMw0I66+AmOQK7tIVg7sEfg4BHViZqYZSfXAS+xVx8BokKqSCXGVI5R2kS772loBOYD2g41sISXvrN2e9ULwPQQEzZf1QgPr/yZsACpBCr9R9L7vdm5jlz/vEDl901Rbk5MTV2qjIBAAz8eujgjV+zBY5PoXianTnLhaHRygsEblwsuJY2u/iXW17dPYDS7tdXruBXpUBGALKamT4467K28O2XCYA5wSqFqnfg+4IVAdXDF7UK+apDoj7Vu/AfL4ub5VTGABAAAAAElFTkSuQmCC" alt="">
-                                            <router-link to="/user/exchange" class="cursor-pointer">Đổi Tiền</router-link>
-                                        </div>-->
-                    </div>
-                  </div>
-                </div>
-                <div class="vx-col w-full lg:w-1/2 mb-3" v-if="getSetSys.isActiveWalletETH">
-                  <div class="boxCoin">
-                    <div class="boxCoin-body">
-                      <div class="leftBox flex flex-col sm:flex-row">
-                        <div class="flex items-center">
-                          <span class="curency-icon ETH"></span>
-                          <span class="uppercase font-bold block sm:hidden">ETH</span>
-                        </div>
-                        <div class="flex flex-col">
-                          <span class="uppercase font-bold">ETH</span>
-                          <span class="capitalize colorGray">Ethereum</span>
-                        </div>
-                      </div>
-                      <div class="rightBox">
-                        <div class="flex flex-col items-end">
-                          <span class="font-bold">{{
-                            formatPrice(balanceETH, 4)
-                          }}</span>
-                          <span class="colorGray">~${{
-                            formatPrice(
-                              balanceETH * getSetSys.quotePriceETH,
-                              2
-                            )
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="boxCoinFooter">
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAABHNCSVQICAgIfAhkiAAAAiJJREFUWIXt1jF22kAQgOF/9uWFZ1fKCaIbBJeCRj5ByAkin8DQgZq4Ajp8A5MbOCcwLpDK2DewTxDoXGlSrCEWkkASkJci02nfrvbb1e6MhGNGHAaofkPFwdDDG06LuspRIfPwF4Kzfj55/4Gzq0VeV3M0RNz3UwiAl5dmUffjQSrGf8hm/DOQdzt7xH0XlY+ocZDEnvjW6P7vQaLwEiVAsSddlPVtj8KtV/EwkGjQASaAW5xltHdIRBYShwHKzY4xz7RG14dEpCHlEAC3mZZoMAHpoix2pfL1XAkTBAdlSnt4YTd/HjYRfpazay+1I3ljhQtInlBzl25PzsG4mQUrZ3ZHRCely45I+myYxEE3soByA/I9uwYJgK+ZdpM4hnnYBPHLKYAEN/XsjWegOddZshPmtak+4o1nBiEojbDxOdNy0uig+ljxPRZx2vABDGhhRcwNoUkcpvFnVwtOG34lzArxmgYMKp8qQQASJvaT1sRsICxk85+hTNgxd7UwOQgLQZeVIXUxBYhXCA+1IGUwb2/TFoR9VRReA5e1MQDKAjinPcwuKu77qDi0RtmMnIJUyqo1MSXC2IF5CalirD5T3Hd39s2FAKh094ZYzBJv/FQf0h4+2EK1T+gSpVN39J9q5Q2noL36CPHrno80BLDlXb8AzxUQ94g290HAttofDbooAVJQApQfGG53/gTtDVmFvQUuKg6iNhl549khJn8bvwEod96NMQX8+QAAAABJRU5ErkJggg=="
-                          alt="" />
-                        <a href="javascript:;" @click.stop="showPopNapRutTien()">Nạp Tiền</a>
-                      </div>
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAdCAYAAAC9pNwMAAAABHNCSVQICAgIfAhkiAAAAhJJREFUSInFlk160lAUht+TZC6uQFyB2YFxymNqdtAoYVy6gtIVFMdCDStoBB+nhRVIV2DdAcwhxwGW34RwA9VvlOfc79z33txzf4QTS2sNFye9Ayogbel3rrN88gzQe5DKKqixDLofnw2cCd0DPwl4LzQHfjT4IGgG/CiwEXQLXhqsQVgltX8aQVe6tsqCSZ1wF6o9lNFmiEtguuU7d/L61VrDxdZzwEW0CtKTfqe1MqSPyPq4tSf9bqh+NNwCj5mLh6ND4MUiJg87YH0feQhXiHqrqIDirvtkcBurH1WAANJYBrdx3iTkx5ex1hoetrYQnWDPmxtrrP6nELG+5nWANXstSfyY2w6oHw0R3i4DKe/ke2e47bPWEpp7oQCpc7e33UAWLH/vzQF+V/3oXoOwTCVvaLHGou2Dt7Tgkdq/1K8nIAn2bCRJPDEFW+rXA0TemKVJBZEQIWHmuMX+DDBCUCbxWFmoVP8PeL30/yn49FovtCnObJwNVv19FEbSzaWyZyHKN5QRqmFexTsgY+BVebB1ASyPy7+gwoK1IE1KQxdy1Y+apkkWdpqwc20ZSrjRs/qFEViSeILSKrYW0l8auZ8+1I8ShA+lmKoPMuganWCr7bSoxtEeby4Ue+4VGze1czPoWdQCrg6kfpZ+17iwMsGwfMg1UQJEtrfaFDTGmreLHgXG4K1BVJ5uoKyXRFn9AQcq1fTcDi0cAAAAAElFTkSuQmCC"
-                          alt="" />
-                        <a href="javascript:;" @click.stop="showPopNapRutTien()">Rút Tiền</a>
-                      </div>
-                      <!--<div>
-                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAcCAYAAACQ0cTtAAAABHNCSVQICAgIfAhkiAAAAaxJREFUSIm11cFt2zAUxvH/EyRdK2/ADeINmkwQd4IoE9gB4qK3IrcCMRB1A3eCJBPE2cDZgCPIx1pqXg9V7CqWRDZh30kQHvijyE+kEKDMfJuj3CBagnyy1+m6qy8KgQEFQgZiUB7MfDv+f5hquXsWsj4wDCYyATYuUIJgQDPwCviwe6mUCCcve+jEzOd6gv46QyVziqIGxLTe/QXGztnq8y2I5xp0NDVLCoxce9aZqn8uIQNXQKrkDuXp3Zjy44/pUeaLGurauDu1QDh6DdlFmntjXhO63C4RzvoggMGAeEPzbQHDEIQ7rqYuCHq+zMw0I66+AmOQK7tIVg7sEfg4BHViZqYZSfXAS+xVx8BokKqSCXGVI5R2kS772loBOYD2g41sISXvrN2e9ULwPQQEzZf1QgPr/yZsACpBCr9R9L7vdm5jlz/vEDl901Rbk5MTV2qjIBAAz8eujgjV+zBY5PoXianTnLhaHRygsEblwsuJY2u/iXW17dPYDS7tdXruBXpUBGALKamT4467K28O2XCYA5wSqFqnfg+4IVAdXDF7UK+apDoj7Vu/AfL4ub5VTGABAAAAAElFTkSuQmCC" alt="">
-                                            <router-link to="/user/exchange" class="cursor-pointer">Đổi Tiền</router-link>
-                                        </div>-->
-                    </div>
-                  </div>
-                </div>
-                <div class="vx-col w-full lg:w-1/2 mb-3" v-if="getSetSys.isActiveWalletBTC">
-                  <div class="boxCoin">
-                    <div class="boxCoin-body">
-                      <div class="leftBox flex flex-col sm:flex-row">
-                        <div class="flex items-center">
-                          <span class="curency-icon BTC"></span>
-                          <span class="uppercase font-bold block sm:hidden">BTC</span>
-                        </div>
-                        <div class="flex flex-col">
-                          <span class="uppercase font-bold">BTC</span>
-                          <span class="capitalize colorGray">Bitcoin</span>
-                        </div>
-                      </div>
-                      <div class="rightBox">
-                        <div class="flex flex-col items-end">
-                          <span class="font-bold">{{
-                            formatPrice(balanceBTC, 6)
-                          }}</span>
-                          <span class="colorGray">~${{
-                            formatPrice(
-                              balanceBTC * getSetSys.quotePriceBTC,
-                              2
-                            )
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="boxCoinFooter">
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAABHNCSVQICAgIfAhkiAAAAiJJREFUWIXt1jF22kAQgOF/9uWFZ1fKCaIbBJeCRj5ByAkin8DQgZq4Ajp8A5MbOCcwLpDK2DewTxDoXGlSrCEWkkASkJci02nfrvbb1e6MhGNGHAaofkPFwdDDG06LuspRIfPwF4Kzfj55/4Gzq0VeV3M0RNz3UwiAl5dmUffjQSrGf8hm/DOQdzt7xH0XlY+ocZDEnvjW6P7vQaLwEiVAsSddlPVtj8KtV/EwkGjQASaAW5xltHdIRBYShwHKzY4xz7RG14dEpCHlEAC3mZZoMAHpoix2pfL1XAkTBAdlSnt4YTd/HjYRfpazay+1I3ljhQtInlBzl25PzsG4mQUrZ3ZHRCely45I+myYxEE3soByA/I9uwYJgK+ZdpM4hnnYBPHLKYAEN/XsjWegOddZshPmtak+4o1nBiEojbDxOdNy0uig+ljxPRZx2vABDGhhRcwNoUkcpvFnVwtOG34lzArxmgYMKp8qQQASJvaT1sRsICxk85+hTNgxd7UwOQgLQZeVIXUxBYhXCA+1IGUwb2/TFoR9VRReA5e1MQDKAjinPcwuKu77qDi0RtmMnIJUyqo1MSXC2IF5CalirD5T3Hd39s2FAKh094ZYzBJv/FQf0h4+2EK1T+gSpVN39J9q5Q2noL36CPHrno80BLDlXb8AzxUQ94g290HAttofDbooAVJQApQfGG53/gTtDVmFvQUuKg6iNhl549khJn8bvwEod96NMQX8+QAAAABJRU5ErkJggg=="
-                          alt="" />
-                        <a href="javascript:;" @click.stop="showPopNapRutTien()">Nạp Tiền</a>
-                      </div>
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAdCAYAAAC9pNwMAAAABHNCSVQICAgIfAhkiAAAAhJJREFUSInFlk160lAUht+TZC6uQFyB2YFxymNqdtAoYVy6gtIVFMdCDStoBB+nhRVIV2DdAcwhxwGW34RwA9VvlOfc79z33txzf4QTS2sNFye9Ayogbel3rrN88gzQe5DKKqixDLofnw2cCd0DPwl4LzQHfjT4IGgG/CiwEXQLXhqsQVgltX8aQVe6tsqCSZ1wF6o9lNFmiEtguuU7d/L61VrDxdZzwEW0CtKTfqe1MqSPyPq4tSf9bqh+NNwCj5mLh6ND4MUiJg87YH0feQhXiHqrqIDirvtkcBurH1WAANJYBrdx3iTkx5ex1hoetrYQnWDPmxtrrP6nELG+5nWANXstSfyY2w6oHw0R3i4DKe/ke2e47bPWEpp7oQCpc7e33UAWLH/vzQF+V/3oXoOwTCVvaLHGou2Dt7Tgkdq/1K8nIAn2bCRJPDEFW+rXA0TemKVJBZEQIWHmuMX+DDBCUCbxWFmoVP8PeL30/yn49FovtCnObJwNVv19FEbSzaWyZyHKN5QRqmFexTsgY+BVebB1ASyPy7+gwoK1IE1KQxdy1Y+apkkWdpqwc20ZSrjRs/qFEViSeILSKrYW0l8auZ8+1I8ShA+lmKoPMuganWCr7bSoxtEeby4Ue+4VGze1czPoWdQCrg6kfpZ+17iwMsGwfMg1UQJEtrfaFDTGmreLHgXG4K1BVJ5uoKyXRFn9AQcq1fTcDi0cAAAAAElFTkSuQmCC"
-                          alt="" />
-                        <a href="javascript:;" @click.stop="showPopNapRutTien()">Rút Tiền</a>
-                      </div>
-                      <!--<div>
-                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAcCAYAAACQ0cTtAAAABHNCSVQICAgIfAhkiAAAAaxJREFUSIm11cFt2zAUxvH/EyRdK2/ADeINmkwQd4IoE9gB4qK3IrcCMRB1A3eCJBPE2cDZgCPIx1pqXg9V7CqWRDZh30kQHvijyE+kEKDMfJuj3CBagnyy1+m6qy8KgQEFQgZiUB7MfDv+f5hquXsWsj4wDCYyATYuUIJgQDPwCviwe6mUCCcve+jEzOd6gv46QyVziqIGxLTe/QXGztnq8y2I5xp0NDVLCoxce9aZqn8uIQNXQKrkDuXp3Zjy44/pUeaLGurauDu1QDh6DdlFmntjXhO63C4RzvoggMGAeEPzbQHDEIQ7rqYuCHq+zMw0I66+AmOQK7tIVg7sEfg4BHViZqYZSfXAS+xVx8BokKqSCXGVI5R2kS772loBOYD2g41sISXvrN2e9ULwPQQEzZf1QgPr/yZsACpBCr9R9L7vdm5jlz/vEDl901Rbk5MTV2qjIBAAz8eujgjV+zBY5PoXianTnLhaHRygsEblwsuJY2u/iXW17dPYDS7tdXruBXpUBGALKamT4467K28O2XCYA5wSqFqnfg+4IVAdXDF7UK+apDoj7Vu/AfL4ub5VTGABAAAAAElFTkSuQmCC" alt="">
-                                            <router-link to="/user/exchange" class="cursor-pointer">Đổi Tiền</router-link>
-                                        </div>-->
-                    </div>
-                  </div>
-                </div>
-                <div class="vx-col w-full lg:w-1/2 mb-3" v-if="getSetSys.isActiveWalletPaypal">
-                  <div class="boxCoin">
-                    <div class="boxCoin-body">
-                      <div class="leftBox flex flex-col sm:flex-row">
-                        <div class="flex items-center">
-                          <span class="curency-icon PAYPAL"></span>
-                          <span class="uppercase font-bold block sm:hidden">Paypal</span>
-                        </div>
-                        <div class="flex flex-col">
-                          <span class="uppercase font-bold">Paypal</span>
-                          <!--<span class="capitalize colorGray">Tether</span>-->
-                        </div>
-                      </div>
-                      <div class="rightBox">
-                        <div class="flex flex-col items-end">
-                          <span class="font-bold">{{
-                            formatPrice(balancePaypal, 2)
-                          }}</span>
-                          <span class="colorGray">~${{
-                            formatPrice(
-                              balancePaypal * getSetSys.quotePricePAYPAL,
-                              2
-                            )
-                          }}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="boxCoinFooter">
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAABHNCSVQICAgIfAhkiAAAAiJJREFUWIXt1jF22kAQgOF/9uWFZ1fKCaIbBJeCRj5ByAkin8DQgZq4Ajp8A5MbOCcwLpDK2DewTxDoXGlSrCEWkkASkJci02nfrvbb1e6MhGNGHAaofkPFwdDDG06LuspRIfPwF4Kzfj55/4Gzq0VeV3M0RNz3UwiAl5dmUffjQSrGf8hm/DOQdzt7xH0XlY+ocZDEnvjW6P7vQaLwEiVAsSddlPVtj8KtV/EwkGjQASaAW5xltHdIRBYShwHKzY4xz7RG14dEpCHlEAC3mZZoMAHpoix2pfL1XAkTBAdlSnt4YTd/HjYRfpazay+1I3ljhQtInlBzl25PzsG4mQUrZ3ZHRCely45I+myYxEE3soByA/I9uwYJgK+ZdpM4hnnYBPHLKYAEN/XsjWegOddZshPmtak+4o1nBiEojbDxOdNy0uig+ljxPRZx2vABDGhhRcwNoUkcpvFnVwtOG34lzArxmgYMKp8qQQASJvaT1sRsICxk85+hTNgxd7UwOQgLQZeVIXUxBYhXCA+1IGUwb2/TFoR9VRReA5e1MQDKAjinPcwuKu77qDi0RtmMnIJUyqo1MSXC2IF5CalirD5T3Hd39s2FAKh094ZYzBJv/FQf0h4+2EK1T+gSpVN39J9q5Q2noL36CPHrno80BLDlXb8AzxUQ94g290HAttofDbooAVJQApQfGG53/gTtDVmFvQUuKg6iNhl549khJn8bvwEod96NMQX8+QAAAABJRU5ErkJggg=="
-                          alt="" />
-                        <a href="javascript:;" @click.stop="
-                        (showVC = true),
-                          (showVGD = false),
-                          (showNT = true)
-                          ">Nạp Tiền</a>
-                      </div>
-                      <div>
-                        <img
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAdCAYAAAC9pNwMAAAABHNCSVQICAgIfAhkiAAAAhJJREFUSInFlk160lAUht+TZC6uQFyB2YFxymNqdtAoYVy6gtIVFMdCDStoBB+nhRVIV2DdAcwhxwGW34RwA9VvlOfc79z33txzf4QTS2sNFye9Ayogbel3rrN88gzQe5DKKqixDLofnw2cCd0DPwl4LzQHfjT4IGgG/CiwEXQLXhqsQVgltX8aQVe6tsqCSZ1wF6o9lNFmiEtguuU7d/L61VrDxdZzwEW0CtKTfqe1MqSPyPq4tSf9bqh+NNwCj5mLh6ND4MUiJg87YH0feQhXiHqrqIDirvtkcBurH1WAANJYBrdx3iTkx5ex1hoetrYQnWDPmxtrrP6nELG+5nWANXstSfyY2w6oHw0R3i4DKe/ke2e47bPWEpp7oQCpc7e33UAWLH/vzQF+V/3oXoOwTCVvaLHGou2Dt7Tgkdq/1K8nIAn2bCRJPDEFW+rXA0TemKVJBZEQIWHmuMX+DDBCUCbxWFmoVP8PeL30/yn49FovtCnObJwNVv19FEbSzaWyZyHKN5QRqmFexTsgY+BVebB1ASyPy7+gwoK1IE1KQxdy1Y+apkkWdpqwc20ZSrjRs/qFEViSeILSKrYW0l8auZ8+1I8ShA+lmKoPMuganWCr7bSoxtEeby4Ue+4VGze1czPoWdQCrg6kfpZ+17iwMsGwfMg1UQJEtrfaFDTGmreLHgXG4K1BVJ5uoKyXRFn9AQcq1fTcDi0cAAAAAElFTkSuQmCC"
-                          alt="" />
-                        <a href="javascript:;" @click.stop="
-                          showPopNapRutTien(),
-                          (getSetSys.isDepositOpen = false),
-                          (getSetSys.isWithdraOpen = true)
-                          ">Rút Tiền</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="history lg:mb-4">
                 <h4 class="mb-3 history-title">Lịch sử giao dịch</h4>
                 <div class="history-body relative" :class="{ 'ld-loading': isLoading }">
@@ -597,104 +317,44 @@
                   </vs-tabs>
                   <div class="showHisM" :class="{ block: showHisUSD }">
                     <div class="history-content">
-                      <div class="box-result">
-                        <ul class="nav nav-tabs">
-                          <li class="box-result-header">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>Thời gian</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <span>Giá trị</span>
-                              </div>
-                              <div class="block-col type">
-                                <span>Loại</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <span>Txid/Mô tả</span>
-                              </div>
-                              <div class="block-col note">
-                                <span>Ghi chú</span>
-                              </div>
-                              <div class="block-col status">
-                                <span>Tình trạng</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="item" v-if="dataHisWallet.length == 0">
-                            <div class="w-full text-center">
-                              <span>Không có dữ liệu</span>
-                            </div>
-                          </li>
-                          <li class="item" v-else :key="indextr" v-for="(tr, indextr) in dataHisWallet">
-                            <div class="flex" style="padding: 0 1.5rem" @click="popupBill(tr)">
-                              <div class="block-col time">
-                                <span>{{
-                                  formatDateWallet(tr.created_at)
-                                }}</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <div v-if="blObj.displayName.toUpperCase() ==
-                                    tr.from_u.toUpperCase()
-                                    ">
-                                  <span class="red" v-if="tr.type_key == 'rt' ||
-                                    tr.type_key == 'ct' ||
-                                    tr.type_key == 'ctsa' ||
-                                    tr.type_key == 'nn' ||
-                                    tr.type_key == 'mv'
-                                    ">-{{ formatPrice(tr.amount, 2) }}</span>
-                                  <span class="green" v-else>+{{ formatPrice(tr.amount, 2) }}</span>
-                                </div>
-                                <div v-else-if="blObj.displayName.toUpperCase() ==
-                                  tr.to_u.toUpperCase()
-                                  ">
-                                  <span class="green">+{{ formatPrice(tr.amount, 2) }}</span>
-                                </div>
-                              </div>
-                              <div class="block-col type">
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'rt'">Rút tiền</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'nt'">Nạp tiền
-                                  {{ tr.paypal_order_id ? "Paypal" : "" }}</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'ct' ||
-                                  tr.type_key == 'ctsa' ||
-                                  tr.type_key == 'ctas'
-                                  ">Chuyển tiền</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'nn'">Nạp nhanh</span>
-                                <span class="deitalType transfer_in" v-if="tr.type_key == 'mv'">Mua VIP</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <p class="text-left">
-                                  <span class="item-txid-desc">{{
-                                    tr.type_key == "ctsa" ||
-                                    tr.type_key == "ctas"
-                                    ? ""
-                                    : tr.from_u + ":"
-                                  }}
-                                    {{ tr.type }}</span>
-                                </p>
-                              </div>
-                              <div class="block-col note">
-                                <span>{{ tr.note ? tr.note : "-" }}</span>
-                              </div>
-                              <div class="block-col status text-center">
-                                <span v-if="tr.status">
-                                  <span class="green">
-                                    <feather-icon icon="CheckIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hoàn tất
-                                </span>
-                                <span v-if="!tr.status">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Đợi
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <vs-pagination v-if="totalRUSDT > 0" class="mt-4 mb-2" :total="totalRUSDT"
-                            v-model="currentxUSDT" @input="clickPageUSDT"></vs-pagination>
-                        </ul>
+                      <div class="box-result table-custom">
+                        <div class="center">
+                          <vs-table :max-items="maxHisWallet" pagination :data="dataHisWithdraw">
+                            <template slot="thead">
+                                <vs-th> Thời gian </vs-th>
+                                <vs-th> Giá trị </vs-th>
+                                <vs-th> Loại </vs-th>
+                                <vs-th> Txid/Mô tả </vs-th>
+                                <vs-th> Tiền điện tử </vs-th>
+                                <vs-th> Địa chỉ </vs-th>
+                            </template>
+                            <template slot-scope="{data}">
+                              <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                                <vs-td :data="formatDateWallet(tr.created_at)">
+                                  {{ formatDateWallet(tr.created_at) }}
+                                </vs-td>
+                                <vs-td :data="formatPrice(tr.amount, 2) ">
+                                  {{ formatPrice(tr.amount, 2) }}
+                                </vs-td>
+                                <vs-td :data="tr.token_name">
+                                  {{ tr.token_name.toUpperCase() }}
+                                </vs-td>
+                                <vs-td :data="tr.tx_hash">
+                                  <div class="tooltip">
+                                    {{ formatTxHash(tr.tx_hash) }}
+                                    <span class="tooltiptext">{{ tr.tx_hash}}</span>
+                                  </div>
+                                </vs-td>
+                                <vs-td :data="tr.crypto_price">
+                                  {{ tr.crypto_price }}
+                                </vs-td>
+                                <vs-td :data="tr.to_address">
+                                  {{ tr.to_address }}
+                                </vs-td>
+                              </vs-tr>
+                            </template>
+                          </vs-table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -781,7 +441,7 @@
                                   </span>
                                   Đợi
                                 </span>
-                                <span v-else="tr.status">
+                                <span v-else-if="tr.status">
                                   <span class="red">
                                     <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
                                   </span>
@@ -812,7 +472,7 @@
                       </span>
                       <button @click="showPopTrans()" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
-                        <span class="iconSubmit iconSubmitLive"></span>
+                        <img style="width: 20px; height: 20px; margin-right: 4px;" src="../../assets/images/wallet/wallet-svgrepo-com.svg"/>
                         <span>Ví Tiền</span>
                       </button>
                     </div>
@@ -834,98 +494,12 @@
                   </div>
                 </div>
               </div>
-              <div class="sectionTable lg:pb-4">
-                <div class="balance">
-                  <div class="wrapBalance">
-                    <div class="boxBalance">
-                      <div class="history">
-                        <h4 class="history-title mb-3">Lịch sử giao dịch</h4>
-                        <div class="history-body">
-                          <div class="history-content">
-                            <div class="box-result">
-                              <ul class="nav nav-tabs">
-                                <li class="box-result-header">
-                                  <div class="flex" style="padding: 0 1.5rem">
-                                    <div class="block-col time">
-                                      <span>Thời gian</span>
-                                    </div>
-                                    <div class="block-col text-right amount">
-                                      <span>Giá trị</span>
-                                    </div>
-                                    <div class="block-col type">
-                                      <span>Loại</span>
-                                    </div>
-                                    <div class="block-col" style="flex: 2 1 0%">
-                                      <span>Txid/Mô tả</span>
-                                    </div>
-                                    <!-- <div class="block-col note">
-                                                                        <span>Ghi chú</span>
-                                                                    </div> -->
-                                    <div class="block-col status">
-                                      <span>Tình trạng</span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li class="item" v-if="dataHisWalletWGD.length == 0">
-                                  <div class="w-full text-center">
-                                    <span>Không có dữ liệu</span>
-                                  </div>
-                                </li>
-                                <li class="item" v-else :key="indextr" v-for="(tr, indextr) in dataHisWalletWGD">
-                                  <div class="flex" style="padding: 0 1.5rem">
-                                    <div class="block-col time">
-                                      <span>{{
-                                        formatDateWallet(tr.created_at)
-                                      }}</span>
-                                    </div>
-                                    <div class="block-col text-right amount">
-                                      <span class="red" v-if="tr.type_key == 'ctas'">-{{ formatPrice(tr.amount, 2)
-                                      }}</span>
-                                      <span class="green" v-else>+{{ formatPrice(tr.amount, 2) }}</span>
-                                    </div>
-                                    <div class="block-col type">
-                                      <span class="deitalType transfer_in" v-if="tr.type_key == 'ctas'">Chuyển ra</span>
-                                      <span class="deitalType transfer_in" v-else>Chuyển vào</span>
-                                    </div>
-                                    <div class="block-col" style="flex: 2 1 0%">
-                                      <p class="text-left">
-                                        <span class="item-txid-desc" v-if="tr.type_key == 'ctas'">Ra: {{ tr.to_u }}</span>
-                                        <span class="item-txid-desc" v-else>Vào: {{ tr.to_u }}</span>
-                                      </p>
-                                    </div>
-                                    <div class="block-col status text-center">
-                                      <span v-if="tr.status">
-                                        <span class="green">
-                                          <feather-icon icon="CheckIcon" svgClasses="w-4 h-4" />
-                                        </span>
-                                        Hoàn tất
-                                      </span>
-                                      <span v-if="!tr.status">
-                                        <span class="red">
-                                          <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                        </span>
-                                        Đợi
-                                      </span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <vs-pagination v-if="totalRWGD > 0" class="mt-4 mb-2" :total="totalRWGD"
-                                  v-model="currentxWGD" @input="clickPageWGD"></vs-pagination>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <vs-popup class="text-center" title="Chuyển tiền" :active.sync="popupTransferActive">
+    <!-- <vs-popup class="text-center" title="Chuyển tiền" :active.sync="popupTransferActive">
       <div class="header flex">
         <div class="leftHeader flex flex-col items-center">
           <span class="text-sm mb-2 font-bold white" v-html="textWalletHtml"></span>
@@ -972,8 +546,252 @@
         </div>
         <vs-button @click="clickTransMoney" color="rgb(62, 201, 214)" type="filled">Chuyển Tiền</vs-button>
       </div>
+    </vs-popup> -->
+    <vs-popup class="qDeposit" title="Ví" :active.sync="popupTransferActive">
+      <vs-tabs alignment="center">
+        <vs-tab label="Nạp tiền">
+          <div class="con-tab-ejemplo">
+            <div class="wrapper">
+              <div class="flex items-center justify-center gap-5">
+                <div class="flex flex-col">
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
+                  <div class="relative">
+                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(true)">
+                      <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                      <span class="white mx-2">{{ walletIsSelect.name || listWallet[0].name }}</span>
+                      <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+                    </vs-button>
+                    <div class="listWallShow" :class="{ active: showPopWalSL }">
+                      <span v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer" @click="selectWallet(wallet)">
+                        <img style="width: 14px; height: 14px;" :src="wallet.icon" />
+                        <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ wallet.name }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="walletIsSelect.children" class="flex flex-col">
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
+                  <div class="relative">
+                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
+                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+                    </vs-button>
+                    <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
+                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                        <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex w-full relative mt-5">
+                <label class="flex flex-col w-full">
+                  <span class="inline-flex items-center font-semibold text-[14px] text-[#b1bad3] pb-1 justify-between">
+                    <div class="inline-flex w-full">
+                      Địa chỉ nạp tiền ETH của bạn
+                    </div>
+                  </span>
+                  <div class="flex w-full shrink-0 shadow-[0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12)] rounded">
+                    <div
+                      class="copy-wrapper rounded-l"
+                    >
+                      <span class="copy-text">{{ addressPayment }}</span>
+                      <input type="hidden" id="addressPayment" :value="addressPayment">
+                    </div>
+                    <div class="input-button-copy rounded-r flex-shrink-0">
+                      <button
+                        class="rounded"
+                        type="button"
+                      >
+                        <span class="inline-flex">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 448 512"
+                          >
+                            <path
+                              d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </label>
+              </div>
+              <div class="flex items-center justify-center mt-5 ">
+                <div
+                  class="flex items-center justify-center p-2 rounded-sm shadow-[0 4px 6px -1px rgba(27, 23, 23, .2), 0 2px 4px -1px rgba(0, 0, 0, .12)]"
+                  style="background: white"
+                >
+                  <img
+                    alt="deposit-address"
+                    src="../../assets/images/wallet/qrcode.png"
+                    width="128px"
+                    height="128px"
+                    class="svelte-gvr12l"
+                  />
+                </div>
+              </div>
+              <span class="block text-center text-[#b1bad3] text-[14px] mt-5">
+                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này, 
+                {{ walletIsSelect.children && walletIsSelect.children.length  ? '2' : '1'}} 
+                confirmations cần thiết.
+              </span>  
+            </div>
+          </div>
+        </vs-tab>
+        <vs-tab label="Rút tiền">
+          <div class="con-tab-ejemplo">
+            <div class="flex flex-col gap-5">
+              <div class="flex items-center justify-center gap-5">
+                <div class="flex flex-col items-center">
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">Số tiền dư</span>
+                  <div class="text-white font-semibold">
+                    <span style="font-size: 16px;">
+                      0$
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-center gap-5">
+                <div class="flex flex-col">
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
+                  <div class="relative">
+                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow" @click="closeDropdown(true)">
+                      <span class="white mr-1">0.00000000</span>
+                      <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                      <feather-icon class="material-icons ml-2" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+                    </vs-button>
+                    <div class="listWallShow" :class="{ active: showPopWalSL }">
+                      <div v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer" @click="selectWallet(wallet)">
+                        <div class="flex items-center mr-5">
+                          <span class="inline-block" style="color: #2f4553; font-weight: 600;">0.00000000</span>
+                        </div>
+                        <div class="flex items-center">
+                          <img style="width: 14px; height: 14px;" :src="wallet.icon" />
+                          <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ wallet.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="walletIsSelect.children" class="flex flex-col">
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
+                  <div class="relative">
+                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
+                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+                    </vs-button>
+                    <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
+                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                        <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="flex flex-col w-full">
+                <span class="label-content svelte-5ecfln">
+                  <div class="flex items-center pb-1">
+                    <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                    <span class="inline-block font-semibold text-[14px] text-[#2f4553] ml-1">
+                      <span>{{ walletIsSelect.name || listWallet[0].name }} Địa chỉ</span>
+                    </span>
+                    <div class="asterisk-wrapper svelte-41a1vp">
+                      <span class="text-red inline-flex justify-start text-[14px] font-normal ml-1">*</span>
+                    </div>
+                  </div>
+                </span>
+                <div class="input-wrap">
+                  <div class="input-content">
+                    <input
+                      autocomplete="on"
+                      class="input-address"
+                      type="text"
+                      name="address"
+                    />
+                  </div>
+                </div>
+              </label>
+              <label class="flex flex-col w-full">
+                <span class="flex items-center justify-between">
+                  <div class="flex items-center pb-1">
+                    <span class="inline-block font-semibold text-[14px] text-[#2f4553] ml-1">
+                      <span>Số tiền</span>
+                    </span>
+                    <div class="asterisk-wrapper svelte-41a1vp">
+                      <span class="text-red inline-flex justify-start text-[14px] font-normal ml-1">*</span>
+                    </div>
+                  </div>
+                  <div class="inline-block font-semibold text-[#2f4553]">
+                    <span style="font-size: 12px;">0,00 US$</span>
+                  </div>
+                </span>
+                <div class="input-wrap">
+                  <div class="input-content">
+                    <div class="after-icon">
+                      <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                    </div>
+                    <input
+                      autocomplete="on"
+                      class="input-address rounded-r-none"
+                      type="number"
+                      name="amount"
+                    />
+                  </div>
+                  <div class="input-button-wrap inline-flex flex-shrink-0">
+                    <button
+                      class="btn-max"
+                      type="button"
+                    >
+                      <span class="inline-flex">Tối đa</span>
+                    </button>
+                  </div>
+                </div>
+              </label>
+              <button class="btn-crypto"> 
+                <span>Rút tiền</span> 
+              </button>
+              <p class="text-withdraw">
+                Số tiền rút tối thiểu là 
+                <span>
+                  2.50000000
+                  <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                </span>. 
+                Phí xử lý giao dịch 
+                <span>
+                  1.00000000
+                  <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                </span>
+                sẽ được khấu trừ vào số dư còn lại của bạn.
+              </p>
+            </div>
+          </div>
+        </vs-tab>
+        <vs-tab label="Mua Crypto">
+          <div class="con-tab-ejemplo">
+            <div class="flex flex-col gap-5 items-center justify-center">
+              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto" style="background-color: #f0b90b;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/binace.svg"/>
+              </a>
+              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod" class="btn-crypto" style="background-color: #fff;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/bybit.png"/>
+              </a>
+              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto" style="background-color: #cf4444;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/okx.svg"/>
+              </a>
+              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;"> 
+                <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/kucoin.svg"/>
+              </a>
+            </div>
+            <p class="mt-5 text-withdraw">
+              Tuyên bố miễn trừ trách nhiệm: Các dịch vụ bên thứ ba ở trên có thể được sử dụng để mua tiền điện tử có thể được sử dụng để chơi trên Stake. Bằng cách đăng ký trên nền tảng của họ, bạn cũng chấp nhận các điều khoản dịch vụ của họ và sẽ được yêu cầu vượt qua quy trình KYC của họ, quy trình này chạy độc lập với quy trình của chúng tôi.
+            </p>
+          </div>
+        </vs-tab>
+      </vs-tabs>
     </vs-popup>
-
     <vs-popup class="text-center" title="Thông tin" :active.sync="popupBillActive">
       <div class="flex justify-between mb-2 text-white" style="border-bottom: 1px solid #213f62; padding-bottom: 5px">
         <span>Thời gian:</span>
@@ -1076,12 +894,52 @@ export default {
       balancePaypal: 0,
 
       isLoading: false,
+      maxHisWallet: 10,
+      pageHisWallet: 1,
       dataHisWallet: [],
+      dataHisWithdraw: [],
       totalRUSDT: 0,
       dataHisWalletHoaHong: [],
       totalRHH: 0,
       dataHisWalletWGD: [],
       totalRWGD: 0,
+      showPopWalSL: false,
+      showPopNetwork: false,
+      listWallet: [
+        {
+          icon: require('../../assets/images/wallet/bitcoin-logo-svgrepo-com.svg'),
+          name: 'BTC',
+        },
+        {
+          icon: require('../../assets/images/wallet/ethereum-eth.svg'),
+          name: 'ETH',
+        },
+        {
+          icon: require('../../assets/images/wallet/usdt.svg'),
+          name: 'USDT',
+          children: [
+            'ETH - Ethereum (ERC20)', 'BSC - BNB Smart Chain (BEP20)', 'POLYGON - Matic'
+          ]
+        },
+        {
+          icon: require('../../assets/images/wallet/bnb.svg'),
+          name: 'BNB',
+        },
+        {
+          icon: require('../../assets/images/wallet/usdc.svg'),
+          name: 'USDC',
+          children: [
+            'ETH - Ethereum (ERC20)', 'BSC - BNB Smart Chain (BEP20)', 'POLYGON - Matic'
+          ]
+        },
+        {
+          icon: require('../../assets/images/wallet/matic-logo.svg'),
+          name: 'MATIC',
+        },
+      ],
+      walletIsSelect: {},
+      networkIsSelect: '',
+      addressPayment: '0x260c3c88b5c70ab688a646f2e7c5622144eef1fa',
     };
   },
   computed: {
@@ -1430,15 +1288,28 @@ export default {
 
     getListHisTrade() {
       this.isLoading = true;
-      AuthenticationService.getListHisTradeWallet().then((res) => {
-        if (res.data.success) {
-          this.isLoading = false;
-          this.dataHisWallet = res.data.data;
-          let c = (res.data.count / 10).toString();
-          //this.totalRUSDT = Number(c.split(".")[0])
-          this.totalRUSDT = Math.ceil(c);
+      const userInfo = JSON.parse(localStorage.getItem("INFO"));
+      if (userInfo) {
+        const data = {
+          params: {
+            userId: userInfo.id
+          }
         }
-      });
+        AuthenticationService.getDepositCryptoHistoryByUserid(data)
+          .then((res) => {
+            if (res.data.success) {
+              this.isLoading = false;
+              this.dataHisWallet = res.data.data;
+            }
+          })
+         AuthenticationService.getWithdrawCryptoHistoryByUserid(data)
+          .then((res) => {
+            if (res.data.success) {
+              this.isLoading = false;
+              this.dataHisWithdraw = res.data.data;
+            }
+          })
+      }
     },
 
     clickPageUSDT(page) {
@@ -1507,6 +1378,12 @@ export default {
     formatDateWallet(value) {
       if (value) {
         return moment(String(value)).format("MM/DD/YYYY HH:mm:ss");
+      }
+    },
+
+    formatTxHash(value) {
+      if (value) {
+        return `${value.substr(0,3)}...${value.substr(-2)}`
       }
     },
 
@@ -1614,6 +1491,28 @@ export default {
     },
     onWindowLoad() {
       this.getInfoUser();
+    },
+    
+    selectWallet(val) {
+      this.walletIsSelect = val;
+      this.showPopWalSL = false;
+      this.showPopNetwork = false;
+    },
+
+    selectNetwork(val) {
+      this.networkIsSelect = val;
+      this.showPopNetwork = false;
+      this.showPopWalSL = false;
+    },
+
+    closeDropdown(isPopwal) {
+      if (isPopwal) {
+        this.showPopWalSL = !this.showPopWalSL;
+        this.showPopNetwork = false;
+      } else {
+        this.showPopNetwork = !this.showPopNetwork;
+        this.showPopWalSL = false;
+      }
     },
   },
   mounted() {
@@ -2031,11 +1930,104 @@ export default {
     width: 860px;
   }
 }
+
 </style>
 
 <style>
 .content .inputGroup input {
   background: #fff;
   color: #545454;
+}
+.table-custom {
+  margin-top: 20px;
+}
+.table-custom .vs-con-table .vs-table--content .vs-con-tbody {
+  border: none!important;
+  background: transparent!important;
+}
+.table-custom .vs-con-table .vs-table--thead {
+  color: rgba(255, 255, 255, 0.7)!important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1)!important;
+}
+.table-custom .vs-con-table .vs-table--thead .vs-table-text {
+  font-size: 14px!important;
+  font-weight: 500!important;
+}
+.table-custom .vs-con-table .vs-con-tbody .vs-table--tbody-table .vs-table--thead tr {
+  background: transparent!important;
+  text-align: center!important;
+}
+.table-custom .vs-con-table .vs-table--tr {
+  background: transparent!important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1)!important;
+}
+.table-custom .vs-con-table .vs-table--tr:hover {
+  transform: none!important;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  display: inline-block;
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 6px;
+
+  /* Position the tooltip */
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999999;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.qDeposit .listWallShow {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: none;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  max-height: inherit;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  min-width: 140px;
+}
+
+.qDeposit .listWallShow.listWallNetwork {
+  min-width: 225px;
+  width: 100%;
+}
+
+.qDeposit .listWallShow.listWallNetwork .drop {
+  justify-content: flex-start;
+}
+
+.qDeposit .listWallShow.active {
+  display: flex;
+  flex-direction: column;
+}
+.qDeposit .listWallShow .drop {
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qDeposit .listWallShow .drop:hover {
+  color: #05080a;
+  background: #b1bad3;
 }
 </style>

@@ -5,11 +5,11 @@ import ApiPayment from "./ApiPayment";
 export default {
   //=========== USER
   getDepositCryptoHistoryByUserid(obj) {
-    return ApiPayment.get(`/api/payments/getDepositCryptoHistoryByUserid`, obj);
+    return ApiPayment().get(`/api/payments/getDepositCryptoHistoryByUserid`, obj);
   },
   
   getWithdrawCryptoHistoryByUserid(obj) {
-    return ApiPayment.get(
+    return ApiPayment().get(
       `/api/payments/getWithdrawCryptoHistoryByUserid`,
       obj
     );
