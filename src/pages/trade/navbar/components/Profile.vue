@@ -201,6 +201,9 @@
       </vs-dropdown-menu>
     </vs-dropdown>-->
     <vs-popup class="qDeposit" title="Ví" :active.sync="popupActiveNapNhanh">
+      <div class="icon-wallet">
+        <img src="../../../../assets/images/wallet/wallet-svgrepo-com.svg" alt="Wallet">
+      </div>
       <vs-tabs alignment="center">
         <vs-tab label="Nạp tiền">
           <div class="con-tab-ejemplo">
@@ -965,6 +968,7 @@ export default {
     },
 
     selectCurrency(val) {
+      localStorage.setItem('CURRENCY', JSON.stringify(val));
       this.currencyIsSelect = val;
       this.showDropdownCurrency = false;
     },
@@ -1127,6 +1131,8 @@ export default {
     } else {
       this.isAcc = getData.isAccount = 0;
     }
+
+    this.currencyIsSelect = JSON.parse(localStorage.getItem("CURRENCY"));
   },
 };
 </script>
@@ -1493,6 +1499,9 @@ export default {
 .qDeposit .vs-popup--title h3 {
   padding: 16px!important;
 }
+.qDeposit .vs-popup--title {
+  margin-left: 30px!important;
+}
 .qDeposit .con-ul-tabs {
   background: #0f212e!important;
   display: flex;
@@ -1692,5 +1701,15 @@ export default {
 }
 .cursor-pointer {
   cursor: pointer!important;
+}
+.icon-wallet {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+}
+.icon-wallet img {
+  width: 16px; 
+  height: 16px; 
+  object-fit: cover;
 }
 </style>

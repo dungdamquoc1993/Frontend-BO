@@ -6,6 +6,15 @@
           <div class="flex flex-col justify-center relative">
             <p class="text-lg">Tổng tài sản (USD)</p>
             <p>
+              <span class="price mr-2">
+                ${{
+                  isAcc
+                  ? this.formatPrice(blObj.blLive, 2)
+                  : this.formatPrice(blObj.blDemo, 2)
+                }}
+              </span>
+            </p>
+            <!-- <p>
               <span class="price mr-2" v-if="getSetSys.typeCurrUseSys == 'usdt'">
                 {{ formatPrice(balanceForUser * getSetSys.quotePriceUSDT, 2) }}
               </span>
@@ -16,8 +25,8 @@
                 {{ formatPrice(balanceForUser * getSetSys.quotePriceETH, 2) }}
               </span>
               <span :class="`icon ${getSetSys.typeCurrUseSys} inline-block`"></span>
-              <!--<span class="basePrice text-lg">~ ${{ formatPrice(balanceUser, 2) }}</span> -->
-            </p>
+              <span class="basePrice text-lg">~ ${{ formatPrice(balanceUser, 2) }}</span>
+            </p> -->
           </div>
         </div>
       </div>
@@ -118,21 +127,7 @@
                       </svg>
                     </div>
                   </div>
-                  <vs-tabs>
-                    <vs-tab label="USDT" class="p-0" @click="
-                      getListHisTrade(),
-                      (showHisUSD = true),
-                      (showHisHH = false)
-                      ">
-                    </vs-tab>
-                    <vs-tab label="Hoa Hồng" @click="
-                      getListHisTradeHH(),
-                      (showHisHH = true),
-                      (showHisUSD = false)
-                      ">
-                    </vs-tab>
-                  </vs-tabs>
-                  <div class="showHisM" :class="{ block: showHisUSD }">
+                  <div class="showHisM">
                     <div class="history-content">
                       <div class="box-result table-custom">
                         <div class="center">
@@ -171,104 +166,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="showHisM" :class="{ block: showHisHH }">
-                    <div class="history-content">
-                      <div class="box-result">
-                        <ul class="nav nav-tabs">
-                          <li class="box-result-header">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>Thời gian</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <span>Giá trị</span>
-                              </div>
-                              <div class="block-col type">
-                                <span>Loại</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <span>Txid/Mô tả</span>
-                              </div>
-                              <div class="block-col note">
-                                <span>Ghi chú</span>
-                              </div>
-                              <div class="block-col status">
-                                <span>Tình trạng</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="item" v-if="dataHisWalletHoaHong.length == 0">
-                            <div class="w-full text-center">
-                              <span>Không có dữ liệu</span>
-                            </div>
-                          </li>
-                          <li class="item" v-else :key="indextr" v-for="(tr, indextr) in dataHisWalletHoaHong">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>{{
-                                  formatDateWallet(tr.created_at)
-                                }}</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <!-- <span class="red" v-if="tr.type_key == 'mv'">-{{ formatPrice(tr.amount, 2) }}</span> -->
-                                <span class="green">+{{
-                                  formatPrice(
-                                    tr.pending_commission + tr.vip_commission,
-                                    2
-                                  )
-                                }}</span>
-                              </div>
-                              <div class="block-col type">
-                                <span class="deitalType trading_commission">{{
-                                  tr.vip_commission > 0
-                                  ? "Mua VIP"
-                                  : "Giao dịch"
-                                }}</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <p class="text-left">
-                                  <span class="item-txid-desc">{{
-                                    tr.vip_commission > 0
-                                    ? "Hoa Hồng VIP"
-                                    : "Hoa Hồng Giao dịch"
-                                  }}</span>
-                                </p>
-                              </div>
-                              <div class="block-col note">
-                                <span>{{
-                                  tr.vip_commission > 0
-                                  ? tr.ref_id + " đã mua VIP"
-                                  : "-"
-                                }}</span>
-                              </div>
-                              <div class="block-col status text-center">
-                                <span v-if="tr.status == 1">
-                                  <span class="green">
-                                    <feather-icon icon="CheckIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hoàn tất
-                                </span>
-                                <span v-else-if="tr.status == 0">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Đợi
-                                </span>
-                                <span v-else-if="tr.status">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hủy
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <vs-pagination v-if="totalRHH > 0" class="mt-4 mb-2" :total="totalRHH" v-model="currentxHH"
-                            @input="clickPageHH"></vs-pagination>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -301,21 +198,7 @@
                       </svg>
                     </div>
                   </div>
-                  <vs-tabs>
-                    <vs-tab label="USDT" class="p-0" @click="
-                      getListHisTrade(),
-                      (showHisUSD = true),
-                      (showHisHH = false)
-                      ">
-                    </vs-tab>
-                    <vs-tab label="Hoa Hồng" @click="
-                      getListHisTradeHH(),
-                      (showHisHH = true),
-                      (showHisUSD = false)
-                      ">
-                    </vs-tab>
-                  </vs-tabs>
-                  <div class="showHisM" :class="{ block: showHisUSD }">
+                  <div class="showHisM">
                     <div class="history-content">
                       <div class="box-result table-custom">
                         <div class="center">
@@ -355,104 +238,6 @@
                             </template>
                           </vs-table>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="showHisM" :class="{ block: showHisHH }">
-                    <div class="history-content">
-                      <div class="box-result">
-                        <ul class="nav nav-tabs">
-                          <li class="box-result-header">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>Thời gian</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <span>Giá trị</span>
-                              </div>
-                              <div class="block-col type">
-                                <span>Loại</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <span>Txid/Mô tả</span>
-                              </div>
-                              <div class="block-col note">
-                                <span>Ghi chú</span>
-                              </div>
-                              <div class="block-col status">
-                                <span>Tình trạng</span>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="item" v-if="dataHisWalletHoaHong.length == 0">
-                            <div class="w-full text-center">
-                              <span>Không có dữ liệu</span>
-                            </div>
-                          </li>
-                          <li class="item" v-else :key="indextr" v-for="(tr, indextr) in dataHisWalletHoaHong">
-                            <div class="flex" style="padding: 0 1.5rem">
-                              <div class="block-col time">
-                                <span>{{
-                                  formatDateWallet(tr.created_at)
-                                }}</span>
-                              </div>
-                              <div class="block-col text-right amount">
-                                <!-- <span class="red" v-if="tr.type_key == 'mv'">-{{ formatPrice(tr.amount, 2) }}</span> -->
-                                <span class="green">+{{
-                                  formatPrice(
-                                    tr.pending_commission + tr.vip_commission,
-                                    2
-                                  )
-                                }}</span>
-                              </div>
-                              <div class="block-col type">
-                                <span class="deitalType trading_commission">{{
-                                  tr.vip_commission > 0
-                                  ? "Mua VIP"
-                                  : "Giao dịch"
-                                }}</span>
-                              </div>
-                              <div class="block-col" style="flex: 2 1 0%">
-                                <p class="text-left">
-                                  <span class="item-txid-desc">{{
-                                    tr.vip_commission > 0
-                                    ? "Hoa Hồng VIP"
-                                    : "Hoa Hồng Giao dịch"
-                                  }}</span>
-                                </p>
-                              </div>
-                              <div class="block-col note">
-                                <span>{{
-                                  tr.vip_commission > 0
-                                  ? tr.ref_id + " đã mua VIP"
-                                  : "-"
-                                }}</span>
-                              </div>
-                              <div class="block-col status text-center">
-                                <span v-if="tr.status == 1">
-                                  <span class="green">
-                                    <feather-icon icon="CheckIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hoàn tất
-                                </span>
-                                <span v-else-if="tr.status == 0">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Đợi
-                                </span>
-                                <span v-else-if="tr.status">
-                                  <span class="red">
-                                    <feather-icon icon="AlertCircleIcon" svgClasses="w-4 h-4" />
-                                  </span>
-                                  Hủy
-                                </span>
-                              </div>
-                            </div>
-                          </li>
-                          <vs-pagination v-if="totalRHH > 0" class="mt-4 mb-2" :total="totalRHH" v-model="currentxHH"
-                            @input="clickPageHH"></vs-pagination>
-                        </ul>
                       </div>
                     </div>
                   </div>
@@ -548,6 +333,9 @@
       </div>
     </vs-popup> -->
     <vs-popup class="qDeposit" title="Ví" :active.sync="popupTransferActive">
+      <div class="icon-wallet">
+        <img src="../../assets/images/wallet/wallet-svgrepo-com.svg" alt="Wallet">
+      </div>
       <vs-tabs alignment="center">
         <vs-tab label="Nạp tiền">
           <div class="con-tab-ejemplo">
@@ -940,6 +728,7 @@ export default {
       walletIsSelect: {},
       networkIsSelect: '',
       addressPayment: '0x260c3c88b5c70ab688a646f2e7c5622144eef1fa',
+      isAcc: 0,
     };
   },
   computed: {
@@ -1561,6 +1350,12 @@ export default {
     }
 
     this.getAddressF();
+    let acc = localStorage.getItem("BO_BALANCE_TYPE");
+    if (acc == "LIVE") {
+      this.isAcc = getData.isAccount = 1;
+    } else {
+      this.isAcc = getData.isAccount = 0;
+    }
   },
 };
 </script>
@@ -1570,8 +1365,7 @@ export default {
   color: #fff;
 }
 
-.showV,
-.showHisM {
+.showV {
   display: none;
 }
 
@@ -2029,5 +1823,15 @@ export default {
 .qDeposit .listWallShow .drop:hover {
   color: #05080a;
   background: #b1bad3;
+}
+.icon-wallet {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+}
+.icon-wallet img {
+  width: 16px; 
+  height: 16px; 
+  object-fit: cover;
 }
 </style>
