@@ -831,7 +831,7 @@ export default {
         },
 
         getAddressF(coint){
-
+            alert('he xi calo')
             this.isLoading = true
             AuthenticationService.getAddressCoin(coint)
             .then((res) => {

@@ -5,14 +5,25 @@ import ApiPayment from "./ApiPayment";
 export default {
   //=========== USER
   getDepositCryptoHistoryByUserid(obj) {
-    return ApiPayment().get(`/api/payments/getDepositCryptoHistoryByUserid`, obj);
+    return ApiPayment().get(
+      `/api/payments/getDepositCryptoHistoryByUserid`,
+      obj
+    );
   },
-  
+
   getWithdrawCryptoHistoryByUserid(obj) {
     return ApiPayment().get(
       `/api/payments/getWithdrawCryptoHistoryByUserid`,
       obj
     );
+  },
+  
+  requestCheckBalanceFromUsers(obj) {
+    return ApiPayment().post(`/api/payments/requestCheckBalanceFromUsers`, obj);
+  },
+
+  withdrawCryptoForUser(obj) {
+    return ApiPayment().post(`/api/payments/withdrawCryptoForUser`, obj)
   },
 
   loginUser(obj) {
