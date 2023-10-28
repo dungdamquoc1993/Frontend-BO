@@ -389,7 +389,7 @@
                 <label class="flex flex-col w-full">
                   <span class="inline-flex items-center font-semibold text-[14px] text-[#b1bad3] pb-1 justify-between">
                     <div class="inline-flex w-full">
-                      Địa chỉ nạp tiền ETH của bạn
+                      Địa chỉ nạp tiền {{ walletIsSelect.name || listWallet[0].name }} của bạn
                     </div>
                   </span>
                   <div class="flex w-full shrink-0 shadow-[0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12)] rounded">
@@ -430,7 +430,7 @@
                     src="../../assets/images/wallet/qrcode.png"
                     width="128px"
                     height="128px"
-                    class="svelte-gvr12l"
+                    id="walletQRCode"
                   />
                 </div>
               </div>
@@ -460,9 +460,9 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow" @click="closeDropdown(true)">
-                      <span class="white mr-1">0.00000000</span>
                       <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
-                      <feather-icon class="material-icons ml-2" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+                      <span class="white mx-2">{{ walletIsSelect.name || listWallet[0].name }}</span>
+                      <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow" :class="{ active: showPopWalSL }">
                       <div v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer" @click="selectWallet(wallet)">
@@ -526,13 +526,16 @@
                     </div>
                   </div>
                   <div class="inline-block font-semibold text-[#2f4553]">
-                    <span style="font-size: 12px;">0,00 US$</span>
+                    <span class="inline-flex items-center gap-1" style="font-size: 12px;">
+                      0,00
+                      <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                    </span>
                   </div>
                 </span>
                 <div class="input-wrap">
                   <div class="input-content">
                     <div class="after-icon">
-                      <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                      <span class="font-semibold">US$</span>
                     </div>
                     <input
                       autocomplete="on"
@@ -740,8 +743,9 @@ export default {
       ],
       walletIsSelect: {},
       networkIsSelect: '',
-      addressPayment: '0x260c3c88b5c70ab688a646f2e7c5622144eef1fa',
+      addressPayment: '',
       isAcc: 0,
+      userInfo: {},
     };
   },
   computed: {
@@ -932,6 +936,27 @@ export default {
 
     toggleDataSidebarRutTien(val = false) {
       this.addSidebarRutTien = val;
+    },
+
+    createQRCode(text) {
+      const opts = {
+          errorCorrectionLevel: 'H',
+          type: 'image/jpeg',
+          margin: 1,
+          color: {
+            dark:"#000000",
+            light:"#FFFFFF"
+          }
+        }
+  
+      QRCode.toDataURL(text, opts, (err, url) => {
+        if (err) throw err;
+  
+        const walletQRCode = document.getElementById('walletQRCode');
+        if (walletQRCode) {
+          walletQRCode.src = url;
+        }
+      });
     },
 
     changeTransMoney() {
@@ -1330,6 +1355,23 @@ export default {
       this.walletIsSelect = val;
       this.showPopWalSL = false;
       this.showPopNetwork = false;
+      switch (val.name) {
+        case 'BTC':
+          this.addressPayment = this.userInfo.btc_address;
+          break;
+        case 'ETH':
+        case 'BNB':
+        case 'MATIC':
+          this.addressPayment = this.userInfo.evm_native_address;
+          break;
+        case 'USDT':
+        case 'USDC':
+          this.addressPayment = this.userInfo.evm_erc20_address;
+          break;
+        default:
+          break;
+      }
+      this.createQRCode(this.addressPayment);
     },
 
     selectNetwork(val) {
@@ -1360,6 +1402,12 @@ export default {
   },
 
   created() {
+    this.userInfo = JSON.parse(localStorage.getItem("INFO"));
+    if (this.userInfo) {
+      this.addressPayment = this.userInfo.btc_address;
+    }
+
+    this.createQRCode(this.addressPayment);
     this.amountAcc = getData.balance;
     this.amountAccLive = getData.blLive;
 
