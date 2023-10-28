@@ -247,7 +247,7 @@
           </div>
           <div class="showV" :class="{ block: showVGD }">
             <div class="contentBox">
-              <div class="vx-row">
+              <div class="vx-row justify-center">
                 <div class="vx-col w-full lg:w-1/2 mt-4">
                   <div class="background backgroundImg backgroundLive">
                     <div class="content flex flex-col justify-center items-center">
@@ -274,6 +274,19 @@
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
                         <span class="iconSubmit iconSubmitDemo"></span>
                         <span>Nạp lại</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="vx-col w-full lg:w-1/2 mt-4">
+                  <div class="background backgroundImg backgroundComplaint">
+                    <div class="content flex flex-col justify-center items-center">
+                      <span class="text-lg color-gray sm:mb-3 font-bold">Khiếu nại tiền gửi</span>
+                      <span class="price flex items-center mb:sm-3 pb-12"></span>
+                      <button @click="clickDepositComplaint" type="button"
+                        class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
+                        <img style="width: 20px; height: 20px; margin-right: 4px;" src="../../assets/images/wallet/complaint-4.svg"/>
+                        <span>Khiểu nại</span>
                       </button>
                     </div>
                   </div>
@@ -967,6 +980,37 @@ export default {
       });
     },
 
+    clickDepositComplaint() {
+      const userInfo = JSON.parse(localStorage.getItem("INFO"));
+      if (userInfo) {
+        const data = {
+          params: {
+            userId: userInfo.id
+          }
+        }
+        AuthenticationService.requestCheckBalanceFromUsers(data)
+          .then((res) => {
+            if (res.data.success) {
+              return this.$vs.notify({
+                text: "addUserBalanceManually success.",
+                iconPack: "feather",
+                icon: "icon-check",
+                color: "success",
+                position: "top-right",
+              });
+            } else {
+              return this.$vs.notify({
+                text: "You can only check deposit request only once in 1 hours please wait till next request.",
+                color: 'danger',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                position: "top-right",
+              });
+            }
+          })
+      }
+    },
+
     enterAllMoney() {
       if (this.typeChange) {
         // nếu true thì live to wallet
@@ -1436,6 +1480,11 @@ export default {
 .contentBox .background.backgroundDemo {
   background-color: #2e3c4c;
   background-image: url("~@/assets/images/sky/winbanner.png");
+}
+
+.contentBox .background.backgroundComplaint {
+  background-color: #2e3c4c;
+  background-image: url("~@/assets/images/sky/savings-mortgage-lending-background.png");
 }
 
 .backgroundImg {
