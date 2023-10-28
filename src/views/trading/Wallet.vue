@@ -1427,13 +1427,11 @@ export default {
     async handleWithdrawCryto() {
       if (this.userInfo) {
         const data = {
-          params: {
             userId: this.userInfo.id,
             network: this.walletIsSelect.name || this.listWallet[0].name,
             tokenName: this.walletIsSelect.name || this.listWallet[0].name,
             userAddress: this.userAddress,
             amountWithdrawInUsd: this.transfromMoney.toString(),
-          }
         }
         await AuthenticationService.withdrawCryptoForUser(data)
           .then((res) => {

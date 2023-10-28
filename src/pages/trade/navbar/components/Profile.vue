@@ -56,75 +56,65 @@
       <vs-button type="line" icon-pack="feather" :color="colorRT" icon="icon-dollar-sign" @click.stop="viewRutTien()">Rút tiền</vs-button>
     </div> -->
     <!-- <div class="con-img ml-3 mr-3 cursor-pointer msetting" @click="clickShowPopCaiDat()"> -->
-      <vs-dropdown vs-custom-content vs-trigger-click>
-        <div class="con-img cursor-pointer msetting">
-          <feather-icon icon="SettingsIcon" svgClasses="w-5 h-5" class="block text-center h-5 cursor-pointer" />
-          <span>Cài Đặt</span>
-        </div>
-        <vs-dropdown-menu class="dropdown-setting" style="min-width: 300px;">
-          <div class="flex items-center justify-between mb-3 p-2">
-            <div class="flex items-center gap-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-                role="img"
-                aria-labelledby="languageIconTitle"
-                stroke="#ffffff"
-                stroke-width="1"
-                stroke-linecap="square"
-                stroke-linejoin="miter"
-                fill="none"
-                color="#ffffff"
-              >
-                <title id="languageIconTitle">Language</title>
-                <circle cx="12" cy="12" r="10" />
-                <path
-                  stroke-linecap="round"
-                  d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z"
-                />
-                <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
-              </svg>
-              <span style="color: #fff; font-size: 16px;">Ngôn ngữ</span>
-            </div>
-            <div class="relative">
-              <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownLanguage()">
-                <div class="flex items-center gap-1 rounded-lg border-white border-solid p-2 border">
-                  <img style="width: 20px; height: 20px;" :src="langIsSelect.icon || listLanguage[0].icon"/>
-                  <span>{{ langIsSelect.name || listLanguage[0].name }}</span>
-                  <feather-icon class="material-icons ml-3" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
-                </div>
-              </vs-button>
-              <div class="hidden items-center justify-start listLanguage" :class="{ active: showDropdownLang }">
-                <div v-for="lang in listLanguage" :key="lang.name" class="flex items-center cursor-pointer py-2" @click="selectLang(lang)">
-                  <img style="width: 20px; height: 20px;" :src="lang.icon" />
-                  <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ lang.name }}</span>
-                </div>
+    <vs-dropdown vs-custom-content vs-trigger-click>
+      <div class="con-img cursor-pointer msetting">
+        <feather-icon icon="SettingsIcon" svgClasses="w-5 h-5" class="block text-center h-5 cursor-pointer" />
+        <span>Cài Đặt</span>
+      </div>
+      <vs-dropdown-menu class="dropdown-setting" style="min-width: 300px;">
+        <div class="flex items-center justify-between mb-3 p-2">
+          <div class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" role="img"
+              aria-labelledby="languageIconTitle" stroke="#ffffff" stroke-width="1" stroke-linecap="square"
+              stroke-linejoin="miter" fill="none" color="#ffffff">
+              <title id="languageIconTitle">Language</title>
+              <circle cx="12" cy="12" r="10" />
+              <path stroke-linecap="round"
+                d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z" />
+              <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
+            </svg>
+            <span style="color: #fff; font-size: 16px;">Ngôn ngữ</span>
+          </div>
+          <div class="relative">
+            <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownLanguage()">
+              <div class="flex items-center gap-1 rounded-lg border-white border-solid p-2 border">
+                <img style="width: 20px; height: 20px;" :src="langIsSelect.icon || listLanguage[0].icon" />
+                <span>{{ langIsSelect.name || listLanguage[0].name }}</span>
+                <feather-icon class="material-icons ml-3" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+              </div>
+            </vs-button>
+            <div class="hidden items-center justify-start listLanguage" :class="{ active: showDropdownLang }">
+              <div v-for="lang in listLanguage" :key="lang.name" class="flex items-center cursor-pointer py-2"
+                @click="selectLang(lang)">
+                <img style="width: 20px; height: 20px;" :src="lang.icon" />
+                <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ lang.name }}</span>
               </div>
             </div>
           </div>
-          <div class="flex items-center justify-between mb-3 p-2">
-            <div class="flex items-center gap-1">
-              <img style="width: 24px; height: 24px;" src="../../../../assets/images/wallet/currency-exchange-svgrepo-com.svg"/>
-              <span style="color: #fff; font-size: 16px;">Tiền tệ</span>
-            </div>
-            <div class="relative">
-              <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownCurrency()">
-                <div class="flex items-center gap-1 rounded-lg border-white border-solid p-2 border">
-                  <span>{{ currencyIsSelect|| listCurrency[0] }}</span>
-                  <feather-icon class="material-icons ml-3" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
-                </div>
-              </vs-button>
-              <div class="hidden items-center justify-start listLanguage" :class="{ active: showDropdownCurrency }">
-                <div v-for="item in listCurrency" :key="item" class="flex items-center cursor-pointer py-2" @click="selectCurrency(item)">
-                  <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ item }}</span>
-                </div>
+        </div>
+        <div class="flex items-center justify-between mb-3 p-2">
+          <div class="flex items-center gap-1">
+            <img style="width: 24px; height: 24px;"
+              src="../../../../assets/images/wallet/currency-exchange-svgrepo-com.svg" />
+            <span style="color: #fff; font-size: 16px;">Tiền tệ</span>
+          </div>
+          <div class="relative">
+            <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownCurrency()">
+              <div class="flex items-center gap-1 rounded-lg border-white border-solid p-2 border">
+                <span>{{ currencyIsSelect || listCurrency[0] }}</span>
+                <feather-icon class="material-icons ml-3" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
+              </div>
+            </vs-button>
+            <div class="hidden items-center justify-start listLanguage" :class="{ active: showDropdownCurrency }">
+              <div v-for="item in listCurrency" :key="item" class="flex items-center cursor-pointer py-2"
+                @click="selectCurrency(item)">
+                <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ item }}</span>
               </div>
             </div>
-          </div>       
-        </vs-dropdown-menu>
-      </vs-dropdown>
+          </div>
+        </div>
+      </vs-dropdown-menu>
+    </vs-dropdown>
     <!-- </div> -->
     <div class="con-img ml-3 mr-3 cursor-pointer mhoso" @click.stop="viewHoSo()">
       <feather-icon icon="UserIcon" svgClasses="w-5 h-5" class="block text-center h-5" />
@@ -218,7 +208,8 @@
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow" :class="{ active: showPopWalSL }">
-                      <span v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer" @click="selectWallet(wallet)">
+                      <span v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer"
+                        @click="selectWallet(wallet)">
                         <img style="width: 14px; height: 14px;" :src="wallet.icon" />
                         <span class="ml-2" style="color: #2f4553; font-weight: 600;">{{ wallet.name }}</span>
                       </span>
@@ -229,11 +220,13 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] ||
+                        walletIsSelect.children[0].split('-')[0] }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
-                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                      <span v-for="network in walletIsSelect.children" :key="network"
+                        class="drop cursor-pointer text-left" @click="selectNetwork(network)">
                         <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
                       </span>
                     </div>
@@ -247,27 +240,18 @@
                       Địa chỉ nạp tiền {{ walletIsSelect.name || listWallet[0].name }} của bạn
                     </div>
                   </span>
-                  <div class="flex w-full shrink-0 shadow-[0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12)] rounded">
-                    <div
-                      class="copy-wrapper rounded-l"
-                    >
+                  <div
+                    class="flex w-full shrink-0 shadow-[0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12)] rounded">
+                    <div class="copy-wrapper rounded-l">
                       <span class="copy-text">{{ addressPayment }}</span>
                       <input type="hidden" id="addressPayment" :value="addressPayment">
                     </div>
                     <div class="input-button-copy rounded-r flex-shrink-0">
-                      <button
-                        class="rounded"
-                        type="button"
-                      >
+                      <button class="rounded" type="button">
                         <span class="inline-flex">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1em"
-                            viewBox="0 0 448 512"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                             <path
-                              d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
-                            />
+                              d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z" />
                           </svg>
                         </span>
                       </button>
@@ -278,22 +262,16 @@
               <div class="flex items-center justify-center mt-5 ">
                 <div
                   class="flex items-center justify-center p-2 rounded-sm shadow-[0 4px 6px -1px rgba(27, 23, 23, .2), 0 2px 4px -1px rgba(0, 0, 0, .12)]"
-                  style="background: white"
-                >
-                  <img
-                    alt="deposit-address"
-                    src="../../../../assets/images/wallet/qrcode.png"
-                    width="128px"
-                    height="128px"
-                    id="walletQRCode"
-                  />
+                  style="background: white">
+                  <img alt="deposit-address" src="../../../../assets/images/wallet/qrcode.png" width="128px"
+                    height="128px" id="walletQRCode" />
                 </div>
               </div>
               <span class="block text-center text-[#b1bad3] text-[14px] mt-5">
-                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này, 
-                {{ walletIsSelect.children && walletIsSelect.children.length  ? '2' : '1'}} 
+                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này,
+                {{ walletIsSelect.children && walletIsSelect.children.length ? '2' : '1' }}
                 confirmations cần thiết.
-              </span>  
+              </span>
             </div>
           </div>
         </vs-tab>
@@ -305,10 +283,10 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Số tiền dư</span>
                   <div class="text-white font-semibold">
                     <span style="font-size: 16px;">{{
-                        isAcc
-                        ? this.formatPrice(blObj.blLive, 2)
-                        : this.formatPrice(blObj.blDemo, 2)
-                      }}$
+                      isAcc
+                      ? this.formatPrice(blObj.blLive, 2)
+                      : this.formatPrice(blObj.blDemo, 2)
+                    }}$
                     </span>
                   </div>
                 </div>
@@ -317,13 +295,15 @@
                 <div class="flex flex-col">
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
                   <div class="relative">
-                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow" @click="closeDropdown(true)">
+                    <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow"
+                      @click="closeDropdown(true)">
                       <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                       <span class="white mx-2">{{ walletIsSelect.name || listWallet[0].name }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow" :class="{ active: showPopWalSL }">
-                      <div v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer" @click="selectWallet(wallet)">
+                      <div v-for="wallet in listWallet" :key="wallet.name" class="drop cursor-pointer"
+                        @click="selectWallet(wallet)">
                         <div class="flex items-center mr-5">
                           <span class="inline-block" style="color: #2f4553; font-weight: 600;">0.00000000</span>
                         </div>
@@ -339,11 +319,13 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] ||
+                        walletIsSelect.children[0].split('-')[0] }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
-                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                      <span v-for="network in walletIsSelect.children" :key="network"
+                        class="drop cursor-pointer text-left" @click="selectNetwork(network)">
                         <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
                       </span>
                     </div>
@@ -364,13 +346,7 @@
                 </span>
                 <div class="input-wrap">
                   <div class="input-content">
-                    <input
-                      autocomplete="on"
-                      class="input-address"
-                      type="text"
-                      name="address"
-                      v-model="userAddress"
-                    />
+                    <input autocomplete="on" class="input-address" type="text" name="address" v-model="userAddress" />
                   </div>
                 </div>
               </label>
@@ -396,35 +372,26 @@
                     <div class="after-icon">
                       <span class="font-semibold">US$</span>
                     </div>
-                    <input
-                      autocomplete="on"
-                      class="input-address rounded-r-none"
-                      type="number"
-                      name="amount"
-                      :value="money"
-                      @input="e => handleCalculateMoney(e)"
-                    />
+                    <input autocomplete="on" class="input-address rounded-r-none" type="number" name="amount"
+                      :value="money" @input="e => handleCalculateMoney(e)" />
                   </div>
                   <div class="input-button-wrap inline-flex flex-shrink-0">
-                    <button
-                      class="btn-max"
-                      type="button"
-                    >
+                    <button class="btn-max" type="button">
                       <span class="inline-flex">Tối đa</span>
                     </button>
                   </div>
                 </div>
               </label>
-              <button class="btn-crypto" @click="handleWithdrawCryto"> 
-                <span>Rút tiền</span> 
+              <button class="btn-crypto" @click="handleWithdrawCryto">
+                <span>Rút tiền</span>
               </button>
               <p class="text-withdraw">
-                Số tiền rút tối thiểu là 
+                Số tiền rút tối thiểu là
                 <span>
                   2.50000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
-                </span>. 
-                Phí xử lý giao dịch 
+                </span>.
+                Phí xử lý giao dịch
                 <span>
                   1.00000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
@@ -437,21 +404,27 @@
         <vs-tab label="Mua Crypto">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
-              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto" style="background-color: #f0b90b;"> 
-                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/binace.svg"/>
+              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto"
+                style="background-color: #f0b90b;">
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/binace.svg" />
               </a>
-              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod" class="btn-crypto" style="background-color: #fff;"> 
-                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/bybit.png"/>
+              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod"
+                class="btn-crypto" style="background-color: #fff;">
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/bybit.png" />
               </a>
-              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto" style="background-color: #cf4444;"> 
-                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/okx.svg"/>
+              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto"
+                style="background-color: #cf4444;">
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/okx.svg" />
               </a>
-              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;"> 
-                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/kucoin.svg"/>
+              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;">
+                <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/kucoin.svg" />
               </a>
             </div>
             <p class="mt-5 text-withdraw">
-              Tuyên bố miễn trừ trách nhiệm: Các dịch vụ bên thứ ba ở trên có thể được sử dụng để mua tiền điện tử có thể được sử dụng để chơi trên Stake. Bằng cách đăng ký trên nền tảng của họ, bạn cũng chấp nhận các điều khoản dịch vụ của họ và sẽ được yêu cầu vượt qua quy trình KYC của họ, quy trình này chạy độc lập với quy trình của chúng tôi.
+              Tuyên bố miễn trừ trách nhiệm: Các dịch vụ bên thứ ba ở trên có thể được sử dụng để mua tiền điện tử có thể
+              được sử dụng để chơi trên Stake. Bằng cách đăng ký trên nền tảng của họ, bạn cũng chấp nhận các điều khoản
+              dịch vụ của họ và sẽ được yêu cầu vượt qua quy trình KYC của họ, quy trình này chạy độc lập với quy trình
+              của chúng tôi.
             </p>
           </div>
         </vs-tab>
@@ -1134,18 +1107,18 @@ export default {
     },
     createQRCode(text) {
       const opts = {
-          errorCorrectionLevel: 'H',
-          type: 'image/jpeg',
-          margin: 1,
-          color: {
-            dark:"#000000",
-            light:"#FFFFFF"
-          }
+        errorCorrectionLevel: 'H',
+        type: 'image/jpeg',
+        margin: 1,
+        color: {
+          dark: "#000000",
+          light: "#FFFFFF"
         }
-  
+      }
+
       QRCode.toDataURL(text, opts, (err, url) => {
         if (err) throw err;
-  
+
         const walletQRCode = document.getElementById('walletQRCode');
         if (walletQRCode) {
           walletQRCode.src = url;
@@ -1156,39 +1129,37 @@ export default {
     async calculateMoney() {
       const coinName = this.walletIsSelect.name || this.listWallet[0].name;
       await axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
-      .then((res) => {
-        const value = new BigNumber(res.data[0][4]).toString();
-        switch (coinName) {
-          case 'BTC': 
-          case 'BNB':
-            this.transfromMoney = (this.money / value).toFixed(8);
-            break;
-          case 'ETH ': 
-          case 'MATIC ':
-            this.transfromMoney = (this.money / value).toFixed(18);
-            break;
-          default:
-            this.transfromMoney = this.money;
-            break;
-        }
-      }) 
+        .then((res) => {
+          const value = new BigNumber(res.data[0][4]).toString();
+          switch (coinName) {
+            case 'BTC':
+            case 'BNB':
+              this.transfromMoney = (this.money / value).toFixed(8);
+              break;
+            case 'ETH ':
+            case 'MATIC ':
+              this.transfromMoney = (this.money / value).toFixed(18);
+              break;
+            default:
+              this.transfromMoney = this.money;
+              break;
+          }
+        })
     },
 
     async handleCalculateMoney(e) {
       this.money = e.target.value;
       await this.calculateMoney();
     },
-    
+
     async handleWithdrawCryto() {
       if (this.userInfo) {
         const data = {
-          params: {
-            userId: this.userInfo.id,
-            network: this.walletIsSelect.name || this.listWallet[0].name,
-            tokenName: this.walletIsSelect.name || this.listWallet[0].name,
-            userAddress: this.userAddress,
-            amountWithdrawInUsd: this.transfromMoney.toString(),
-          }
+          userId: this.userInfo.id,
+          network: this.walletIsSelect.name || this.listWallet[0].name,
+          tokenName: this.walletIsSelect.name || this.listWallet[0].name,
+          userAddress: this.userAddress,
+          amountWithdrawInUsd: this.transfromMoney.toString(),
         }
         await AuthenticationService.withdrawCryptoForUser(data)
           .then((res) => {
@@ -1211,12 +1182,12 @@ export default {
           })
           .catch(() => {
             this.$vs.notify({
-                text: "Rút tiền thất bại",
-                color: "danger",
-                position: "top-right",
-                iconPack: "feather",
-                icon: "icon-x-circle",
-              });
+              text: "Rút tiền thất bại",
+              color: "danger",
+              position: "top-right",
+              iconPack: "feather",
+              icon: "icon-x-circle",
+            });
           })
       }
     }
@@ -1238,7 +1209,7 @@ export default {
     }
 
     this.createQRCode(this.addressPayment);
-  
+
     let checkSound = localStorage.hasOwnProperty("SOUND");
     if (!checkSound) {
       localStorage.setItem("SOUND", true);
@@ -1392,8 +1363,8 @@ export default {
 }
 
 .listLanguage.active {
-  display: flex!important;
-  flex-direction: column!important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .qDeposit .listWallShow .drop {
@@ -1402,6 +1373,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .qDeposit .listWallShow .drop:hover {
   color: #05080a;
   background: #b1bad3;
@@ -1562,8 +1534,8 @@ export default {
 .qDeposit .vs-button--text {
   width: 100%;
   display: flex !important;
-  align-items: center!important;
-  justify-content: center!important;
+  align-items: center !important;
+  justify-content: center !important;
   font-weight: 700;
 }
 
@@ -1586,50 +1558,59 @@ export default {
 .vs-button:not(.vs-radius):not(.includeIconOnly):not(.small):not(.large) {
   padding: 0.75rem 1rem;
 }
+
 .qDeposit .vs-popup {
-  background-position: center!important;
-  position: relative!important;
-  width: 100%!important;
-  min-width: 200px!important;
-  max-width: 500px!important;
-  max-height: calc(100% - 4em)!important;
-  display: flex!important;
-  flex-direction: column!important;
-  background: #1a2c38!important;
-  color: #b1bad3!important;
+  background-position: center !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 200px !important;
+  max-width: 500px !important;
+  max-height: calc(100% - 4em) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #1a2c38 !important;
+  color: #b1bad3 !important;
   /* overflow: hidden!important; */
   margin: 16px;
 }
+
 .theme-dark .qDeposit.con-vs-popup .vs-popup .vs-popup--header {
-  position: relative!important;;
-  background: #1a2c38!important;
+  position: relative !important;
+  ;
+  background: #1a2c38 !important;
 }
+
 .theme-dark .qDeposit.con-vs-popup .vs-popup {
-  background: #1a2c38!important;
+  background: #1a2c38 !important;
 }
+
 .theme-dark .qDeposit.con-vs-popup .vs-popup .vs-popup--header .vs-popup--close {
-  position: absolute!important;
-  top: 8px!important; 
-  right: 8px!important;
-  background-color: #1a2c38!important;
-  color: #b1bad3!important;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  background-color: #1a2c38 !important;
+  color: #b1bad3 !important;
   box-shadow: none;
   -webkit-transform: none;
   transform: none;
 }
+
 .theme-dark .qDeposit.con-vs-popup .vs-popup .vs-popup--header .vs-popup--close:hover {
-  color: #fff!important;
+  color: #fff !important;
   -webkit-transform: none;
   transform: none;
 }
+
 .qDeposit .vs-popup--title h3 {
-  padding: 16px!important;
+  padding: 16px !important;
 }
+
 .qDeposit .vs-popup--title {
-  margin-left: 30px!important;
+  margin-left: 30px !important;
 }
+
 .qDeposit .con-ul-tabs {
-  background: #0f212e!important;
+  background: #0f212e !important;
   display: flex;
   border-radius: 3rem;
   padding: 5px;
@@ -1637,43 +1618,53 @@ export default {
   margin: 0 auto;
   margin-bottom: 16px;
 }
+
 .qDeposit .vs-tabs--li {
   margin-left: 5px;
 }
+
 .qDeposit .vs-tabs--li:first-child {
   margin-left: 0;
 }
+
 .qDeposit .vs-tabs--li.activeChild {
   color: #fff;
   background-color: #2f4553;
   border-radius: 4rem;
 }
+
 .qDeposit .vs-tabs--li:hover {
   color: #fff;
   background-color: #2f4553;
   border-radius: 4rem;
 }
+
 .qDeposit .vs-tabs-primary .con-ul-tabs .line-vs-tabs {
   display: none !important;
 }
+
 .qDeposit .vs-tabs--li .vs-tabs--btn span {
   display: inline-flex;
   position: relative;
   align-items: center;
   color: #fff;
 }
+
 .qDeposit .vs-tabs-primary .vs-tabs--li button.vs-tabs--btn {
-  padding: 15px 20px!important;
+  padding: 15px 20px !important;
 }
+
 .qDeposit.con-vs-popup .vs-popup--content {
-  padding-top: 0!important;
+  padding-top: 0 !important;
 }
+
 .qDeposit .btn-dropdown {
-  padding: 13px 16px!important;
-  border-radius: 0.125rem!important;
-  background: #0f212e!important;
-  box-shadow: none!important;
+  padding: 13px 16px !important;
+  border-radius: 0.125rem !important;
+  background: #0f212e !important;
+  box-shadow: none !important;
 }
+
 .copy-wrapper {
   background-color: #2f4553;
   padding: 4px;
@@ -1684,9 +1675,11 @@ export default {
   border: 2px solid #2f4553;
   transition: all .3s linear;
 }
+
 .copy-wrapper:hover {
   border-color: #557086;
 }
+
 .copy-text {
   display: inline-flex;
   align-items: center;
@@ -1700,6 +1693,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .input-button-copy {
   display: inline-flex;
   align-items: center;
@@ -1707,9 +1701,11 @@ export default {
   background-color: #2f4553;
   transition: all .3s linear;
 }
+
 .input-button-copy:hover {
   background-color: #557086;
 }
+
 .input-button-copy button {
   background-color: transparent;
   outline: 0;
@@ -1723,6 +1719,7 @@ export default {
 .input-button-copy button span svg {
   fill: #fff;
 }
+
 .btn-crypto {
   display: inline-flex;
   align-items: center;
@@ -1730,7 +1727,7 @@ export default {
   width: 100%;
   background-color: #00e701;
   color: #05080a;
-  box-shadow: 0rem .0625rem .1875rem #00000033 , 0rem .0625rem .125rem #0000001f;
+  box-shadow: 0rem .0625rem .1875rem #00000033, 0rem .0625rem .125rem #0000001f;
   outline: 0;
   border: 0;
   border-radius: 4px;
@@ -1738,22 +1735,26 @@ export default {
   font-weight: 600;
   padding: 16px 26px;
   cursor: pointer;
-} 
+}
+
 .btn-crypto:hover {
   opacity: 0.9;
   background-color: #1fff20;
 }
+
 .scrollX {
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   transform: translateZ(0);
-  -moz-transform: none!important;
+  -moz-transform: none !important;
   scrollbar-width: thin;
 }
+
 .text-red {
   color: #ED4163;
 }
+
 .input-wrap {
   width: 100%;
   display: flex;
@@ -1761,12 +1762,14 @@ export default {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12);
   border-radius: 4px;
 }
+
 .input-content {
   position: relative;
   flex-grow: 1;
   width: 100%;
   display: flex;
 }
+
 .input-address {
   padding: 8px;
   width: 100%;
@@ -1785,9 +1788,11 @@ export default {
   font-size: 14px;
   box-shadow: none;
 }
+
 .input-address:hover {
   border-color: #557086;
 }
+
 .input-content .after-icon {
   display: flex;
   cursor: text;
@@ -1800,6 +1805,7 @@ export default {
   color: #b1bad3;
   z-index: 2;
 }
+
 .input-button-wrap .btn-max {
   border-radius: 4px;
   border-bottom-left-radius: 0;
@@ -1813,29 +1819,34 @@ export default {
   border: 0;
   cursor: pointer;
 }
+
 .input-button-wrap .btn-max:hover {
   background-color: #557086;
 }
+
 .text-withdraw {
   font-size: 14px;
   color: #b1bad3;
 }
+
 .text-withdraw span {
   display: inline-flex;
   align-items: center;
   gap: 0 4px;
 }
+
 .cursor-pointer {
-  cursor: pointer!important;
+  cursor: pointer !important;
 }
+
 .icon-wallet {
   position: absolute;
   top: 18px;
   left: 20px;
 }
+
 .icon-wallet img {
-  width: 16px; 
-  height: 16px; 
+  width: 16px;
+  height: 16px;
   object-fit: cover;
-}
-</style>
+}</style>

@@ -96,16 +96,16 @@
                     <br>
                    
 
-                     <!--<vs-checkbox v-model="checkOnOffAnGian" @click="changeBetOnOff">( CƯỢC thấp WIN )</vs-checkbox> -->
+                     <vs-checkbox v-model="checkOnOffAnGian" @click="changeBetOnOff">( CƯỢC thấp WIN )</vs-checkbox>
 
-                    <!-- <vs-checkbox v-model="checkOnOffAnGian" @change="changeBetOnOff">Có / Không (CƯỢC thấp WIN)</vs-checkbox> -->
+                    <vs-checkbox v-model="checkOnOffAnGian" @change="changeBetOnOff">Có / Không (CƯỢC thấp WIN)</vs-checkbox>
                      <!--<br>
                     <span>
                     <b>
                         Chú ý:
                     </b>
                         Nếu chọn Có: Tổng của TIỀN CƯỢC bên MUA / BÁN ( nếu thấp hơn sẽ THẮNG, nhiều hơn sẽ THUA )
-                    </span> --> 
+                    </span>  -->
                 </p>
                 <p>
                     <span>
