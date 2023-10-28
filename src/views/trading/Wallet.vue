@@ -511,6 +511,7 @@
                       class="input-address"
                       type="text"
                       name="address"
+                      v-model="userAddress"
                     />
                   </div>
                 </div>
@@ -527,7 +528,7 @@
                   </div>
                   <div class="inline-block font-semibold text-[#2f4553]">
                     <span class="inline-flex items-center gap-1" style="font-size: 12px;">
-                      0,00
+                      {{ transfromMoney }}
                       <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                     </span>
                   </div>
@@ -542,6 +543,8 @@
                       class="input-address rounded-r-none"
                       type="number"
                       name="amount"
+                      :value="money"
+                      @input="e => handleCalculateMoney(e)"
                     />
                   </div>
                   <div class="input-button-wrap inline-flex flex-shrink-0">
@@ -554,7 +557,7 @@
                   </div>
                 </div>
               </label>
-              <button class="btn-crypto"> 
+              <button class="btn-crypto" @click="handleWithdrawCryto"> 
                 <span>Rút tiền</span> 
               </button>
               <p class="text-withdraw">
@@ -643,6 +646,8 @@ import getSetSys from "@/services/settingSys.json";
 import moment from "moment";
 import SETTINGS from "../../../settings.json";
 import QRCode from "qrcode";
+import axios from 'axios';
+import BigNumber from 'bignumber.js';
 
 export default {
   components: {
@@ -746,6 +751,9 @@ export default {
       addressPayment: '',
       isAcc: 0,
       userInfo: {},
+      money: '',
+      transfromMoney: '0',
+      userAddress: '',
     };
   },
   computed: {
@@ -1351,7 +1359,7 @@ export default {
       this.getInfoUser();
     },
     
-    selectWallet(val) {
+    async selectWallet(val) {
       this.walletIsSelect = val;
       this.showPopWalSL = false;
       this.showPopNetwork = false;
@@ -1372,6 +1380,7 @@ export default {
           break;
       }
       this.createQRCode(this.addressPayment);
+      await this.calculateMoney();
     },
 
     selectNetwork(val) {
@@ -1389,6 +1398,73 @@ export default {
         this.showPopWalSL = false;
       }
     },
+    async calculateMoney() {
+      const coinName = this.walletIsSelect.name || this.listWallet[0].name;
+      await axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
+      .then((res) => {
+        const value = new BigNumber(res.data[0][4]).toString();
+        switch (coinName) {
+          case 'BTC': 
+          case 'BNB':
+            this.transfromMoney = (this.money / value).toFixed(8);
+            break;
+          case 'ETH ': 
+          case 'MATIC ':
+            this.transfromMoney = (this.money / value).toFixed(18);
+            break;
+          default:
+            this.transfromMoney = this.money;
+            break;
+        }
+      }) 
+    },
+
+    async handleCalculateMoney(e) {
+      this.money = e.target.value;
+      await this.calculateMoney();
+    },
+    
+    async handleWithdrawCryto() {
+      if (this.userInfo) {
+        const data = {
+          params: {
+            userId: this.userInfo.id,
+            network: this.walletIsSelect.name || this.listWallet[0].name,
+            tokenName: this.walletIsSelect.name || this.listWallet[0].name,
+            userAddress: this.userAddress,
+            amountWithdrawInUsd: this.transfromMoney.toString(),
+          }
+        }
+        await AuthenticationService.withdrawCryptoForUser(data)
+          .then((res) => {
+            if (res.data.success) {
+              this.$vs.notify({
+                text: "Rút tiền thành công.",
+                iconPack: "feather",
+                icon: "icon-check",
+                color: "success",
+              });
+            } else {
+              this.$vs.notify({
+                text: "Rút tiền thất bại",
+                color: "danger",
+                position: "top-right",
+                iconPack: "feather",
+                icon: "icon-x-circle",
+              });
+            }
+          })
+          .catch(() => {
+            this.$vs.notify({
+                text: "Rút tiền thất bại",
+                color: "danger",
+                position: "top-right",
+                iconPack: "feather",
+                icon: "icon-x-circle",
+              });
+          })
+      }
+    }
   },
   mounted() {
     this.getSysWallet();
