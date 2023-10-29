@@ -1166,14 +1166,14 @@ export default {
     calculateMoney(coinName) {
       axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
         .then((res) => {
-          const value = new BigNumber(res.data[0][4]).toString();
+          const value = new BigNumber(res.data[0][4]).toString(); 
           switch (coinName) {
             case 'BTC':
             case 'BNB':
               this.transfromMoney = (this.money / value).toFixed(8);
               break;
-            case 'ETH ':
-            case 'MATIC ':
+            case 'ETH':
+            case 'MATIC':
               this.transfromMoney = (this.money / value).toFixed(18);
               break;
             default:

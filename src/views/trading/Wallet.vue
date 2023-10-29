@@ -1447,8 +1447,8 @@ export default {
           case 'BNB':
             this.transfromMoney = (this.money / value).toFixed(8);
             break;
-          case 'ETH ': 
-          case 'MATIC ':
+          case 'ETH': 
+          case 'MATIC':
             this.transfromMoney = (this.money / value).toFixed(18);
             break;
           default:
