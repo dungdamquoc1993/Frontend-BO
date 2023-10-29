@@ -384,12 +384,12 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
-                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
-                        <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
+                      <span v-for="network in walletIsSelect.children" :key="network.name" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                        <span style="color: #2f4553; font-weight: 600;">{{ network.name }}</span>
                       </span>
                     </div>
                   </div>
@@ -491,12 +491,12 @@
                   <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.split('-')[0] || walletIsSelect.children[0].split('-')[0] }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
-                      <span v-for="network in walletIsSelect.children" :key="network" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
-                        <span style="color: #2f4553; font-weight: 600;">{{ network }}</span>
+                      <span v-for="network in walletIsSelect.children" :key="network.name" class="drop cursor-pointer text-left" @click="selectNetwork(network)">
+                        <span style="color: #2f4553; font-weight: 600;">{{ network.name }}</span>
                       </span>
                     </div>
                   </div>
@@ -738,7 +738,18 @@ export default {
           icon: require('../../assets/images/wallet/usdt.svg'),
           name: 'USDT',
           children: [
-            'ETH - Ethereum (ERC20)', 'BSC - BNB Smart Chain (BEP20)', 'POLYGON - Matic'
+            {
+              name: 'ETH - Ethereum (ERC20)',
+              nameShort: 'ETH'
+            },
+            {
+              name: 'BSC - BNB Smart Chain (BEP20)',
+              nameShort: 'BNB'
+            },
+            {
+              name: 'POLYGON - Matic',
+              nameShort: 'MATIC'
+            }
           ]
         },
         {
@@ -749,7 +760,18 @@ export default {
           icon: require('../../assets/images/wallet/usdc.svg'),
           name: 'USDC',
           children: [
-            'ETH - Ethereum (ERC20)', 'BSC - BNB Smart Chain (BEP20)', 'POLYGON - Matic'
+            {
+              name: 'ETH - Ethereum (ERC20)',
+              nameShort: 'ETH'
+            },
+            {
+              name: 'BSC - BNB Smart Chain (BEP20)',
+              nameShort: 'BNB'
+            },
+            {
+              name: 'POLYGON - Matic',
+              nameShort: 'MATIC'
+            }
           ]
         },
         {
@@ -758,7 +780,7 @@ export default {
         },
       ],
       walletIsSelect: {},
-      networkIsSelect: '',
+      networkIsSelect: {},
       addressPayment: '',
       isAcc: 0,
       userInfo: {},
@@ -783,7 +805,8 @@ export default {
   methods: {
     showPopTrans() {
       alert(`line 1101 src/views/trading/Wallet.vue show modal nạp rút tiền`)
-      this.popupTransferActive = true
+      this.popupTransferActive = true;
+      this.createQRCode(this.addressPayment);
     },
     popupBill(tr) {
       this.popupBillActive = true;
@@ -1371,7 +1394,7 @@ export default {
       this.getInfoUser();
     },
     
-    async selectWallet(val) {
+    selectWallet(val) {
       this.walletIsSelect = val;
       this.showPopWalSL = false;
       this.showPopNetwork = false;
@@ -1392,13 +1415,18 @@ export default {
           break;
       }
       this.createQRCode(this.addressPayment);
-      await this.calculateMoney();
+      const coinName = this.walletIsSelect.children
+        ? this.walletIsSelect.children[0].nameShort
+        : this.walletIsSelect.name || this.listWallet[0].name;
+      this.calculateMoney(coinName);
     },
 
     selectNetwork(val) {
       this.networkIsSelect = val;
       this.showPopNetwork = false;
       this.showPopWalSL = false;
+      const coinName = val.nameShort || this.walletIsSelect.children[0].nameShort;
+      this.calculateMoney(coinName);
     },
 
     closeDropdown(isPopwal) {
@@ -1410,9 +1438,8 @@ export default {
         this.showPopWalSL = false;
       }
     },
-    async calculateMoney() {
-      const coinName = this.walletIsSelect.name || this.listWallet[0].name;
-      await axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
+    calculateMoney(coinName) {
+      axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
       .then((res) => {
         const value = new BigNumber(res.data[0][4]).toString();
         switch (coinName) {
@@ -1431,9 +1458,12 @@ export default {
       }) 
     },
 
-    async handleCalculateMoney(e) {
+    handleCalculateMoney(e) {
       this.money = e.target.value;
-      await this.calculateMoney();
+      const coinName = this.walletIsSelect.children
+        ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
+        : this.walletIsSelect.name || this.listWallet[0].name;
+      this.calculateMoney(coinName);
     },
     
     async handleWithdrawCryto() {
@@ -1479,11 +1509,14 @@ export default {
       }
     },
 
-    async handleMaxMoney() {
+    handleMaxMoney() {
       this.money = this.isAcc
         ? this.blObj.blLive.toString()
         : this.blObj.blDemo.toString();
-      await this.calculateMoney();
+      const coinName = this.walletIsSelect.children
+        ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
+        : this.walletIsSelect.name || this.listWallet[0].name;
+      this.calculateMoney(coinName);
     }
   },
   mounted() {
