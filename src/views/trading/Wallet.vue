@@ -4,7 +4,7 @@
       <div class="w-full h-48 subBanner">
         <div class="container h-full flex items-center info">
           <div class="flex flex-col justify-center relative">
-            <p class="text-lg">Tổng tài sản (USD)</p>
+            <p class="text-lg">{{ $t('TotalAssets') }}</p>
             <p>
               <span class="price mr-2">
                 {{
@@ -105,7 +105,7 @@
                 </div>
               </div> -->
               <div class="history lg:mb-4">
-                <h4 class="mb-3 my-4 history-title">Lịch sử giao dịch</h4>
+                <h4 class="mb-3 my-4 history-title">{{ $t('TransactionHistory') }}</h4>
                 <div class="history-body relative" :class="{ 'ld-loading': isLoading }">
                   <div class="loading">
                     <div class="loading__ring">
@@ -176,7 +176,7 @@
           <div class="showV" :class="{ block: showVC }">
             <div class="box-coin-wrapper">
               <div class="history lg:mb-4">
-                <h4 class="mb-3 history-title">Lịch sử giao dịch</h4>
+                <h4 class="mb-3 history-title">{{ $t('TransactionHistory') }}</h4>
                 <div class="history-body relative" :class="{ 'ld-loading': isLoading }">
                   <div class="loading">
                     <div class="loading__ring">
@@ -251,7 +251,7 @@
                 <div class="vx-col w-full lg:w-1/2 mt-4">
                   <div class="background backgroundImg backgroundLive">
                     <div class="content flex flex-col justify-center items-center">
-                      <span class="text-lg color-gray sm:mb-3 font-bold">Tài khoản Thực</span>
+                      <span class="text-lg color-gray sm:mb-3 font-bold">{{ $t('RealAccount') }}</span>
                       <span class="price flex items-center mb:sm-3 mb-2">
                         <span class="text-3xl font-bold">
                           {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}` }}
@@ -260,7 +260,7 @@
                       <button @click="showPopTrans()" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
                         <img style="width: 20px; height: 20px; margin-right: 4px;" src="../../assets/images/wallet/wallet-svgrepo-com.svg"/>
-                        <span>Ví Tiền</span>
+                        <span>{{ $t('Wallet') }}</span>
                       </button>
                     </div>
                   </div>
@@ -268,7 +268,7 @@
                 <div class="vx-col w-full lg:w-1/2 mt-4">
                   <div class="background backgroundImg backgroundDemo">
                     <div class="content flex flex-col justify-center items-center">
-                      <span class="text-lg color-gray sm:mb-3 font-bold">Tài khoản Demo</span>
+                      <span class="text-lg color-gray sm:mb-3 font-bold">{{ $t('DemoAccount') }}</span>
                       <span class="price flex items-center mb:sm-3 mb-2">
                         <span class="text-3xl font-bold">
                           {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}` }}
@@ -277,7 +277,7 @@
                       <button @click="clickReloadMoneyDemo" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
                         <span class="iconSubmit iconSubmitDemo"></span>
-                        <span>Nạp lại</span>
+                        <span>{{ $t('Reload')}}</span>
                       </button>
                     </div>
                   </div>
@@ -285,12 +285,12 @@
                 <div class="vx-col w-full lg:w-1/2 mt-4">
                   <div class="background backgroundImg backgroundComplaint">
                     <div class="content flex flex-col justify-center items-center">
-                      <span class="text-lg color-gray sm:mb-3 font-bold">Khiếu nại tiền gửi</span>
+                      <span class="text-lg color-gray sm:mb-3 font-bold">{{ $t('DepositComplaints') }}</span>
                       <span class="price flex items-center mb:sm-3 pb-12"></span>
                       <button @click="clickDepositComplaint" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
                         <img style="width: 20px; height: 20px; margin-right: 4px;" src="../../assets/images/wallet/complaint-4.svg"/>
-                        <span>Khiểu nại</span>
+                        <span>{{ $t('Complain') }}</span>
                       </button>
                     </div>
                   </div>

@@ -318,7 +318,7 @@
             <div class="pc block">
                 <div class="mb-6">
                     <div class="mt-2 mb-2">
-                        Tiền cược
+                        {{ $t('Bet') || 'Tiền cược' }}
                     </div>
                     <div class="relative">
                         <vs-input @keyup="nhapBetAmount" class="w-full betInput" icon-pack="feather" icon="icon-dollar-sign" placeholder="10" v-model="betAmount" icon-no-border />
@@ -344,7 +344,7 @@
                 </div>
                 <div class="lg:relative mb-10">
                     <div class="mt-2 mb-2 text-center">
-                        Lợi nhuận
+                        {{ $t('Profit') || 'Lợi nhuận' }}
                     </div>
                     <div class="text-center">
                         <span class="profitPercent color-light-blue mb-2">95%</span>
@@ -355,7 +355,7 @@
                 </div>
                 <div class="lg:relative mb-10 text-center">
                     <div class="text-center">
-                        Chỉ báo tâm lý
+                        {{ $t('Sentiment') || 'Chỉ báo tâm lý' }}
                     </div>
                     <vs-progress class="bg-red" :height="4" :percent="CSBUY" color="success"></vs-progress>
                     <div class="block">
@@ -378,11 +378,11 @@
                     </div>
                     <div class="h-6"></div>
                     <vs-button @click="BetBuySell('buy')" :disabled="!isBet" class="w-full h-16 font-bold mb-3" color="success" type="relief">
-                    MUA
+                        {{ $t('Buy').toUpperCase() || 'MUA' }}
                         <feather-icon style="top: 5px;" icon="TrendingUpIcon" svgClasses="w-6 h-6"></feather-icon>
                     </vs-button>
                     <vs-button @click="BetBuySell('sell')" :disabled="!isBet" class="w-full h-16 font-bold" color="danger" type="relief">
-                    BÁN
+                        {{ $t('Sell').toUpperCase() || 'BÁN' }}
                         <feather-icon style="top: 5px;" icon="TrendingDownIcon" svgClasses="w-6 h-6"></feather-icon>
                     </vs-button>
                     <!--<vs-button @click="clickMin" class="w-full h-16 font-bold" color="danger" type="relief">
@@ -405,7 +405,7 @@
                 </div>
                 <div class="relative">
                     <div class="mt-2 mb-2 text-center">
-                        Lợi nhuận
+                        {{ $t('Profit') || 'Lợi nhuận' }}
                         <span class="profitPercent color-light-blue mb-2">95%</span>
                         <span class="profitValue color-green text-3xl font-bold">+$
                           {{ isCurrency == 'VND' ? this.formatPriceVND(loiNhuan * 24000) : `$${loiNhuan}` }}
@@ -482,7 +482,7 @@
                                 </div>
                                 <div class="relative">
                                     <div class="mt-2 mb-2 text-center">
-                                        Lợi nhuận
+                                        {{ $t('Profit') || 'Lợi nhuận' }}
                                         <span class="profitPercent color-light-blue mb-2">95%</span>
                                         <span class="profitValue color-green text-3xl font-bold">+
                                           {{ isCurrency == 'VND' ? this.formatPriceVND(loiNhuan * 24000) : `$${loiNhuan}` }}

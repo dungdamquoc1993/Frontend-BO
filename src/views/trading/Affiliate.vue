@@ -6,17 +6,15 @@
                     <div class="container h-full">
                         <div class="vx-row h-full items-center">
                             <div class="vx-col lg:w-6/12">
-                                <p class="text-3xl font-bold white line-height-normal mb-4">Bạn cần trở thành Thành viên VIP
-                                    để nhận hoa hồng VIP và hoa hồng giao dịch</p>
-                                <vs-button color="success" type="filled" @click="popupBuyThamGiaVip = true">Mua
-                                    ngay</vs-button>
+                                <p class="text-3xl font-bold white line-height-normal mb-4">{{ $t('MemberVip') }}</p>
+                                <vs-button color="success" type="filled" @click="popupBuyThamGiaVip = true"> {{ $t('BuyRight') }}</vs-button>
                             </div>
                             <div class="vx-col w-full lg:w-6/12">
                                 <div class="affiliateInfo bgSecondary borderPrimary">
                                     <div class="linkGroup">
                                         <div class="vx-col flex-col justify-center">
                                             <div class="w-full">
-                                                <p class="color-gray colorSecondary mb-2 label">Link Đăng ký</p>
+                                                <p class="color-gray colorSecondary mb-2 label">{{ $t('LinkRegister') }}</p>
                                                 <div class="groupButton flex mb-4 relative">
                                                     <div class="leftControl">
                                                         <input type="text" v-model="linkDk" readonly="readonly" disabled
@@ -24,12 +22,12 @@
                                                     </div>
                                                     <div class="rightControl">
                                                         <button class="btn button primary cursor-pointer"
-                                                            v-clipboard:copy="linkDk" @click="saoChep">Sao chép</button>
+                                                            v-clipboard:copy="linkDk" @click="saoChep">{{ $t('Copy') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="w-6/12">
-                                                <p class="color-light-gray mb-2 colorSecondary label">Mã giới thiệu</p>
+                                                <p class="color-light-gray mb-2 colorSecondary label">{{ $t('ReferralCode') }}</p>
                                                 <div class="groupButton flex mb-4 relative">
                                                     <div class="leftControl">
                                                         <input type="text" v-model="codeGioiThieu" readonly="readonly"
@@ -37,8 +35,7 @@
                                                     </div>
                                                     <div class="rightControl">
                                                         <button class="btn button primary cursor-pointer"
-                                                            v-clipboard:copy="codeGioiThieu" @click="saoChep">Sao
-                                                            chép</button>
+                                                            v-clipboard:copy="codeGioiThieu" @click="saoChep">{{ $t('Copy') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61,8 +58,8 @@
                                     </div>
                                     <div>
                                         <div class="textContent">
-                                            <p class="mb-1 title">Mời bạn</p>
-                                            <p class="color-white-50 mb-0 des">Mời bạn đăng ký qua liên kết</p>
+                                            <p class="mb-1 title">{{ $t('InviteFriend') }}</p>
+                                            <p class="color-white-50 mb-0 des">{{ $t('InviteFriendRegister') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -73,8 +70,8 @@
                                     </div>
                                     <div>
                                         <div class="textContent">
-                                            <p class="mb-1 title">Mời bạn</p>
-                                            <p class="color-white-50 mb-0 des">Mời bạn đăng ký qua liên kết</p>
+                                            <p class="mb-1 title">{{ $t('InviteFriend') }}</p>
+                                            <p class="color-white-50 mb-0 des">{{ $t('InviteFriendRegister') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -85,8 +82,8 @@
                                     </div>
                                     <div>
                                         <div class="textContent">
-                                            <p class="mb-1 title">Mời bạn</p>
-                                            <p class="color-white-50 mb-0 des">Mời bạn đăng ký qua liên kết</p>
+                                            <p class="mb-1 title">{{ $t('InviteFriend') }}</p>
+                                            <p class="color-white-50 mb-0 des">{{ $t('InviteFriendRegister') }}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -5,7 +5,7 @@
             <div class="headerContent justify-between items-center mb-4">
                 <div class="flex justify-between">
                     <h1 class="text-3xl white font-bold capitalize relative">
-                        Số liệu B.O
+                        {{ $t('BOData') }}
                     </h1>
                     <!--<a href="#" class="inline-flex items-center white">
                         <span class="btn-eyes"></span>
@@ -28,15 +28,15 @@
                             </div>
                             <div class="vx-col w-full lg:w-1/3 mt-3 mb-3">
                                 <div class="w-full mb-3 borderRightColor">
-                                    <p class="white text-center mt-3 mb-2 name">Tổng vòng</p>
+                                    <p class="white text-center mt-3 mb-2 name">{{ $t('TotalRound') }}</p>
                                     <p class="white text-center value">{{ formatPrice(totalOrder, 0) }}</p>
                                 </div>
                                 <div class="w-full mb-3 borderTopColor">
-                                    <p class="white text-center m-3 mb-2 name">Tỷ lệ thắng</p>
+                                    <p class="white text-center m-3 mb-2 name">{{ $t('WinRate') }}</p>
                                     <p class="white text-center value">{{ win_rate ? win_rate.toFixed(2) : 0 }}%</p>
                                 </div>
                                 <div class="w-full mb-3 borderTopColor">
-                                    <p class="white text-center mt-3 mb-2 name">Tổng giao dịch</p>
+                                    <p class="white text-center mt-3 mb-2 name">{{ $t('TotalTransaction') }}</p>
                                     <p class="white text-center value">
                                       {{ isCurrency == 'VND' ? this.formatPriceVND(trades * 24000) : `$${this.formatPrice(trades, 2)}` }}
                                     </p>
@@ -56,7 +56,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="43.525" height="40.623" viewBox="0 0 43.525 40.623"><g id="bar-graph-profit" transform="translate(0 -1)"><path id="Path_29851" data-name="Path 29851" d="M42.074,38.722H40.623V2.451A1.451,1.451,0,0,0,39.173,1h-5.8a1.451,1.451,0,0,0-1.451,1.451V38.722h-5.8V14.058a1.451,1.451,0,0,0-1.451-1.451h-5.8a1.451,1.451,0,0,0-1.451,1.451V38.722h-5.8V25.664a1.451,1.451,0,0,0-1.451-1.451h-5.8A1.451,1.451,0,0,0,2.9,25.664V38.722H1.451a1.451,1.451,0,0,0,0,2.9H42.074a1.451,1.451,0,1,0,0-2.9Z" fill="#b9c7ff"></path></g></svg>
                             </div>
                             <div class="info">
-                                <p class="name m-0">Lợi nhuận ròng</p>
+                                <p class="name m-0">{{ $t('NetProfit') }}</p>
                                 <p class="value white m-0 d-flex">
                                     <span>
                                       {{ isCurrency == 'VND' ? this.formatPriceVND(profits * 24000) : `$${this.formatPrice(profits, 2)}` }}
@@ -73,7 +73,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="49.009" height="55.129" viewBox="0 0 49.009 55.129"><g id="savings" transform="translate(-4.441 -1)"><path id="Path_29852" data-name="Path 29852" d="M30.559,1A11.559,11.559,0,1,0,42.119,12.559,11.559,11.559,0,0,0,30.559,1Zm5.075,12.188-4.446,4.446a.889.889,0,0,1-1.257,0l-4.446-4.446a.889.889,0,0,1,0-1.257l4.446-4.446a.889.889,0,0,1,1.257,0l4.446,4.446A.889.889,0,0,1,35.634,13.188Z" transform="translate(-1.613)" fill="#bbe8e0"></path> <path id="Path_29853" data-name="Path 29853" d="M19.367,49l1.459,11.67a.889.889,0,0,0,.882.779H39.492a.889.889,0,0,0,.882-.779L41.833,49Z" transform="translate(-1.654 -5.32)" fill="#bbe8e0"></path> <path id="Path_29854" data-name="Path 29854" d="M53.149,32.773a15.086,15.086,0,0,0-23.314,4.239V28.95c-.3.019-.589.044-.889.044s-.594-.026-.889-.044v8.062A15.086,15.086,0,0,0,4.742,32.773a.889.889,0,0,0,0,1.334,15.056,15.056,0,0,0,19.339.513,13.3,13.3,0,0,1,3.93,8.6H18.276a.889.889,0,0,0-.882,1l.1.779H40.4l.1-.779a.889.889,0,0,0-.882-1H29.88a13.3,13.3,0,0,1,3.93-8.6,15.056,15.056,0,0,0,19.339-.513.889.889,0,0,0,0-1.334Z" transform="translate(0 -3.098)" fill="#bbe8e0"></path></g></svg>
                             </div>
                             <div class="info">
-                                <p class="name m-0">Tổng doanh thu</p>
+                                <p class="name m-0">{{ $t('TotalRevenue') }}</p>
                                 <p class="value white m-0 d-flex">
                                     <span>
                                       {{ isCurrency == 'VND' ? this.formatPriceVND(revenue * 24000) : `$${this.formatPrice(revenue, 2)}` }}
@@ -86,11 +86,11 @@
                 <div class="vx-col w-full relative mt-2">
                     <vs-progress class="bg-red" :height="8" :percent="80" color="success"></vs-progress>
                     <div class="block">
-                        <span class="float-left mr-1">MUA</span>
+                        <span class="float-left mr-1">{{ $t('Buy').toUpperCase() }}</span>
                         <span class="green float-left">
                             {{ up_rate ? up_rate.toFixed(2) : 0 }}%
                         </span>
-                        <span class="float-right ml-1">BÁN</span>
+                        <span class="float-right ml-1">{{ $t('Sell').toUpperCase() }}</span>
                         <span class="red float-right">
                             <span v-if="up_rate">{{ (100 - up_rate ).toFixed(2)}}%  </span>
                             <span v-else>0%</span>
@@ -102,7 +102,7 @@
     </div>
     <div class="vx-row mt-5">
         <div class="headerContent w-full flex lg:flex-row flex-col justify-between items-center mb-4">
-            <h1 class="text-3xl white font-bold capitalize">Lịch Sử Giao Dịch</h1>
+            <h1 class="text-3xl white font-bold capitalize">{{ $t('TransactionHistory') }}</h1>
             <div class="lg:flex items-end">
                 <div class="flex flex-col lg:mr-3 relative">
                     <div class="dateRange">
@@ -111,7 +111,7 @@
                         <datepicker class="customeTradeHistory endDate" :format="formatDate" v-model="endDate"></datepicker>
                     </div>
                 </div>
-                <vs-button color="rgb(62, 201, 214)" type="filled" @click="getSeachOrderDate()">Tìm kiếm</vs-button>
+                <vs-button color="rgb(62, 201, 214)" type="filled" @click="getSeachOrderDate()">{{ $t('Search') }}</vs-button>
             </div>
         </div>
         <div class="table-responsive tableTradeHis relative">
