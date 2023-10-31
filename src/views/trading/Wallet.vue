@@ -7,10 +7,10 @@
             <p class="text-lg">Tổng tài sản (USD)</p>
             <p>
               <span class="price mr-2">
-                ${{
+                {{
                   isAcc
-                  ? this.formatPrice(blObj.blLive, 2)
-                  : this.formatPrice(blObj.blDemo, 2)
+                  ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}`)
+                  : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}`)
                 }}
               </span>
             </p>
@@ -253,7 +253,9 @@
                     <div class="content flex flex-col justify-center items-center">
                       <span class="text-lg color-gray sm:mb-3 font-bold">Tài khoản Thực</span>
                       <span class="price flex items-center mb:sm-3 mb-2">
-                        <span class="text-3xl font-bold">${{ formatPrice(blObj.blLive, 2) }}</span>
+                        <span class="text-3xl font-bold">
+                          {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}` }}
+                        </span>
                       </span>
                       <button @click="showPopTrans()" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
@@ -268,7 +270,9 @@
                     <div class="content flex flex-col justify-center items-center">
                       <span class="text-lg color-gray sm:mb-3 font-bold">Tài khoản Demo</span>
                       <span class="price flex items-center mb:sm-3 mb-2">
-                        <span class="text-3xl font-bold">${{ formatPrice(blObj.blDemo, 2) }}</span>
+                        <span class="text-3xl font-bold">
+                          {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}` }}
+                        </span>
                       </span>
                       <button @click="clickReloadMoneyDemo" type="button"
                         class="btn button wbtn btn-large btn-radius w-9/12 cursor-pointer">
@@ -445,10 +449,10 @@
                 </div>
               </div>
               <span class="block text-center text-[#b1bad3] text-[14px] mt-5">
-                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này, 
-                {{ walletIsSelect.children && walletIsSelect.children.length  ? '2' : '1'}} 
+                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này,
+                {{ walletIsSelect.children && walletIsSelect.children.length  ? '2' : '1'}}
                 confirmations cần thiết.
-              </span>  
+              </span>
             </div>
           </div>
         </vs-tab>
@@ -568,16 +572,16 @@
                   </div>
                 </div>
               </label>
-              <button class="btn-crypto" @click="handleWithdrawCryto"> 
-                <span>Rút tiền</span> 
+              <button class="btn-crypto" @click="handleWithdrawCryto">
+                <span>Rút tiền</span>
               </button>
               <p class="text-withdraw">
-                Số tiền rút tối thiểu là 
+                Số tiền rút tối thiểu là
                 <span>
                   2.50000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
-                </span>. 
-                Phí xử lý giao dịch 
+                </span>.
+                Phí xử lý giao dịch
                 <span>
                   1.00000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
@@ -590,16 +594,16 @@
         <vs-tab label="Mua Crypto">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
-              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto" style="background-color: #f0b90b;"> 
+              <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto" style="background-color: #f0b90b;">
                 <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/binace.svg"/>
               </a>
-              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod" class="btn-crypto" style="background-color: #fff;"> 
+              <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod" class="btn-crypto" style="background-color: #fff;">
                 <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/bybit.png"/>
               </a>
-              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto" style="background-color: #cf4444;"> 
+              <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto" style="background-color: #cf4444;">
                 <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/okx.svg"/>
               </a>
-              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;"> 
+              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;">
                 <img style="height: 20px; object-fit: cover;" src="../../assets/images/wallet/kucoin.svg"/>
               </a>
             </div>
@@ -787,7 +791,8 @@ export default {
       money: '',
       transfromMoney: '0',
       userAddress: '',
-      ldForm: false
+      ldForm: false,
+      isCurrency: 'USD',
     };
   },
   computed: {
@@ -917,6 +922,10 @@ export default {
       return formatter.format(value);
     },
 
+    formatPriceVND(value) {
+      return value.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
+    },
+
     showPopNapRutTien() {
       this.popupActiveNRTien = true;
     },
@@ -991,10 +1000,10 @@ export default {
             light:"#FFFFFF"
           }
         }
-  
+
       QRCode.toDataURL(text, opts, (err, url) => {
         if (err) throw err;
-  
+
         const walletQRCode = document.getElementById('walletQRCode');
         if (walletQRCode) {
           walletQRCode.src = url;
@@ -1393,7 +1402,7 @@ export default {
     onWindowLoad() {
       this.getInfoUser();
     },
-    
+
     selectWallet(val) {
       this.walletIsSelect = val;
       this.showPopWalSL = false;
@@ -1443,11 +1452,11 @@ export default {
       .then((res) => {
         const value = new BigNumber(res.data[0][4]).toString();
         switch (coinName) {
-          case 'BTC': 
+          case 'BTC':
           case 'BNB':
             this.transfromMoney = (this.money / value).toFixed(8);
             break;
-          case 'ETH': 
+          case 'ETH':
           case 'MATIC':
             this.transfromMoney = (this.money / value).toFixed(18);
             break;
@@ -1455,7 +1464,7 @@ export default {
             this.transfromMoney = this.money;
             break;
         }
-      }) 
+      })
     },
 
     handleCalculateMoney(e) {
@@ -1465,7 +1474,7 @@ export default {
         : this.walletIsSelect.name || this.listWallet[0].name;
       this.calculateMoney(coinName);
     },
-    
+
     async handleWithdrawCryto() {
       if (this.userInfo) {
         this.ldForm = true;
@@ -1531,6 +1540,7 @@ export default {
   },
 
   created() {
+    this.isCurrency = JSON.parse(localStorage.getItem('CURRENCY')) || 'USD';
     this.userInfo = JSON.parse(localStorage.getItem("INFO"));
     if (this.userInfo) {
       this.addressPayment = this.userInfo.btc_address;
@@ -2056,8 +2066,8 @@ export default {
   left: 20px;
 }
 .icon-wallet img {
-  width: 16px; 
-  height: 16px; 
+  width: 16px;
+  height: 16px;
   object-fit: cover;
 }
 </style>

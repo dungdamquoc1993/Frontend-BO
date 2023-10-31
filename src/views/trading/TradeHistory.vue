@@ -37,7 +37,9 @@
                                 </div>
                                 <div class="w-full mb-3 borderTopColor">
                                     <p class="white text-center mt-3 mb-2 name">Tổng giao dịch</p>
-                                    <p class="white text-center value">${{ formatPrice(trades, 2) }}</p>
+                                    <p class="white text-center value">
+                                      {{ isCurrency == 'VND' ? this.formatPriceVND(trades * 24000) : `$${this.formatPrice(trades, 2)}` }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -56,8 +58,9 @@
                             <div class="info">
                                 <p class="name m-0">Lợi nhuận ròng</p>
                                 <p class="value white m-0 d-flex">
-                                    <span>$</span> 
-                                    <span>{{ formatPrice(profits, 2) }}</span>
+                                    <span>
+                                      {{ isCurrency == 'VND' ? this.formatPriceVND(profits * 24000) : `$${this.formatPrice(profits, 2)}` }}
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -72,8 +75,9 @@
                             <div class="info">
                                 <p class="name m-0">Tổng doanh thu</p>
                                 <p class="value white m-0 d-flex">
-                                    <span>$</span> 
-                                    <span>{{ formatPrice(revenue, 2) }}</span>
+                                    <span>
+                                      {{ isCurrency == 'VND' ? this.formatPriceVND(revenue * 24000) : `$${this.formatPrice(revenue, 2)}` }}
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -255,19 +259,19 @@ export default {
     components: {
         //VueApexCharts,
         Datepicker,
-        highcharts: Chart 
+        highcharts: Chart
     },
     data() {
         return {
             dataHisOrder: [],
-            
+
             isLoading: false,
 
             down:0, // số lần sell
             down_rate:0, // tỉ lệ sell
             lose: 0,
             profits: 0, // lợi nhuận rồng
-            refund: 0, // hoàn tiền           
+            refund: 0, // hoàn tiền
             revenue: 0, // tổng doanh thu
             trades: 0, // tổng tiền giao dịch
             up:0, // số lần buy
@@ -283,7 +287,7 @@ export default {
             // donutChart: {
             //     series: [0, 1],
             //     chartOptions: {
-                    
+
             //         labels: ["Tổng vòng thua", "Tổng vòng thắng"],
             //         //colors: this.themeColors,
             //         colors: ["#28C76F", "#EA5455", "#414141"],
@@ -301,6 +305,7 @@ export default {
             //         }]
             //     }
             // }
+            isCurrency: 'USD'
         }
     },
   methods: {
@@ -325,7 +330,7 @@ export default {
                 cD.update({data: obj}, true)
                 this.totalOrder = gD.lose + gD.win
                 //this.donutChart.series = [gD.lose, gD.win]
-                
+
                 this.up = gD.up
                 this.up_rate = gD.up_rate
                 this.down = gD.down
@@ -407,10 +412,14 @@ export default {
       }
     },
 
+    formatPriceVND(value) {
+      return value.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
+    },
+
   },
 
   created() {
-
+        this.isCurrency = JSON.parse(localStorage.getItem('CURRENCY')) || 'USD';
         var currentDate = new Date()
         var day = currentDate.getDate()
         var month = currentDate.getMonth()
