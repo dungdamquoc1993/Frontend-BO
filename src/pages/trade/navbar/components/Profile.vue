@@ -9,7 +9,7 @@
       <vs-dropdown vs-custom-content vs-trigger-click>
         <div class="text-left cursor-pointer" style="font-weight: bold">
           <p class="text-sm" style="color: #c1c1c1">
-            {{ isAcc ? "Tài khoản Thực" : "Tài khoản Demo" }}
+            {{ isAcc ? $t('RealAccount') || "Tài khoản Thực" : $t('DemoAccount') || "Tài khoản Demo" }}
           </p>
           <p>
             <span class="text-money">
@@ -26,7 +26,7 @@
         </div>
         <vs-dropdown-menu class="dropdown-account" style="width: 160px">
           <div class="accLive mb-3">
-            <span style="font-size: 12px; color: #d6d6d6">Tài khoản Thực</span>
+            <span style="font-size: 12px; color: #d6d6d6">{{ $t('RealAccount') || "Tài khoản Thực" }}</span>
             <div class="balance cursor-pointer" @click="changeAccount(1)">
               <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
                 {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}` }}
@@ -38,7 +38,7 @@
           </div>
           <hr style="border-color: #b4c2d2" />
           <div class="accDemo mt-3">
-            <span style="font-size: 12px; color: #d6d6d6">Tài khoản Demo</span>
+            <span style="font-size: 12px; color: #d6d6d6">{{ $t('DemoAccount') || "Tài khoản Demo" }}</span>
             <div class="balance cursor-pointer" @click="changeAccount(0)">
               <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
                 {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}` }}
@@ -54,7 +54,7 @@
     </div>
     <div class="con-img ml-3 mr-3">
       <vs-button color="success" icon-pack="feather" icon="icon-dollar-sign" type="relief"
-        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()">Nạp Nhanh</vs-button>
+        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()">{{ $t('QuickRecharge') || 'Nạp nhanh' }}</vs-button>
       <!-- <vs-button type="line" icon-pack="feather" :color="colorNT" icon="icon-dollar-sign" @click.stop="viewNapTien()">Nạp nhanh</vs-button> -->
     </div>
     <!--<div class="con-img ml-3">
@@ -64,7 +64,7 @@
     <vs-dropdown vs-custom-content vs-trigger-click>
       <div class="con-img cursor-pointer msetting">
         <feather-icon icon="SettingsIcon" svgClasses="w-5 h-5" class="block text-center h-5 cursor-pointer" />
-        <span>Cài Đặt</span>
+        <span>{{ $t('Settings') || 'Cài Đặt' }}</span>
       </div>
       <vs-dropdown-menu class="dropdown-setting" style="min-width: 300px;">
         <div class="flex items-center justify-between mb-3 p-2">
@@ -123,7 +123,7 @@
     <!-- </div> -->
     <div class="con-img ml-3 mr-3 cursor-pointer mhoso" @click.stop="viewHoSo()">
       <feather-icon icon="UserIcon" svgClasses="w-5 h-5" class="block text-center h-5" />
-      <span>Hồ Sơ</span>
+      <span>{{ $t('Profile') || 'Hồ Sơ' }}</span>
     </div>
     <!-- <div class="con-img ml-3 mr-3 text-center relative cursor-pointer mTT">
       <notification-drop-down />
@@ -607,10 +607,12 @@ export default {
       listLanguage: [
         {
           name: 'Tiếng Việt',
+          lang: 'vi',
           icon: require('../../../../assets/images/wallet/vietnam-flag-icon.svg'),
         },
         {
           name: 'Tiếng Anh',
+          lang: 'en',
           icon: require('../../../../assets/images/wallet/flag-en.svg'),
         }
       ],
@@ -1008,6 +1010,7 @@ export default {
 
     selectLang(val) {
       this.langIsSelect = val;
+      this.$i18n.locale = val.lang || 'en';
       this.showDropdownLang = false;
     },
 
