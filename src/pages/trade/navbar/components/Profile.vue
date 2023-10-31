@@ -12,12 +12,13 @@
             {{ isAcc ? "Tài khoản Thực" : "Tài khoản Demo" }}
           </p>
           <p>
-            <span class="text-money">$
+            <span class="text-money">
               {{
                 isAcc
-                ? this.formatPrice(blObj.blLive, 2)
-                : this.formatPrice(blObj.blDemo, 2)
-              }}</span>
+                ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}`)
+                : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}`)
+              }}
+            </span>
             <span class="float-right">
               <feather-icon icon="ChevronDownIcon" svgClasses="w-6 h-6 text-down" />
             </span>
@@ -27,7 +28,9 @@
           <div class="accLive mb-3">
             <span style="font-size: 12px; color: #d6d6d6">Tài khoản Thực</span>
             <div class="balance cursor-pointer" @click="changeAccount(1)">
-              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">$ {{ formatPrice(blObj.blLive, 2) }}</span>
+              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
+                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}` }}
+              </span>
               <span class="reloadBalance absolute" style="right: 10px; z-index: 99999" @click="clickShowPopTrans()">
                 <feather-icon icon="LinkIcon" class="cursor-pointer w-4"></feather-icon>
               </span>
@@ -37,7 +40,9 @@
           <div class="accDemo mt-3">
             <span style="font-size: 12px; color: #d6d6d6">Tài khoản Demo</span>
             <div class="balance cursor-pointer" @click="changeAccount(0)">
-              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">$ {{ formatPrice(blObj.blDemo, 2) }}</span>
+              <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
+                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}` }}
+              </span>
               <span class="reloadBalance absolute z-10" style="right: 10px">
                 <feather-icon icon="RefreshCwIcon" @click.stop="reloadBalanceDemo()"
                   class="cursor-pointer w-4"></feather-icon>
@@ -615,7 +620,8 @@ export default {
       money: '',
       transfromMoney: '0',
       userAddress: '',
-      ldForm: false
+      ldForm: false,
+      isCurrency: 'USD',
     }
   },
   props: {
@@ -1006,9 +1012,11 @@ export default {
     },
 
     selectCurrency(val) {
+      this.isCurrency = val;
       localStorage.setItem('CURRENCY', JSON.stringify(val));
       this.currencyIsSelect = val;
       this.showDropdownCurrency = false;
+      location.reload();
     },
 
     selectNetwork(val) {
@@ -1096,6 +1104,10 @@ export default {
       return formatter.format(value);
     },
 
+    formatPriceVND(value) {
+      return value.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
+    },
+
     isNumber(value) {
       return typeof value === "number" && isFinite(value);
     },
@@ -1166,7 +1178,7 @@ export default {
     calculateMoney(coinName) {
       axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
         .then((res) => {
-          const value = new BigNumber(res.data[0][4]).toString(); 
+          const value = new BigNumber(res.data[0][4]).toString();
           switch (coinName) {
             case 'BTC':
             case 'BNB':
@@ -1254,6 +1266,7 @@ export default {
     //       }
     //   })
     // }
+    this.isCurrency = JSON.parse(localStorage.getItem('CURRENCY')) || 'USD';
     this.userInfo = JSON.parse(localStorage.getItem("INFO"));
     if (this.userInfo) {
       this.addressPayment = this.userInfo.btc_address;
