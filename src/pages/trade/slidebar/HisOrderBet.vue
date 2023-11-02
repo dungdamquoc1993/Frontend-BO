@@ -42,7 +42,7 @@
                                             <span class="trendIcon mr-2" :class="{'trendUp': oknha.type == 'buy', 'trendDown': oknha.type == 'sell'}"></span> 
                                             <span class="uppercase">{{ oknha.type }}</span>
                                         </span> 
-                                        <span>${{ formatPrice(oknha.amt, 2) }}</span>
+                                        <span>{{ isCurrency == 'VND' ? formatPriceVND(oknha.amt * 24000) : `$${formatPrice(oknha.amt, 2)}` }}</span>
                                     </div>
                                     <div class="flex justify-between bet-time">
                                         <span class="colorGray">Thời gian</span>
@@ -74,13 +74,14 @@
                                             <span class="trendIcon mr-2" :class="{'trendUp': oknha.bs == 'buy', 'trendDown': oknha.bs == 'sell'}"></span> 
                                             <span class="uppercase">{{ oknha.bs }}</span>
                                         </span> 
-                                        <span>${{ formatPrice(oknha.ab, 2) }}</span>
+                                        <span>{{ isCurrency == 'VND' ? formatPriceVND(oknha.ab * 24000) : `$${formatPrice(oknha.ab, 2)}` }}</span>
                                     </div>
                                     <div class="flex justify-between">
                                         <span class="text-xs time">{{ formatDay(oknha.d) + ' '  +formatHours(oknha.d) }}</span> 
                                         <span class="totalWin font-bold" :class="{'winUp': oknha.aw > 0, 'winDown': oknha.aw == 0}" >
                                             <span class="uppercase"></span> 
-                                            <span>{{ oknha.aw > 0 ? '+' : '' }}</span>${{ oknha.aw > 0 ? formatPrice(oknha.aw, 2) : 0 }} 
+                                            <span>{{ oknha.aw > 0 ? '+' : '' }}</span>
+                                            {{ oknha.aw > 0 ? (isCurrency == 'VND' ? formatPriceVND(oknha.aw * 24000) : `$${formatPrice(oknha.aw, 2)}`) : (isCurrency == 'VND' ? formatPriceVND(0) : `$${formatPrice(0)}`) }} 
                                         </span>
                                     </div>
                                 </div>
@@ -147,6 +148,7 @@ export default {
           maxScrollbarLength: 60,
           wheelSpeed: .60,
       },
+      isCurrency: 'USD'
     }
   },
 
@@ -200,6 +202,10 @@ export default {
         return formatter.format(value);
     },
 
+    formatPriceVND(value) {
+      return value.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
+    },
+
     formatDay(value){
       if (value) {
           return moment(String(value)).format('DD/MM/YYYY')
@@ -242,6 +248,9 @@ export default {
   components: {
     VuePerfectScrollbar
   },
+  created() {
+    this.isCurrency = JSON.parse(localStorage.getItem('CURRENCY')) || 'USD';
+  }
 
 }
 </script>
