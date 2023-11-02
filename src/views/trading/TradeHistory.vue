@@ -167,19 +167,19 @@
                             BÁN
                         </td>
                         <td class="text-center">
-                            ${{ tr.o }}
+                            {{ isCurrency == 'VND' ? formatPriceVND(tr.o * 24000) : `$${tr.o}` }}
                         </td>
                         <td class="text-center">
-                            ${{ tr.c }}
+                            {{ isCurrency == 'VND' ? formatPriceVND(tr.c * 24000) : `$${tr.c}` }}
                         </td>
                         <td class="text-center">
-                            ${{ tr.ab }}
+                            {{ isCurrency == 'VND' ? formatPriceVND(tr.ab * 24000) : `$${tr.ab}` }}
                         </td>
                         <td class="text-center text-success" v-if="tr.aw > 0">
-                            +${{ tr.aw }}
+                            +{{ isCurrency == 'VND' ? formatPriceVND(tr.aw * 24000) : `$${tr.aw}` }}
                         </td>
                         <td class="text-center text-danger" v-else>
-                            -${{ tr.al }}
+                            -{{ isCurrency == 'VND' ? formatPriceVND(tr.al * 24000) : `$${tr.al}` }}
                         </td>
                     </tr>
                 </tbody>

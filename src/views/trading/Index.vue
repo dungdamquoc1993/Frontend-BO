@@ -321,7 +321,7 @@
                         {{ $t('Bet') || 'Tiền cược' }}
                     </div>
                     <div class="relative">
-                        <vs-input @keyup="nhapBetAmount" class="w-full betInput" icon-pack="feather" icon="icon-dollar-sign" placeholder="10" v-model="betAmount" icon-no-border />
+                        <vs-input @keyup="nhapBetAmount" class="w-full betInput" icon-pack="feather" v-bind:icon="iconInputAmount" placeholder="10" v-model="betAmount" icon-no-border />
                         <feather-icon @click="clearBAmount()" style="right: 5px;top: 7px; position: absolute !important" class="cursor-pointer" icon="XCircleIcon" svgClasses="w-6 h-6 text-grey"></feather-icon>
                     </div>
                     <div class="vx-row m-0 mt-2">
@@ -473,7 +473,7 @@
                                         <vs-button @click="truBetAmount" class="w-full" type="border" icon-pack="feather" icon="icon-minus"></vs-button>
                                         </div>
                                     <div class="flex relative" style="width: 55rem;">
-                                        <vs-input readonly="readonly" @keyup="nhapBetAmount" class="w-full betInput" icon-pack="feather" icon="icon-dollar-sign" placeholder="10" v-model="betAmount" icon-no-border />
+                                        <vs-input readonly="readonly" @keyup="nhapBetAmount" class="w-full betInput" icon-pack="feather" v-bind:icon="iconInputAmount" placeholder="10" v-model="betAmount" icon-no-border />
                                         <feather-icon @click="clearBAmount()" style="right: 5px;top: 7px;position: absolute !important;" class="cursor-pointer" icon="XCircleIcon" svgClasses="w-6 h-6 text-grey"></feather-icon>
                                     </div>
                                     <div class="flex w-full ml-2">
@@ -1268,6 +1268,7 @@ export default {
                 },
             },
             isCurrency: 'USD',
+            iconInputAmount: 'icon-dollar-sign'
         }
     },
     computed: {
@@ -1354,7 +1355,7 @@ export default {
 
             let gAmount = this.betAmount.toString()
             gAmount = this.replaceAll(gAmount, ',', '')
-
+            gAmount = this.isCurrency === 'USD' ? gAmount : gAmount / 24000
 
             if (this.checkBet(gAmount)) {
                 return this.$vs.notify({
@@ -1444,12 +1445,12 @@ export default {
                 let g = this.replaceAll(total, ',', '')
                 //console.log(g)
                 this.betAmount = this.formatPrice(g, sl[1].length)
-                this.tinhloinhuan(g)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? g : g / 24000)
                 return
             }
             let g = this.getOnlyNumberInString(total, ',', '')
             this.betAmount = this.formatPrice(g, 0)
-            this.tinhloinhuan(g)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? g : g / 24000)
         },
 
         writeBetAmountKey(v) {
@@ -1465,12 +1466,12 @@ export default {
             if (check == 1) {
                 let g = this.replaceAll(getAmount, ',', '')
                 this.betAmount = this.formatPrice(g, sl[1].length)
-                this.tinhloinhuan(g)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? g : g / 24000)
                 return
             }
             let a = this.getOnlyNumberInString(getAmount)
             this.betAmount = this.formatPrice(a, 0)
-            this.tinhloinhuan(a)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? a : a / 24000)
         },
 
         congBetAmount() {
@@ -1483,12 +1484,12 @@ export default {
                 tt = this.replaceAll(getAmount, ',', '')
                 let kq = tt * 2
                 this.betAmount = this.formatPrice(kq, sl[1].length)
-                this.tinhloinhuan(kq)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? kq : kq / 24000)
                 return
             }
             let a = this.getOnlyNumberInString(getAmount)
             tt = a * 2
-            this.tinhloinhuan(tt)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? tt : tt / 24000)
             this.betAmount = this.formatPrice(tt, 0)
         },
 
@@ -1502,12 +1503,12 @@ export default {
                 tt = this.replaceAll(getAmount, ',', '')
                 let kq = tt / 2
                 this.betAmount = this.formatPrice(kq, sl[1].length)
-                this.tinhloinhuan(kq)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? kq : kq / 24000)
                 return
             }
             let a = this.getOnlyNumberInString(getAmount)
             tt = a / 2
-            this.tinhloinhuan(tt)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? tt : tt / 24000)
             this.betAmount = this.formatPrice(tt, 0)
         },
 
@@ -1518,12 +1519,12 @@ export default {
 
             if (check == 1) {
                 g = this.replaceAll(g, ',', '')
-                this.tinhloinhuan(g)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? g : g / 24000)
                 return
             }
             g = this.getOnlyNumberInString(g)
             this.betAmount = this.formatPrice(g, 0)
-            this.tinhloinhuan(g)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? g : g / 24000)
         },
 
         formatPrice(value, minimum) {
@@ -1550,7 +1551,7 @@ export default {
         },
 
         clearBAmount() {
-            this.tinhloinhuan(10)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? 10 : 10 / 24000)
             this.betAmount = 10;
         },
 
@@ -1568,14 +1569,14 @@ export default {
             if (check == 1) {
                 getAmount = this.replaceAll(getAmount, ',', '')
                 let tt = getAmount + amount;
-                this.tinhloinhuan(tt)
+                this.tinhloinhuan(this.isCurrency === 'USD' ? tt : tt / 24000)
                 this.betAmount = this.formatPrice(tt, 2);
                 return
             }
             let aB = this.getOnlyNumberInString(getAmount);
             let tt = aB + amount;
             this.betAmount = this.formatPrice(tt, 0);
-            this.tinhloinhuan(tt)
+            this.tinhloinhuan(this.isCurrency === 'USD' ? tt : tt / 24000)
 
         },
 
@@ -2058,6 +2059,8 @@ export default {
         //this.$store.dispatch('setToken', token)
 
         this.isCurrency = JSON.parse(localStorage.getItem('CURRENCY')) || 'USD';
+        this.iconInputAmount = this.isCurrency === 'USD' ? 'icon-dollar-sign' : 'icon-vnd';
+        this.loiNhuan = this.isCurrency === 'USD' ? 19.50 : 19.50 / 24000;
         let acc = localStorage.getItem('BO_BALANCE_TYPE')
         if (acc == 'LIVE') {
             getData.isAccount = 1
