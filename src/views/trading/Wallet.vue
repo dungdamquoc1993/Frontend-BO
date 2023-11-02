@@ -35,19 +35,19 @@
       <div class="w-full" style="padding: 0 4rem">
         <div class="container">
           <vs-tabs>
-            <vs-tab label="Lịch Sử Nạp Tiền" @click="
+            <vs-tab :label="$t('DepositHistory')" @click="
             getListHisTrade(),
               (showVC = false),
               (showVGD = false),
               (showNT = true)
               "></vs-tab>
-            <vs-tab label="Lịch Sử Rút tiền" @click="
+            <vs-tab :label="$t('WithdrawHistory')" @click="
               getListHisTrade(),
               (showVC = true),
               (showVGD = false),
               (showNT = false)
               "></vs-tab>
-            <vs-tab label="Nạp Tiền" @click="
+            <vs-tab :label="$t('Recharge')" @click="
               getListHisTradeWGD(),
               (showVGD = true),
               (showVC = false),
@@ -135,11 +135,11 @@
                         <div class="center">
                           <vs-table :max-items="maxHisWallet" pagination :data="dataHisWallet">
                             <template slot="thead">
-                              <vs-th> Thời gian </vs-th>
-                              <vs-th> Giá trị </vs-th>
-                              <vs-th> Loại </vs-th>
-                              <vs-th> Txid/Mô tả </vs-th>
-                              <vs-th> Tiền điện tử </vs-th>
+                              <vs-th> {{ $t('Time') }} </vs-th>
+                              <vs-th> {{ $t('Value') }} </vs-th>
+                              <vs-th> {{ $t('Type') }} </vs-th>
+                              <vs-th> {{ $t('Description') }} </vs-th>
+                              <vs-th> {{ $t('Cryptocurrency') }}  </vs-th>
                             </template>
                             <template slot-scope="{data}">
                               <vs-tr :key="indextr" v-for="(tr, indextr) in data">
@@ -206,12 +206,12 @@
                         <div class="center">
                           <vs-table :max-items="maxHisWallet" pagination :data="dataHisWithdraw">
                             <template slot="thead">
-                              <vs-th> Thời gian </vs-th>
-                              <vs-th> Giá trị </vs-th>
-                              <vs-th> Loại </vs-th>
-                              <vs-th> Txid/Mô tả </vs-th>
-                              <vs-th> Tiền điện tử </vs-th>
-                              <vs-th> Địa chỉ </vs-th>
+                              <vs-th> {{ $t('Time') }} </vs-th>
+                              <vs-th> {{ $t('Value') }} </vs-th>
+                              <vs-th> {{ $t('Type') }} </vs-th>
+                              <vs-th> {{ $t('Description') }} </vs-th>
+                              <vs-th> {{ $t('Cryptocurrency') }}  </vs-th>
+                              <vs-th> {{ $t('Address') }}  </vs-th>
                             </template>
                             <template slot-scope="{data}">
                               <vs-tr :key="indextr" v-for="(tr, indextr) in data">

@@ -19,13 +19,13 @@
       
       <div class="p-4 tablist">
             <vs-tabs alignment="fixed">
-                <vs-tab label="MỞ" @click="getListBET(), isCloseTab = true, isOpenTab = false"></vs-tab>
-                <vs-tab label="ĐÓNG" @click="getListOrder(), isCloseTab = false, isOpenTab = true"></vs-tab>
+                <vs-tab :label="$t('Open')" @click="getListBET(), isCloseTab = true, isOpenTab = false"></vs-tab>
+                <vs-tab :label="$t('Close')" @click="getListOrder(), isCloseTab = false, isOpenTab = true"></vs-tab>
                 <div class="tabClose" :class="{'hidden': !isCloseTab, 'block': isCloseTab}">
                   <div class="con-tab-ejemplo">
                         <div v-if="listItemOpen.length == 0" class="flex flex-col justify-center items-center h-a">
                             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Mi4wODMiIGhlaWdodD0iODIuMTA0IiB2aWV3Qm94PSIwIDAgODIuMDgzIDgyLjEwNCI+CiAgPGcgaWQ9ImNvbnZlcnNpb24iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyLjA5MSA0MS4wNDUpIHJvdGF0ZSgxMzUpIiBvcGFjaXR5PSIwLjIiPgogICAgPHBhdGggaWQ9IlBhdGhfMjYyNDMiIGRhdGEtbmFtZT0iUGF0aCAyNjI0MyIgZD0iTTU0LjQxNCwyNS4zOTNIMy42MjhBMy40MjcsMy40MjcsMCwwLDEsMCwyMS43NjZhMy40MjcsMy40MjcsMCwwLDEsMy42MjgtMy42MjhoNDIuMDhMMzMuNzM3LDYuMTY3YTMuNTA3LDMuNTA3LDAsMCwxLDAtNS4wNzksMy41MDcsMy41MDcsMCwwLDEsNS4wNzksMEw1Ni45NTMsMTkuMjI2YTMuMzExLDMuMzExLDAsMCwxLC43MjYsMy45OUEzLjQ4NiwzLjQ4NiwwLDAsMSw1NC40MTQsMjUuMzkzWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMTEgMCkiIGZpbGw9IiNmZmYiLz4KICAgIDxwYXRoIGlkPSJQYXRoXzI2MjQ0IiBkYXRhLW5hbWU9IlBhdGggMjYyNDQiIGQ9Ik0yMS43NzYsMzQuMzkzQTMuMjkzLDMuMjkzLDAsMCwxLDE5LjIzNywzMy4zTDEuMSwxNS4xNjdhMy4zMTEsMy4zMTEsMCwwLDEtLjcyNi0zLjk5QTMuNDg2LDMuNDg2LDAsMCwxLDMuNjM4LDlINTQuNDI1YTMuNDI3LDMuNDI3LDAsMCwxLDMuNjI4LDMuNjI4LDMuNDI3LDMuNDI3LDAsMCwxLTMuNjI4LDMuNjI4SDEyLjM0NUwyNC4zMTYsMjguMjI2YTMuNTA3LDMuNTA3LDAsMCwxLDAsNS4wNzlBMy4yOTMsMy4yOTMsMCwwLDEsMjEuNzc2LDM0LjM5M1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMjMuNjQ5KSIgZmlsbD0iI2ZmZiIvPgogIDwvZz4KPC9zdmc+Cg==" alt="" class="imageLandScape">
-                            <p class="text-sm mt-3 color-grey text-center">Bạn chưa có lệnh nào đang mở</p>
+                            <p class="text-sm mt-3 color-grey text-center">{{ $t('NotOpen') }}</p>
                         </div>
                         <div v-else class="flex flex-col justify-center">
                            <div :key="indextr" v-for="(oknha, indextr) in listItemOpen">

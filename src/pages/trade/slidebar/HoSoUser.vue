@@ -10,7 +10,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-        <h4>HỒ SƠ</h4>
+        <h4>{{ $t('Profile').toUpperCase() }}</h4>
         <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <!-- <vs-divider class="mb-0"></vs-divider> -->
@@ -26,7 +26,7 @@
                   <vs-avatar v-else-if="!!avatar" :src="`${dm}api/auth/me/photo/${avatar}`" size="80px" class="mr-4" />
               <div>
                 <input type="file" class="hidden" name="image" ref="update_avatar_input" @change="update_avatar($event.target.files)" accept="image/png, image/jpg, image/jpeg">
-                <vs-button type="border" class="mr-4" @click="$refs.update_avatar_input.click()">Change Avatar</vs-button> 
+                <vs-button type="border" class="mr-4" @click="$refs.update_avatar_input.click()">{{ $t('ChangeAvatar') }}</vs-button> 
               </div>
             </div>
               <!--<div class="flex items-start flex-col sm:flex-vx-row">
@@ -46,7 +46,7 @@
           </div>
 
           <h3 class="mb-3" style="font-weight: blod">
-            <feather-icon icon="UserIcon" ></feather-icon> Thông tin cá nhân
+            <feather-icon icon="UserIcon" ></feather-icon>{{ $t('PersonalInformation') }}
           </h3>
 
           <div class="vx-vx-row">
@@ -55,7 +55,7 @@
               </div>
               
               <div class="vx-col w-full">
-                  <vs-input label="Biệt danh" v-model="nickName" class="mt-2 w-full"  disabled="disabled"/>
+                  <vs-input :label="$t('Nickname')" v-model="nickName" class="mt-2 w-full"  disabled="disabled"/>
               </div>
 
               <!-- <div class="vx-col lg:w-1/2 w-full">
@@ -73,52 +73,54 @@
 
       <div class="p-4">
           <h3 class="mb-3" style="font-weight: blod">
-              <feather-icon icon="UserCheckIcon" ></feather-icon> Xác minh tài khoản
+              <feather-icon icon="UserCheckIcon" ></feather-icon> {{ $t('VerifyAccount') }}
             </h3>        
             <span class="d-flex mt-5" style="font-size: 12px;">
-              Để đảm bảo an toàn cho tài sản của bạn, chúng tôi cần xác minh danh tính. Hãy điền thông tin thật chính xác, khi đã hoàn tất xác minh danh tính thì thông tin sẽ không chỉnh sửa được nữa.
+              {{ $t('EnsureTheSafety') }}
             </span>
             <p class="clearfix"></p>
-            <vs-button v-if="getDataJson.verify == 0" color="warning" type="border" class="mb-2 mt-2 float-right" @click.stop="showHoSoSetting()" >Xác nhận</vs-button>
-            <span v-else-if="getDataJson.verify == 2" class="lightyellow italic">* Tài khoản đang được xem xét</span>
-            <span v-else class="green italic">* Tài khoản đã được xác minh</span>
+            <vs-button v-if="getDataJson.verify == 0" color="warning" type="border" class="mb-2 mt-2 float-right" @click.stop="showHoSoSetting()" >
+              {{ $t('Confirm') }}
+            </vs-button>
+            <span v-else-if="getDataJson.verify == 2" class="lightyellow italic">* {{ $t('AccountUnderReview') }}</span>
+            <span v-else class="green italic">* {{ $t('AccountVerified') }}</span>
       </div>
 
       <p class="clearfix"></p>
       <div class="p-4">
           <h3 class="mb-3" style="font-weight: blod">
-              <feather-icon icon="LockIcon" ></feather-icon> Bảo mật
+              <feather-icon icon="LockIcon" ></feather-icon> {{ $t('Security') }}
             </h3>
             <span class="d-flex" style="font-size: 12px; margin-bottom: 5px">
-              Bạn có muốn thay đổi mật khẩu không? Nhấp vào nút phía dưới để thay đổi.
+              {{ $t('WantToChangePassword') }}
             </span>
             <p class="clearfix"></p>
-            <vs-button color="warning" type="border" class="mb-2 float-right"  @click="popupActiveChangePass=true">Đổi</vs-button>
+            <vs-button color="warning" type="border" class="mb-2 float-right"  @click="popupActiveChangePass=true">{{ $t('Change') }}</vs-button>
             <p class="clearfix"></p>
-            <span  class="d-flex" style="font-size: 12px; margin-bottom: 5px">Bắt buộc bật 2FA để rút tiền hoặc cập nhật các bảo mật.</span>
+            <span  class="d-flex" style="font-size: 12px; margin-bottom: 5px">{{ $t('RequiredToEnable2FA') }}</span>
             <p class="clearfix"></p>
             <div class="mt-1 float-right">
-              <label>Bật 2FA</label>
+              <label>{{ $t('Open2FA') }}</label>
               <vs-switch color="success" v-model="swi2Fa" @change="on2FA" icon-pack="feather" vs-icon="icon-check" />
             </div>
             
       </div>
       
-    <vs-popup background-color="rgba(0,0,0,.6)" :background-color-popup="colorxChangePass" class=""  title="Đổi mật khẩu" :active.sync="popupActiveChangePass">
+    <vs-popup background-color="rgba(0,0,0,.6)" :background-color-popup="colorxChangePass" class=""  :title="$t('ChangePassword')" :active.sync="popupActiveChangePass">
       <div class="vx-vx-row">
         <div class="vx-col w-full">
-            <vs-input type="password" label="Mật khẩu cũ" maxlength="20" v-model="passOld" name="passOld" class="mt-2 w-full"/>
+            <vs-input type="password" :label="$t('OldPassword')" maxlength="20" v-model="passOld" name="passOld" class="mt-2 w-full"/>
         </div>
 
         <div class="vx-col w-full">
-            <vs-input type="password" label="Mật khẩu mới" maxlength="20" v-model="passNew" name="passNew" class="mt-2 w-full"/>
+            <vs-input type="password" :label="$t('NewPassword')" maxlength="20" v-model="passNew" name="passNew" class="mt-2 w-full"/>
         </div>
         
         <div class="vx-col w-full">
-            <vs-input type="password" label="Nhập lại mật khẩu mới" maxlength="20" v-model="passRenew" name="passReNew" class="mt-2 w-full"/>
+            <vs-input type="password" :label="$t('EnterPassword')" maxlength="20" v-model="passRenew" name="passReNew" class="mt-2 w-full"/>
         </div>
         <div class="vx-col w-full mt-5">
-          <small class="red italic" v-if="!getDataJson.c2fa">* Bạn phải bật 2FA để điều chỉnh</small>
+          <small class="red italic" v-if="!getDataJson.c2fa">* {{ $t('Enable2FA')  }}</small>
           <vs-button v-else color="success" type="border" :disabled="disableChangePass" @click="ChangeNewPass()">Đồng ý</vs-button>
         </div>
         

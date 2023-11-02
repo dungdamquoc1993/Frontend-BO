@@ -127,14 +127,14 @@
                 <thead>
                     <tr>
                         <th>OrderID</th>
-                        <th>Tài sản</th>
-                        <th>Thời gian bắt đầu</th>
-                        <th>Lựa chọn</th>
-                        <th>Đã chọn</th>
-                        <th>Giá mở</th>
-                        <th>Giá đóng</th>
-                        <th>Giá trị</th>
-                        <th>Thanh toán</th>
+                        <th>{{ $t('Asset') }}</th>
+                        <th>{{ $t('StartTime') }}</th>
+                        <th>{{ $t('Select') }}</th>
+                        <th>{{ $t('Selected') }}</th>
+                        <th>{{ $t('OpenPrice') }}</th>
+                        <th>{{ $t('ClosingPrice') }}</th>
+                        <th>{{ $t('Value') }}</th>
+                        <th>{{ $t('Pay') }}</th>
                     </tr>
                 </thead>
                 <tbody v-if="dataHisOrder.length == 0 ">
