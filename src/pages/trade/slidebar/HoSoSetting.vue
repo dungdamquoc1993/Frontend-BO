@@ -21,26 +21,26 @@
       class="scroll-area--data-list-add-new">
 
       <div class="p-6">
-        <h4>Xác minh tài khoản</h4>
+        <h4>{{ $t('VerifyAccount') }}</h4>
         <!-- NICKNAME -->
         <div class="vx-row">
-          <form-wizard color="rgba(var(--vs-primary), 1)" :title="null" :subtitle="null" backButtonText="Quay lại"
-            nextButtonText="Tiếp" :finishButtonText="`${!verify ? 'Xong' : 'Thay đổi'}`" @on-complete="formSubmitted">
+          <form-wizard color="rgba(var(--vs-primary), 1)" :title="null" :subtitle="null" :backButtonText="$t('Back')"
+            :nextButtonText="$t('Next')" :finishButtonText="`${!verify ? 'Xong' : 'Thay đổi'}`" @on-complete="formSubmitted">
             <tab-content class="mb-5">
               <!-- tab 1 content -->
               <div class="vx-row">
-                <p class="d-flex w-full">Thông tin cá nhân</p>
+                <p class="d-flex w-full">{{ $t('PersonalInformation') }}</p>
                 <div class="vx-col md:w-1/2 w-full mt-5">
-                  <vs-input label="Họ" v-model="first_n" class="w-full" />
+                  <vs-input :label="$t('Surname')" v-model="first_n" class="w-full" />
                 </div>
                 <div class="vx-col md:w-1/2 w-full mt-5">
-                  <vs-input label="Tên" v-model="last_n" class="w-full" />
+                  <vs-input :label="$t('Name')" v-model="last_n" class="w-full" />
                 </div>
                 <div class="vx-col w-full mt-5">
-                  <vs-input label="Số CMND / Hộ chiếu" v-model="smcnn" class="w-full" />
+                  <vs-input :label="$t('CardPassport')" v-model="smcnn" class="w-full" />
                 </div>
                 <div class="vx-col w-full mt-5">
-                  <vs-select v-model="country" class="w-full select-large" label="Quốc gia">
+                  <vs-select v-model="country" class="w-full select-large" :label="$t('Nation')">
                     <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item, index) in cityOptions"
                       class="w-full" />
                   </vs-select>
@@ -50,12 +50,13 @@
 
             <!-- tab 2 content -->
             <tab-content class="mb-5 upl">
-              <p class="d-flex w-full">Xác thực danh tính</p>
-              <small>1. Hãy đảm bảo rằng ảnh chụp toàn vẹn và rõ ràng, có định dạng JPG, PNG, JPEG.</small>
-              <small>2. Hãy chụp ảnh Chứng minh thư/Hộ chiếu của bạn. Ảnh cần sáng và rõ ràng, không bị mất góc.</small>
+              <p class="d-flex w-full">{{ $t('IdentityAuthentication') }}</p>
+              <small>1. {{ $t('PleaseEnsureThePhoto1') }}</small>
+              <br>
+              <small>2. {{ $t('PleaseEnsureThePhoto2') }}</small>
               <div class="vx-row m-0 mb-3">
                 <div class="w-full pt-2 pb-2">
-                  <label>-Mặt trước Chứng minh thư/Hộ chiếu</label>
+                  <label>- {{ $t('FrontCard') }}</label>
                 </div>
                 <div class="w-1/2 mb-2">
                   <label class="sample cursor-pointer"
@@ -74,7 +75,7 @@
               </div>
               <div class="vx-row m-0 mb-3">
                 <div class="w-full pt-2 pb-2">
-                  <label>-Mặt sau Chứng minh thư/Hộ chiếu</label>
+                  <label>- {{ $t('BackCard') }} </label>
                 </div>
                 <div class="w-1/2 mb-2">
                   <label class="sample cursor-pointer"
@@ -96,11 +97,11 @@
             <!-- tab 3 content -->
             <tab-content class="mb-5">
               <div class="vx-row">
-                <p class="d-flex w-full">Xem xét</p>
+                <p class="d-flex w-full">{{ $t('Consider') }}</p>
                 <div class="vx-col w-full">
-                  <p class="text-center" v-if="!verify">Nhấn Xong để hoàn thành. Chúng tôi sẽ xem xét thông tin của bạn!
+                  <p class="text-center" v-if="!verify">{{ $t('ClickDoneToComplete') }}
                   </p>
-                  <p class="text-center" v-if="verify">Tài khoản cả bạn đã được xác minh!</p>
+                  <p class="text-center" v-if="verify">{{ $t('YourAccountVerified') }}</p>
                 </div>
               </div>
             </tab-content>
