@@ -1,6 +1,6 @@
 <template>
     <div id="AffiliatePage">
-        <div v-if="isVip" class="bodyContent affiliatePage">
+        <div v-if="!isVip" class="bodyContent affiliatePage">
             <div class="banner">
                 <div class="content">
                     <div class="container h-full">
@@ -1369,7 +1369,9 @@ export default {
                                 nC3.update({ y: d.tshhTTMoi3 }, true)
                             }
                         }
-                        catch { }
+                        catch (error) {
+                            console.log(`Affiliate.vue line 1375: ${error.message}`)
+                         }
                         //let cS3 = this.$refs.chartSplineThree.chart
                     }
 
@@ -1571,7 +1573,7 @@ export default {
         this.linkDk = window.location.origin + '/register?r=' + Ref;
         this.codeGioiThieu = Ref;
 
-        this.isVip = true // getData.vip
+        this.isVip = getData.vip
 
         this.vip_lv = getData.vip_lv
 
