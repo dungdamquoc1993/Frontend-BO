@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <vs-popup class="text-center" title="Trở thành VIP" :active.sync="popupBuyThamGiaVip">
+            <vs-popup class="text-center" :title="$t('BecomeAVip')" :active.sync="popupBuyThamGiaVip">
                 <div class="contentWrapper" :class="{ 'ld-loading': loading }">
                     <div class="loading">
                         <div class="loading__ring">
@@ -115,35 +115,33 @@
                         </div>
                     </div>
                     <div class="header borderBtSecondary">
-                        <span class="text-2xl font-bold capitalize modal-title">Chấp nhận tham gia</span>
+                        <span class="text-2xl font-bold capitalize modal-title">{{ $t('AcceptParticipation') }}</span>
                     </div>
                     <div class="body">
                         <div class="imgShake mb-3"></div>
-                        <div class="textContent mb-3 colorSecondary">Bạn cần thanh toán $100 để mua Quyền Đại lý. Bạn muốn
-                            tiếp tục?</div>
+                        <div class="textContent mb-3 colorSecondary">{{ $t('YouNeedToPay') }}</div>
                         <div class="checkbox flex items-center justify-center mb-3">
                             <vs-checkbox color="success" v-model="dongYMua" @click="isDongY = !isDongY"></vs-checkbox>
                             <span for="customControlInline" class="accept">
-                                Tôi xác nhận và đồng ý
+                                {{ $t('AcknowledgeAndAgree') }}
                                 <a target="_blank" href="/faqs" class="term">
-                                    Điều khoản về dịch vụ
+                                    {{ $t('TermsOfService') }}
                                 </a>
                             </span>
                         </div>
-                        <vs-button class="w-full" color="warning" type="filled" :disabled="!isDongY" @click="OkBuyVip">Xác
-                            nhận</vs-button>
+                        <vs-button class="w-full" color="warning" type="filled" :disabled="!isDongY" @click="OkBuyVip">{{ $t('Confirm') }}</vs-button>
                     </div>
                 </div>
             </vs-popup>
             <vs-popup class="text-center" title="Thông Báo" :active.sync="popupThongBao">
                 <div class="contentWrapper">
                     <div class="header borderBtSecondary">
-                        <span class="text-2xl font-bold capitalize modal-title">Số dư của bạn không đủ</span>
+                        <span class="text-2xl font-bold capitalize modal-title">{{ $t('YourBalanceIsInsufficient') }}</span>
                     </div>
                     <div class="body">
                         <img :src="require('@/assets/images/sky/not_enought_balance.svg')" alt="">
 
-                        <vs-button class="w-full" color="warning" type="filled" @click="OkNapNgay">Nạp ngay</vs-button>
+                        <vs-button class="w-full" color="warning" type="filled" @click="OkNapNgay">{{ $t('LoadNow') }}</vs-button>
                     </div>
                 </div>
             </vs-popup>
@@ -151,14 +149,14 @@
         <div v-else class="affiliatePage pt-8">
             <div class="w-full">
                 <vs-tabs alignment="center">
-                    <vs-tab label="Tổng Quan" @click="showGobal = true, showCom = false, showqlHt = false">
+                    <vs-tab :label="$t('Overview')" @click="showGobal = true, showCom = false, showqlHt = false">
 
                     </vs-tab>
-                    <vs-tab label="Hoa Hồng"
+                    <vs-tab :label="$t('Rose')"
                         @click="chiTietLoiNhuanHoaHong, showGobal = false, showCom = true, showqlHt = false">
 
                     </vs-tab>
-                    <vs-tab label="Quản lý hệ thống" @click="showGobal = false, showCom = false, showqlHt = true">
+                    <vs-tab :label="$t('SystemManagement')" @click="showGobal = false, showCom = false, showqlHt = true">
 
                     </vs-tab>
                 </vs-tabs>
@@ -196,7 +194,7 @@
                                                     </div>
                                                     <div class="rank-text">
                                                         <p class="textRank noselect cursor-pointer bgPrimary">
-                                                            <span class="text">Cấp bậc</span>
+                                                            <span class="text">{{ $t('Rank') }}c</span>
                                                             <span class="q" @click="popupActiveRank = true">
                                                                 <feather-icon icon="HelpCircleIcon"
                                                                     svgClasses="h-6 w-6 ml-1 c-question" />
@@ -206,11 +204,10 @@
                                                 </div>
                                             </div>
                                             <div class="body">
-                                                <h5 class="nextRankCondition colorSecondary text-center mb-3">Điều kiện Cấp
-                                                    bậc</h5>
+                                                <h5 class="nextRankCondition colorSecondary text-center mb-3">{{ $t('Condition') }} {{ $t('Rank') }}</h5>
                                                 <div class="vx-row">
                                                     <div class="vx-col w-2/3">
-                                                        <p class="text-base white-50 mb-2 name">F1 tổng (Tuần này)</p>
+                                                        <p class="text-base white-50 mb-2 name">F1 {{ $t('TotalThisWeek') }}</p>
                                                         <p class="text-xl font-size-18 colorPrimary m-0 value">
                                                             <span class="colorSecondary">{{ hhMeF1isWeek }} / </span>
                                                             <span class="colorGray" v-if="totalDlisMe < 3">1,000</span>
@@ -222,7 +219,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="vx-col w-1/3">
-                                                        <p class="text-base white-50 mb-2 name">F1 Đại lý</p>
+                                                        <p class="text-base white-50 mb-2 name">F1 {{ $t('Agency') }}</p>
                                                         <p class="text-xl font-size-18 m-0 value">
                                                             <span class="colorSecondary">{{ totalDlisMe }} / </span>
                                                             <span class="colorGray" v-if="totalDlisMe < 3">2</span>
@@ -241,7 +238,7 @@
                                         <div class="affiliateInfo bgSecondary borderSecondary">
                                             <div class="referralSponsor">
                                                 <p class="mb-0">
-                                                    <span class="text-xs colorSecondary mb-2">Người giới thiệu</span>
+                                                    <span class="text-xs colorSecondary mb-2">{{ $t('Presenter') }}</span>
                                                 </p>
                                                 <p><span class="text-2xl colorSecondary mb-2 value">{{ f1cuaminh != '' ?
                                                     f1cuaminh : '-----' }}</span></p>
@@ -250,19 +247,19 @@
                                             <div class="linkGroup m-0">
                                                 <div class="vx-row">
                                                     <div class="vx-col w-1/2 mb-2">
-                                                        <p class="text-xs colorSecondary2 mb-2">Tổng số nhà giao dịch</p>
+                                                        <p class="text-xs colorSecondary2 mb-2">{{ $t('TotalNumberOfTraders') }}</p>
                                                         <p class="totalReferral colorSuccess text-2xl">{{ totalNGD }}</p>
                                                     </div>
                                                     <div class="vx-col w-1/2 mb-2">
-                                                        <p class="text-xs colorSecondary2 mb-2">Tổng số Đại lý</p>
+                                                        <p class="text-xs colorSecondary2 mb-2">{{ $t('TotalNumberOfAgents') }}</p>
                                                         <p class="totalAgency colorPrimary text-2xl">{{ totalDaiLy }}</p>
                                                     </div>
                                                     <div class="vx-col w-1/2">
-                                                        <p class="text-xs colorSecondary2 mb-2">Hoa hồng Giao dịch</p>
+                                                        <p class="text-xs colorSecondary2 mb-2">{{ $t('TradingCommissions') }}</p>
                                                         <p class="colorDanger text-2xl m-0">{{ commissGD }}</p>
                                                     </div>
                                                     <div class="vx-col w-1/2">
-                                                        <p class="text-xs colorSecondary2 mb-2">Hoa hồng Đại lý</p>
+                                                        <p class="text-xs colorSecondary2 mb-2">{{ $t('AgentCommission') }}</p>
                                                         <p class="colorPrimary text-2xl m-0">{{ pen_commiss }}</p>
                                                     </div>
                                                 </div>
@@ -292,7 +289,7 @@
                                                         transform="translate(-0.087 -0.087)" fill="#fa2843"></path>
                                                 </svg>
 
-                                                Link Đăng ký
+                                                {{ $t('LinkRegister') }}
                                             </p>
                                             <div class="groupButton flex mb-4 relative">
                                                 <div class="leftControl">
@@ -301,7 +298,7 @@
                                                 </div>
                                                 <div class="rightControl">
                                                     <button class="btn button primary cursor-pointer"
-                                                        v-clipboard:copy="linkDk" @click="saoChep">Sao chép</button>
+                                                        v-clipboard:copy="linkDk" @click="saoChep">{{ $t('Copy') }}p</button>
                                                 </div>
                                             </div>
                                             <p class="text-base font-bold white mb-3 affiliateInfo-title"
@@ -325,7 +322,7 @@
                                                         transform="translate(-0.087 -0.087)" fill="#fa2843"></path>
                                                 </svg>
 
-                                                Mã giới thiệu
+                                                {{ $t('ReferralCode') }}
                                             </p>
                                             <div class="groupButton flex mb-3">
                                                 <div class="leftControl">
@@ -334,7 +331,7 @@
                                                 </div>
                                                 <div class="rightControl">
                                                     <button class="btn button primary cursor-pointer"
-                                                        v-clipboard:copy="codeGioiThieu" @click="saoChep">Sao chép</button>
+                                                        v-clipboard:copy="codeGioiThieu" @click="saoChep">{{ $t('Copy') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -342,10 +339,10 @@
                                     <div class="vx-col w-full lg:w-2/3 mb-4">
                                         <div class="wrap-chart bgSecondary borderSecondary recent-statistics">
                                             <vs-tabs>
-                                                <vs-tab label="Tháng này" @click="showTN = true, showTT = false">
+                                                <vs-tab :label="$t('ThisMonth')" @click="showTN = true, showTT = false">
 
                                                 </vs-tab>
-                                                <vs-tab label="Tháng trước" @click="showTT = true, showTN = false">
+                                                <vs-tab :label="$t('LastMonth')" @click="showTT = true, showTN = false">
 
                                                 </vs-tab>
                                             </vs-tabs>
@@ -356,12 +353,12 @@
                                                             <div class="vx-col w-full lg:w-1/3">
                                                                 <p
                                                                     class="text-xl font-bold white my-4 recent-statistics-title">
-                                                                    Số liệu gần đây</p>
-                                                                <p class="totalReferral colorSuccess mb-4">Tổng số nhà giao
-                                                                    dịch mới ({{ tslgdmtn }})</p>
-                                                                <p class="totalAgency colorBlue mb-4">Tổng số đại lý mới ({{
-                                                                    tsdlmtn }})</p>
-                                                                <p class="colorDanger">Tổng số hoa hồng mới ({{ tshhmtn }})
+                                                                    {{ $t('RecentFigures') }}</p>
+                                                                <p class="totalReferral colorSuccess mb-4">
+                                                                    {{ $t('TotalNumberOfTraders') }} {{ $t('New') }} ({{ tslgdmtn }})</p>
+                                                                <p class="totalAgency colorBlue mb-4">
+                                                                    {{ $t('TotalNumberOfAgents') }} {{ $t('New') }} ({{ tsdlmtn }})</p>
+                                                                <p class="colorDanger">{{ $t('TotalCommissions') }} {{ $t('New') }} ({{ tshhmtn }})
                                                                 </p>
                                                             </div>
                                                             <div class="vx-col w-full lg:w-2/3">
@@ -379,12 +376,11 @@
                                                             <div class="vx-col w-full lg:w-1/3">
                                                                 <p
                                                                     class="text-xl font-bold white my-4 recent-statistics-title">
-                                                                    Số liệu gần đây</p>
-                                                                <p class="totalReferral colorSuccess mb-4">Tổng số nhà giao
-                                                                    dịch mới ({{ tslgdmtt }})</p>
-                                                                <p class="totalAgency colorBlue mb-4">Tổng số đại lý mới ({{
+                                                                   {{ $t('RecentFigures') }}</p>
+                                                                <p class="totalReferral colorSuccess mb-4">{{ $t('TotalNumberOfTraders') }} {{ $t('New') }} ({{ tslgdmtt }})</p>
+                                                                <p class="totalAgency colorBlue mb-4">{{ $t('TotalNumberOfAgents') }} {{ $t('New') }} ({{
                                                                     tsdlmtt }})</p>
-                                                                <p class="colorDanger">Tổng số hoa hồng mới ({{ tshhmtt }})
+                                                                <p class="colorDanger">{{ $t('TotalCommissions') }} {{ $t('New') }} ({{ tshhmtt }})
                                                                 </p>
                                                             </div>
                                                             <div class="vx-col w-full lg:w-2/3">
@@ -416,26 +412,28 @@
                                                         d="M17,12v5a1,1,0,0,0,1,1h2a1,1,0,0,0,1-1V12a1,1,0,0,0-1-1H18A1,1,0,0,0,17,12Z"
                                                         transform="translate(0 -2)" fill="#fa2843"></path>
                                                 </svg>
-                                                <span class="text-xl white font-bold networkVolumeStats-title">KLGD Cấp
-                                                    Dưới</span>
+                                                <span class="text-xl white font-bold networkVolumeStats-title">
+                                                    {{ $t('LowerLevelTradingVolume') }}
+                                                </span>
                                                 <vs-dropdown vs-custom-content vs-trigger-click>
                                                     <a class="flex items-center" href.prevent>
                                                         <feather-icon icon="HelpCircleIcon"
                                                             svgClasses="h-6 w-6 ml-1 c-question" />
                                                     </a>
                                                     <vs-dropdown-menu class="dropdown-question">
-                                                        <p class="m-0 text-sm">Tổng khối lượng giao dịch của 7 tầng mỗi
-                                                            tháng.</p>
+                                                        <p class="m-0 text-sm">
+                                                            {{ $t('TotalVolume') }}
+                                                        </p>
                                                     </vs-dropdown-menu>
                                                 </vs-dropdown>
                                             </div>
                                             <div class="cardBody">
                                                 <div class="vx-row head border-bottom border-top" style="width: 360px;">
                                                     <div class="vx-col lg:w-5/12">
-                                                        <p class="m-0 texthead text-sm capitalize">Tháng</p>
+                                                        <p class="m-0 texthead text-sm capitalize"> {{ $t('Month') }}</p>
                                                     </div>
                                                     <div class="vx-col lg:w-7/12">
-                                                        <p class="m-0 texthead text-sm capitalize">tổng</p>
+                                                        <p class="m-0 texthead text-sm capitalize"> {{ $t('Total') }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="dataContent">
@@ -480,7 +478,7 @@
                                             <div class="cardFooter">
                                                 <div class="vx-row">
                                                     <div class="vx-col lg:w-5/12">
-                                                        <p class="m-0"><b>Tổng</b>
+                                                        <p class="m-0"><b>{{ $t('Total') }}</b>
                                                         </p>
                                                     </div>
                                                     <div class="vx-col lg:w-7/12">
@@ -519,7 +517,7 @@
                                                             stroke-linecap="round" stroke-linejoin="round"
                                                             stroke-miterlimit="10" stroke-width="2"></path>
                                                     </g>
-                                                </svg><span class="text-xl white font-bold getIntouch-title">Liên hệ</span>
+                                                </svg><span class="text-xl white font-bold getIntouch-title">{{ $t('Contact') }}</span>
                                             </div>
                                             <div class="cardBody">
                                                 <div class="vx-row">
@@ -530,7 +528,7 @@
                                                             Support001</p>
                                                     </div>
                                                     <div class="vx-col lg:w-8/12">
-                                                        <p class="white-50 text-base mb-2 getIntouch-label">Địa chỉ Email
+                                                        <p class="white-50 text-base mb-2 getIntouch-label">{{ $t('EmailAddress') }}
                                                         </p>
                                                         <p class="flex items-center">
                                                             <feather-icon icon="MailIcon"
@@ -554,14 +552,14 @@
                         <div class="wraperContent">
                             <div class="headerContent flex lg:flex-row flex-col justify-between items-center mb-4">
                                 <h1 class="text-2xl white font-bold text-capitalize pointer affiliateCommission-title">
-                                    Hoa hồng
+                                    {{ $t('Rose') }}
                                     <span class="q">
                                         <feather-icon icon="HelpCircleIcon" svgClasses="h-6 w-6 ml-1 c-question" />
                                     </span>
                                 </h1>
                                 <div class="affCommissionControl items-end flex flex-wrap">
                                     <div class="blockLine flex flex-col mr-3">
-                                        <span class="type">Loại Hoa hồng</span>
+                                        <span class="type">{{ $t('Type') }} {{ $t('Rose') }}</span>
                                         <v-select class="w-64 relative" v-model="selectedHoaHong" :options="optionsHoaHong"
                                             :dir="$vs.rtl ? 'rtl' : 'ltr'" />
                                     </div>
@@ -575,14 +573,13 @@
                                         </div>
                                     </div>
                                     <vs-button class="w-32" color="rgb(62, 201, 214)" type="filled"
-                                        @click="clickSearchDateTimeHoaHong">Tìm kiếm</vs-button>
+                                        @click="clickSearchDateTimeHoaHong">{{ $t('Search') }}</vs-button>
                                 </div>
                             </div>
                             <div class="notice-comission mb-4">
                                 <p>
-                                    <span style="color: #F02769;">Lưu ý: </span>
-                                    <span style="color: #8D97A0;">Bạn sẽ nhận hoa hồng giao dịch từ tuyến dưới của ngay lập
-                                        tức.</span>
+                                    <span style="color: #F02769;">{{ $t('Note') }}: </span>
+                                    <span style="color: #8D97A0;">{{ $t('YouWillReceiveTradingCommissions') }}</span>
                                 </p>
                             </div>
                             <div class="body vx-row">
@@ -647,24 +644,25 @@
                                                                         stroke-linejoin="round" stroke-width="1"></line>
                                                                 </g>
                                                             </svg><span
-                                                                class="white text-lg font-bold trading-detail-title">Chi
-                                                                tiết Lợi nhuận Giao dịch</span>
+                                                                class="white text-lg font-bold trading-detail-title">
+                                                                {{ $t('TradingProfitDetails') }}
+                                                                </span>
                                                         </div>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <thead>
                                                 <tr>
-                                                    <th class="colorSecondary2">Thời gian</th>
-                                                    <th class="colorSecondary2">Thanh toán</th>
-                                                    <th class="colorSecondary2">Số lượng Giao dịch</th>
+                                                    <th class="colorSecondary2">{{ $t('Time') }}</th>
+                                                    <th class="colorSecondary2">{{ $t('Pay') }}</th>
+                                                    <th class="colorSecondary2">{{ $t('NumberOfTransactions') }}</th>
                                                     <!--<th class="colorSecondary2">Số nhà Giao dịch</th>-->
-                                                    <th class="colorSecondary2">Khối lượng Giao dịch</th>
+                                                    <th class="colorSecondary2">{{ $t('TradingVolume') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center table-content" v-if="listChiTietKLGD.length == 0">
                                                 <tr>
-                                                    <td colspan="5"><span>Không có dữ liệu</span>
+                                                    <td colspan="5"><span>{{ $t('NoData') }}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -724,22 +722,23 @@
                                                                         stroke-linejoin="round" stroke-width="1"></line>
                                                                 </g>
                                                             </svg><span
-                                                                class="white text-lg font-bold trading-detail-title">Chi
-                                                                tiết Lợi nhuận Giao dịch</span>
+                                                                class="white text-lg font-bold trading-detail-title">
+                                                                {{ $t('TradingProfitDetails') }}
+                                                                </span>
                                                         </div>
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <thead>
                                                 <tr>
-                                                    <th class="colorSecondary2">Thời gian</th>
-                                                    <th class="colorSecondary2">Thanh toán</th>
-                                                    <th class="colorSecondary2">Doanh số</th>
+                                                    <th class="colorSecondary2">{{ $t('Time') }}</th>
+                                                    <th class="colorSecondary2">{{ $t('Pay') }}</th>
+                                                    <th class="colorSecondary2">{{ $t('Sales') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center table-content" v-if="listChiTietKLVip.length == 0">
                                                 <tr>
-                                                    <td colspan="5"><span>Không có dữ liệu</span>
+                                                    <td colspan="5"><span>{{ $t('NoData') }}</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -762,20 +761,20 @@
                         <div class="w-full lg:pl-0 px-0">
                             <div>
                                 <div class="filterDiv">
-                                    <h1 class="text-2xl white font-bold capitalize mb-4">Quản lý đại lý</h1>
+                                    <h1 class="text-2xl white font-bold capitalize mb-4">{{ $('ManagementAgent') }}</h1>
                                     <div class="flex flex-wrap">
                                         <div class="relative colFirst lg:mr-5 align-middle">
-                                            <p class="color-white-50 mb-1 aff-test-type">Tìm kiếm bằng </p>
+                                            <p class="color-white-50 mb-1 aff-test-type">{{ $('Seach') }} bằng </p>
                                             <button class="btn search btnSearchType lg:mr-3 button cursor-pointer"
                                                 :class="{ active: showActiveLv, primary: showActiveLv }"
-                                                @click="showActiveLv = true, showActiveBD = false">Cấp bậc</button>
+                                                @click="showActiveLv = true, showActiveBD = false">{{ $('Rank') }}</button>
                                             <button class="btn search btnSearchType button cursor-pointer"
                                                 :class="{ active: showActiveBD, primary: showActiveBD }"
-                                                @click="showActiveBD = true, showActiveLv = false">Biệt danh</button>
+                                                @click="showActiveBD = true, showActiveLv = false">{{ $t('Nickname')}}</button>
                                         </div>
                                         <div class="md:w-1/2 align-middle">
                                             <div class="lg:ml-8">
-                                                <div class="color-white-50 mb-1 aff-text-type">Xem Người bạn giới thiệu bằng
+                                                <div class="color-white-50 mb-1 aff-text-type">{{ $t('SeeWhoYouReferBy')}}
                                                     {{ showActiveLv ? 'Cấp bậc' : 'tên' }}</div>
                                                 <div class="flex">
                                                     <v-select :class="{ block: showActiveLv, hidden: showActiveBD }"
@@ -785,9 +784,9 @@
                                                         class="inputx mr-4 TnD" placeholder="Nhập tên người dùng"
                                                         v-model="EnterNameUser" />
                                                     <vs-button v-if="showActiveLv" color="rgb(62, 201, 214)" type="filled"
-                                                        @click="searchCapBac">Tìm kiếm</vs-button>
+                                                        @click="searchCapBac">{{ $t('Search') }}</vs-button>
                                                     <vs-button v-else color="rgb(62, 201, 214)" type="filled"
-                                                        @click="searchName">Tìm kiếm</vs-button>
+                                                        @click="searchName">{{ $t('Search') }}</vs-button>
                                                 </div>
                                             </div>
                                         </div>
@@ -795,18 +794,17 @@
                                 </div>
                                 <div class="paddingResult">
                                     <div class="mb-3 flex flex-wrap">
-                                        <h1 class="text-2xl white font-bold capitalize ">Kết quả tìm kiếm</h1>
+                                        <h1 class="text-2xl white font-bold capitalize ">{{ $t('SearchResults') }}</h1>
                                         <div class="ml-auto flex flex-wrap scrollRange items-center">
-                                            <span class="textTime mr-4">Khoảng thời gian:</span>
+                                            <span class="textTime mr-4">{{ $t('Period') }}:</span>
                                             <button class="btn btnTime mr-3 cursor-pointer"
-                                                :class="{ 'button primary active': oneday }" @click="changeDateSelect(1)">Hôm
-                                                qua</button>
+                                                :class="{ 'button primary active': oneday }" @click="changeDateSelect(1)"></button>
                                             <button class="btn btnTime mr-3 cursor-pointer"
                                                 :class="{ 'button primary active': twoday }" @click="changeDateSelect(7)">7
-                                                ngày gần nhất</button>
+                                                {{ $t('RecentDays') }}</button>
                                             <button class="btn btnTime mr-3 cursor-pointer"
                                                 :class="{ 'button primary active': threeday }"
-                                                @click="changeDateSelect(30)">30 ngày gần nhất</button>
+                                                @click="changeDateSelect(30)">30 {{ $t('RecentDays') }}</button>
                                             <button class="btn btnTime cursor-pointer"
                                                 :class="{ 'button primary active': allday }" @click="changeDateSelect(0)">Tất
                                                 cả</button>
@@ -840,15 +838,15 @@
                                                 </div>
                                                 <thead>
                                                     <tr>
-                                                        <th>Biệt danh</th>
-                                                        <th>Cấp bậc</th>
-                                                        <th>Tổng KLGD</th>
-                                                        <th>HH nhận</th>
+                                                        <th>{{ $t('Nickname') }}</th>
+                                                        <th>{{ $t('Rank') }}</th>
+                                                        <th>{{ $t('TotalKLGD') }}</th>
+                                                        <th>{{ $t('HHAccepted') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody v-if="datalistAgency.length == 0">
                                                     <tr>
-                                                        <td colspan="4"><span>Không có dữ liệu</span></td>
+                                                        <td colspan="4"><span>{{ $t('NoData') }}</span></td>
                                                     </tr>
                                                 </tbody>
                                                 <tbody v-else>
