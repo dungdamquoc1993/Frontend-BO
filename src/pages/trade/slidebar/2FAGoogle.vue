@@ -1,7 +1,7 @@
 <template>
         <div class="m-10 gg" v-if="!isActive2FA">
             <p class="description color-white-50 text-center mb-2">
-              Google Authenticator đã được bật. Để hủy kích hoạt, nhập mã Google Authenticator và nhấn Hủy kích hoạt.
+              {{ $t('GoogleAuthenticationIsEnabled')}}
             </p>
             <div class="qrcode"> 
               <div class="loading">
@@ -22,7 +22,7 @@
                       <p class="desc mb-0">
                         <small class="description">
                             <span class="noted red">
-                                  Mở ứng dụng Google Authenticator của bạn và quét mã QR bên dưới hoặc nhập khóa vào ứng dụng. Khóa này dùng để khôi phục Xác thực Google của bạn khi bạn đổi hoặc mất điện thoại. Vui lòng sao lưu khóa này trước khi kích hoạt Xác thực Google.
+                                {{ $t('OpenYourGoogleAuthentication')}}
                             </span>
                         </small>
                       </p>
@@ -30,7 +30,7 @@
               </div>
               <div class="vx-row backupkey">
                   <div class="md:w-3/12 label color-white-50">
-                      Mã sao lưu:
+                      {{ $t('BackupCode')}}:
                   </div>
                   <div class="md:w-9/12 key pl-0 pr-lg-3 pr-0">
                         <div class="grouplabel">
@@ -43,12 +43,12 @@
                         </div>
                   </div>
                     <div class="w-full relative">
-                        <vs-input class="w-full" type="password" label="Mật khẩu" v-model="passwordSend"/>
+                        <vs-input class="w-full" type="password" :label="$t('Password')" v-model="passwordSend"/>
                     </div>
                 
                     <div class="w-full">
                         <div class="relative">
-                            <vs-input class="w-full" label="Mã xác nhận" v-model="codeActive"/>
+                            <vs-input class="w-full" :label="$t('Verification')" v-model="codeActive"/>
                             <!--<span class="paste">Paste</span>-->
                         </div>
                         <div class="w-1/5 text-right float-right" style="margin-top: 1rem;">
@@ -57,19 +57,19 @@
                     </div>
                     <div class="w-full">
                         <div class="relative">
-                            <vs-input class="w-full" label="Mã 2FA" v-model="code2FA"/>
+                            <vs-input class="w-full" :label="$t('Code2FA')" v-model="code2FA"/>
                             <!--<span class="paste">Paste</span>-->
                         </div>
                     </div>
                     <div class="w-full text-center" style="margin-top: 1rem;">
-                         <vs-button class="w-64" color="rgb(62, 201, 214)" type="filled" @click="clickVerify()">Bật</vs-button>
+                         <vs-button class="w-64" color="rgb(62, 201, 214)" type="filled" @click="clickVerify()">{{ $t('TurnOn')}}</vs-button>
                     </div>
               </div>
           </div>
         </div>
         <div class="m-10 gg" v-else>
             <p class="description color-white-50 text-center mb-2">
-              Google Authenticator đã được bật. Để hủy kích hoạt, nhập mã Google Authenticator và nhấn Hủy kích hoạt.
+              {{ $t('GoogleAuthenticationIsEnabled') }}
             </p>
             <div class="qrcode">
               <div class="loading">
@@ -82,12 +82,12 @@
               </div>
               <div class="vx-row backupkey">
                     <div class="w-full relative">
-                        <vs-input class="w-full" type="password" label="Mật khẩu" v-model="passwordSend"/>
+                        <vs-input class="w-full" type="password" :label="$t('Password')" v-model="passwordSend"/>
                     </div>
                 
                     <div class="w-full">
                         <div class="relative">
-                            <vs-input class="w-full" label="Mã xác nhận" v-model="codeActive"/>
+                            <vs-input class="w-full" :label="$t('Verification')" v-model="codeActive"/>
                             <!--<span class="paste">Paste</span>-->
                         </div>
                         <div class="text-right float-right" style="margin-top: 1rem;">
@@ -96,12 +96,12 @@
                     </div>
                     <div class="w-full">
                         <div class="relative">
-                            <vs-input class="w-full" label="Mã 2FA" v-model="code2FA"/>
+                            <vs-input class="w-full" :label="$t('Code2FA')" v-model="code2FA"/>
                             <!--<span class="paste">Paste</span>-->
                         </div>
                     </div>
                     <div class="w-full text-center" style="margin-top: 1rem;">
-                         <vs-button class="w-64" color="rgb(62, 201, 214)" type="filled" @click="clickUnVerify()">Hủy Kích Hoạt</vs-button>
+                         <vs-button class="w-64" color="rgb(62, 201, 214)" type="filled" @click="clickUnVerify()">{{ $t('Deactivate') }}</vs-button>
                     </div>
               </div>
           </div>
@@ -125,7 +125,7 @@ export default {
           code2FA: '',
           codeActive: '',
           passwordSend: '',
-          ssDownSend: 'Gửi mã',
+          ssDownSend: this.$t('SendCode'),
           backgroundLoading:'primary',
           colorLoading: '#fff'
       }  
@@ -329,7 +329,6 @@ export default {
         },
     },
     created() {
-
         if(!getData.c2fa){
             this.createQRCode2FA()
         }else{

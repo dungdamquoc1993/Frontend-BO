@@ -129,7 +129,7 @@
 
     <ho-so-setting :isSidebarActive="SidebarHSSetting" @closeSidebar="toggleDataSidebar" /> 
 
-    <vs-prompt title="Xác thực Google" @close="closeGG2FA" :active.sync="popupActive2FA" :buttons-hidden="true">
+    <vs-prompt :title="$t('GoogleAuthentication')" @close="closeGG2FA" :active.sync="popupActive2FA" :buttons-hidden="true">
       <google-auth />
     </vs-prompt>
 

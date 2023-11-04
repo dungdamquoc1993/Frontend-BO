@@ -355,7 +355,7 @@
         <vs-button @click="clickTransMoney" color="rgb(62, 201, 214)" type="filled">Chuyển Tiền</vs-button>
       </div>
     </vs-popup> -->
-    <vs-popup class="qDeposit" title="Ví" :active.sync="popupTransferActive">
+    <vs-popup class="qDeposit" :title="$t('Wallet')" :active.sync="popupTransferActive">
       <div :class="{ 'ld-loading': ldForm }">
         <div class="loading">
           <div class="loading__ring">
@@ -380,12 +380,12 @@
         <img src="../../assets/images/wallet/wallet-svgrepo-com.svg" alt="Wallet">
       </div>
       <vs-tabs alignment="center">
-        <vs-tab label="Nạp tiền">
+        <vs-tab :label="$t('Recharge')">
           <div class="con-tab-ejemplo">
             <div class="wrapper">
               <div class="flex items-center justify-center gap-5">
                 <div class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Money') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(true)">
                       <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
@@ -402,7 +402,7 @@
                   </div>
                 </div>
                 <div v-if="walletIsSelect.children" class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
                       <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort
@@ -422,7 +422,7 @@
                 <label class="flex flex-col w-full">
                   <span class="inline-flex items-center font-semibold text-[14px] text-[#b1bad3] pb-1 justify-between">
                     <div class="inline-flex w-full">
-                      Địa chỉ nạp tiền {{ walletIsSelect.name || listWallet[0].name }} của bạn
+                      {{ $t('DepositAddress') }} {{ walletIsSelect.name || listWallet[0].name }} {{ $t('yours') }}
                     </div>
                   </span>
                   <div
@@ -432,7 +432,7 @@
                       <input type="hidden" id="addressPayment" :value="addressPayment">
                     </div>
                     <div class="input-button-copy rounded-r flex-shrink-0">
-                      <button class="rounded" type="button">
+                      <button class="rounded" type="button"  @click="copyAddress">
                         <span class="inline-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                             <path
@@ -453,29 +453,33 @@
                 </div>
               </div>
               <span class="block text-center text-[#b1bad3] text-[14px] mt-5">
-                Chỉ gửi {{ walletIsSelect.name || listWallet[0].name }} đến địa chỉ này,
+                {{ $t('SendOnly') }} {{ walletIsSelect.name || listWallet[0].name }} {{ $t('ToThisAddress') }},
                 {{ walletIsSelect.children && walletIsSelect.children.length ? '2' : '1' }}
-                confirmations cần thiết.
+                {{ $t('ConfirmationsNeeded') }}
               </span>
             </div>
           </div>
         </vs-tab>
-        <vs-tab label="Rút tiền">
+        <vs-tab :label="$t('Withdraw')">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5">
               <div class="flex items-center justify-center gap-5">
                 <div class="flex flex-col items-center">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">Số tiền dư</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('BalanceAmount') }}</span>
                   <div class="text-white font-semibold">
                     <span style="font-size: 16px;">
-                      0$
+                      {{
+                        isAcc
+                        ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}`)
+                        : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}`)
+                      }}
                     </span>
                   </div>
                 </div>
               </div>
               <div class="flex items-center justify-center gap-5">
                 <div class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">Tiền</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Money') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow"
                       @click="closeDropdown(true)">
@@ -498,7 +502,7 @@
                   </div>
                 </div>
                 <div v-if="walletIsSelect.children" class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">Mạng</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
                       <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort
@@ -519,7 +523,7 @@
                   <div class="flex items-center pb-1">
                     <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                     <span class="inline-block font-semibold text-[14px] text-[#2f4553] ml-1">
-                      <span>{{ walletIsSelect.name || listWallet[0].name }} Địa chỉ</span>
+                      <span>{{ walletIsSelect.name || listWallet[0].name }} {{ $t('Address')}}</span>
                     </span>
                     <div class="asterisk-wrapper svelte-41a1vp">
                       <span class="text-red inline-flex justify-start text-[14px] font-normal ml-1">*</span>
@@ -536,7 +540,7 @@
                 <span class="flex items-center justify-between">
                   <div class="flex items-center pb-1">
                     <span class="inline-block font-semibold text-[14px] text-[#2f4553] ml-1">
-                      <span>Số tiền</span>
+                      <span>{{ $t('AmountOfMoney') }}</span>
                     </span>
                     <div class="asterisk-wrapper svelte-41a1vp">
                       <span class="text-red inline-flex justify-start text-[14px] font-normal ml-1">*</span>
@@ -559,31 +563,31 @@
                   </div>
                   <div class="input-button-wrap inline-flex flex-shrink-0">
                     <button class="btn-max" type="button" @click="handleMaxMoney">
-                      <span class="inline-flex">Tối đa</span>
+                      <span class="inline-flex">{{ $t('Max')}}</span>
                     </button>
                   </div>
                 </div>
               </label>
               <button class="btn-crypto" @click="handleWithdrawCryto">
-                <span>Rút tiền</span>
+                <span>{{ $t('Withdraw') }}</span>
               </button>
               <p class="text-withdraw">
-                Số tiền rút tối thiểu là
+                {{ $t('MinimumWithdrawAmount') }}
                 <span>
                   2.50000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                 </span>.
-                Phí xử lý giao dịch
+                {{ $t('TransactionProcessingFee') }}
                 <span>
                   1.00000000
                   <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                 </span>
-                sẽ được khấu trừ vào số dư còn lại của bạn.
+                {{ $t('FromYourRemainingBalance') }}
               </p>
             </div>
           </div>
         </vs-tab>
-        <vs-tab label="Mua Crypto">
+        <vs-tab :label="$t('BuyCrypto')">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
               <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto"
@@ -603,10 +607,7 @@
               </a>
             </div>
             <p class="mt-5 text-withdraw">
-              Tuyên bố miễn trừ trách nhiệm: Các dịch vụ bên thứ ba ở trên có thể được sử dụng để mua tiền điện tử có thể
-              được sử dụng để chơi trên Stake. Bằng cách đăng ký trên nền tảng của họ, bạn cũng chấp nhận các điều khoản
-              dịch vụ của họ và sẽ được yêu cầu vượt qua quy trình KYC của họ, quy trình này chạy độc lập với quy trình
-              của chúng tôi.
+              {{ $t('DisclaimerTheParty') }}
             </p>
           </div>
         </vs-tab>
@@ -1549,6 +1550,27 @@ export default {
         ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
         : this.walletIsSelect.name || this.listWallet[0].name;
       this.calculateMoney(coinName);
+    },
+    copyAddress() {
+      const thisIns = this;
+
+      this.$copyText(this.addressPayment).then(function() {
+          thisIns.$vs.notify({
+            text: 'Đã sao chép vào bộ nhớ',
+            color: 'success',
+            iconPack: 'feather',
+            position: 'top-right',
+            icon: 'icon-check-circle'
+          })
+      }, function() {
+          thisIns.$vs.notify({
+            text: 'Lỗi sao chép',
+            color: 'danger',
+            iconPack: 'feather',
+            position: 'top-right',
+            icon: 'icon-alert-circle'
+          })
+      })
     }
   },
   mounted() {
