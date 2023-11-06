@@ -166,7 +166,7 @@ export default {
     EmailAddress: "Địa chỉ Email",
     Note: "Lưu ý",
     YouWillReceiveTradingCommissions:
-      "You will receive trading commissions from your downline immediately.",
+      "Bạn sẽ nhận hoa hồng giao dịch từ tuyến dưới của ngay lập tức.",
     TradingProfitDetails: "Chi tiết Lợi nhuận Giao dịch",
     NumberOfTransactions: "Số lượng Giao dịch",
     TradingVolume: "Khối lượng Giao dịch",
@@ -180,7 +180,7 @@ export default {
     RecentDays: "ngày gần nhất",
     All: "Tất cả",
     TotalKLGD: "Tổng KLGD",
-    HHAccepted: "HH Nhận"
+    HHAccepted: "HH Nhận",
   },
   en: {
     HHAccepted: "HH accepted",
@@ -198,7 +198,7 @@ export default {
     NumberOfTransactions: "Number of Transactions",
     TradingProfitDetails: "Trading Profit Details",
     YouWillReceiveTradingCommissions:
-      "Bạn sẽ nhận hoa hồng giao dịch từ tuyến dưới của ngay lập tức.",
+      "You will receive trading commissions from your downline immediately.",
     Note: "Note",
     EmailAddress: "Email address",
     Contact: "Contact",

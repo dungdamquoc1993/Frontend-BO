@@ -761,13 +761,13 @@
                         <div class="w-full lg:pl-0 px-0">
                             <div>
                                 <div class="filterDiv">
-                                    <h1 class="text-2xl white font-bold capitalize mb-4">{{ $('ManagementAgent') }}</h1>
+                                    <h1 class="text-2xl white font-bold capitalize mb-4">{{ $t('ManagementAgent') }}</h1>
                                     <div class="flex flex-wrap">
                                         <div class="relative colFirst lg:mr-5 align-middle">
-                                            <p class="color-white-50 mb-1 aff-test-type">{{ $('Seach') }} bằng </p>
+                                            <p class="color-white-50 mb-1 aff-test-type">{{ $t('Search') }} bằng </p>
                                             <button class="btn search btnSearchType lg:mr-3 button cursor-pointer"
                                                 :class="{ active: showActiveLv, primary: showActiveLv }"
-                                                @click="showActiveLv = true, showActiveBD = false">{{ $('Rank') }}</button>
+                                                @click="showActiveLv = true, showActiveBD = false">{{ $t('Rank') }}</button>
                                             <button class="btn search btnSearchType button cursor-pointer"
                                                 :class="{ active: showActiveBD, primary: showActiveBD }"
                                                 @click="showActiveBD = true, showActiveLv = false">{{ $t('Nickname')}}</button>
@@ -798,7 +798,9 @@
                                         <div class="ml-auto flex flex-wrap scrollRange items-center">
                                             <span class="textTime mr-4">{{ $t('Period') }}:</span>
                                             <button class="btn btnTime mr-3 cursor-pointer"
-                                                :class="{ 'button primary active': oneday }" @click="changeDateSelect(1)"></button>
+                                                :class="{ 'button primary active': oneday }" @click="changeDateSelect(1)">
+                                            {{ $t('Yesterday') }}
+                                            </button>
                                             <button class="btn btnTime mr-3 cursor-pointer"
                                                 :class="{ 'button primary active': twoday }" @click="changeDateSelect(7)">7
                                                 {{ $t('RecentDays') }}</button>
@@ -806,8 +808,7 @@
                                                 :class="{ 'button primary active': threeday }"
                                                 @click="changeDateSelect(30)">30 {{ $t('RecentDays') }}</button>
                                             <button class="btn btnTime cursor-pointer"
-                                                :class="{ 'button primary active': allday }" @click="changeDateSelect(0)">Tất
-                                                cả</button>
+                                                :class="{ 'button primary active': allday }" @click="changeDateSelect(0)">{{ $t('All') }}</button>
                                         </div>
                                     </div>
                                     <div class="search-result">
