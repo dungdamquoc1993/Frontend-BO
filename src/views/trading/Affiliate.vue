@@ -194,7 +194,7 @@
                                                     </div>
                                                     <div class="rank-text">
                                                         <p class="textRank noselect cursor-pointer bgPrimary">
-                                                            <span class="text">{{ $t('Rank') }}c</span>
+                                                            <span class="text">{{ $t('Rank') }}</span>
                                                             <span class="q" @click="popupActiveRank = true">
                                                                 <feather-icon icon="HelpCircleIcon"
                                                                     svgClasses="h-6 w-6 ml-1 c-question" />
