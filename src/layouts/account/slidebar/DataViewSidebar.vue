@@ -345,13 +345,7 @@ export default {
       this.addDataMoneyUSDT = 0
     },
     submitDataUpdateMoney() {
-      return this.$vs.notify({
-        text: 'This API is deprecated',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
-
+      return 
       // const obj = {
       //     id: this.dataId,
       //     nick_name: this.dataNick,

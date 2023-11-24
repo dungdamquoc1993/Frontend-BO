@@ -220,7 +220,6 @@ import moment from "moment";
 
 export default {
   data() {
-    alert('im trigger at Notification.vue')
     return {
       unreadNotifications: []
     };

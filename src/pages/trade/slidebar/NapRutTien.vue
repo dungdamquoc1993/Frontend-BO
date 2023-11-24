@@ -289,12 +289,7 @@ export default {
         },
 
         WithDrawalPaypal(){
-            return this.$vs.notify({
-                text: 'This API is deprecated withdrawalPaypalNoiBo withdrawalPaypalAccount NapRutTien.vue',
-                color: 'warning',
-                iconPack: 'feather',
-                icon: 'icon-check'
-            });
+            return 
             
             // if(!getData.c2fa){
             //      return this.$vs.notify({
@@ -552,12 +547,7 @@ export default {
         },
 
         WithdrawalOKPay(){
-            return this.$vs.notify({
-                text: 'This API is deprecated withdrawal, withdrawal-erc, withdrawal-bsc NapRutTien.vue',
-                color: 'warning',
-                iconPack: 'feather',
-                icon: 'icon-check'
-            });
+            return 
             // if(!getData.c2fa){
             //      return this.$vs.notify({
             //         text:'Bạn phải bật 2FA để yêu cầu rút tiền',
@@ -831,7 +821,6 @@ export default {
         },
 
         getAddressF(coint){
-            alert('he xi calo')
             this.isLoading = true
             AuthenticationService.getAddressCoin(coint)
             .then((res) => {
@@ -858,12 +847,7 @@ export default {
         },
 
         getBalanceWallet(){
-            return this.$vs.notify({
-                text: 'This API is deprecated balance-wallet ',
-                color: 'warning',
-                iconPack: 'feather',
-                icon: 'icon-check'
-            });
+            return 
 
             // AuthenticationService.getBalanceWallet()
             // .then((res) => {    

@@ -61,12 +61,7 @@ export default {
                     icon: 'icon-check'
                 });
             }
-            return this.$vs.notify({
-                text: 'This API is deprecated',
-                color: 'warning',
-                iconPack: 'feather',
-                icon: 'icon-check'
-            });
+            return 
             //    let obj = {
             //        nick: this.nickName,
             //        aUSDT: this.amountUSDT,

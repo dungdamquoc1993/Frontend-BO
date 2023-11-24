@@ -831,7 +831,6 @@ export default {
   },
   methods: {
     showPopTrans() {
-      alert(`line 1101 src/views/trading/Wallet.vue show modal nạp rút tiền`)
       this.popupTransferActive = true;
       this.createQRCode(this.addressPayment);
     },
@@ -1153,12 +1152,7 @@ export default {
     },
 
     clickTransMoney() {
-      this.$vs.notify({
-        text: 'This API is deprecated usdt-to-live, live-to-usdt Wallet.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
+      return
       // let amount = this.enterAmount.toString();
       // amount = this.replaceAll(amount, ",", "");
       // amount = this.replaceAll(amount.toString(), "-", "");
@@ -1350,13 +1344,7 @@ export default {
     },
 
     getBalanceWallet() {
-      return this.$vs.notify({
-        text: 'This API is deprecated balance-wallet Wallet.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
-
+      return 
       // AuthenticationService.getBalanceWallet().then((res) => {
       //   let d = res.data;
       //   if (d.success == 3 || d.success == 4) {

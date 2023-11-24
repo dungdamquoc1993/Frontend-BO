@@ -658,7 +658,6 @@ export default {
   },
   methods: {
     clickShowPopTrans() {
-      alert('line 319 src/pages/trade/navbar/components/Profile.vue, show modal nạp rút tiền tab rút tiền')
       // this.popupTransferActive = true;
       this.popupActiveNapNhanh = true;
       this.amountAcc = getData.balance;
@@ -666,17 +665,11 @@ export default {
     },
 
     clickShowPopCaiDat() {
-      alert('line 318 src/pages/trade/navbar/components/Profile.vue, show modal đổi ngôn ngữ và tiền tệ')
       this.popupActiveCaiDat = true;
     },
 
     clickTransMoney() {
-      this.$vs.notify({
-        text: 'This API is deprecated usdt-to-live, live-to-usdt Profile.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
+      return
       // let amount = this.enterAmount.toString();
       // amount = this.replaceAll(amount, ",", "");
       // amount = this.replaceAll(amount.toString(), "-", "");
@@ -860,12 +853,7 @@ export default {
     },
 
     submitDeposit() {
-      this.$vs.notify({
-        text: 'This API is deprecated usdt-wallet Profile.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
+      return
       // let amount = this.ttNhan;
       // amount = this.replaceAll(amount.toString(), ",", "");
       // amount = this.replaceAll(amount.toString(), "-", "");
@@ -1067,13 +1055,7 @@ export default {
     getBalanceWalletClick() {
       // alert(`line 652 src/pages/trade/navbar/components/Profile.vue show modal nạp rút tiền`)
       this.createQRCode(this.addressPayment);
-      return this.$vs.notify({
-        text: 'This API is deprecated balance-wallet Profile.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
-
+      return 
       // AuthenticationService.getBalanceWallet().then((res) => {
       //   if (res.data.success) {
       //     let mU = res.data.data.usdt;

@@ -442,13 +442,7 @@ export default {
     },
 
     doneRefuseWithdra(id, index, amount, email, fee) {
-      return this.$vs.notify({
-        text: 'This API is deprecated doneRefuseWithdrawal ListHisRutTien.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
-
+      return 
       // let obj = {
       //   id: id,
       //   amount: amount,
@@ -471,13 +465,7 @@ export default {
     },
 
     doneWithdra(id, index, val, address, amount, network) {
-      return this.$vs.notify({
-        text: 'This API is deprecated doneWithdrawal ListHisRutTien.vue',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
-
+      return 
       // let obj = {
       //   id: id,
       //   val: val,

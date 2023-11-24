@@ -530,12 +530,7 @@ export default {
     },
     // not use
     submitDataUpdateMoney() {
-      return this.$vs.notify({
-        text: 'This API is deprecated',
-        color: 'warning',
-        iconPack: 'feather',
-        icon: 'icon-check'
-      });
+      return 
       // const obj = {
       //   id: this.dataId,
       //   money_btc: this.addDataMoneyBTC,

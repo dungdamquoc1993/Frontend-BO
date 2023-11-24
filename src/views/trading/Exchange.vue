@@ -363,13 +363,7 @@ export default {
         },
 
         getBalanceWallet() {
-            return this.$vs.notify({
-                text: 'This API is deprecated balance-wallet',
-                color: 'warning',
-                iconPack: 'feather',
-                icon: 'icon-check'
-            });
-
+            return 
             // AuthenticationService.getBalanceWallet()
             // .then((res) => {
             //     let d = res.data
