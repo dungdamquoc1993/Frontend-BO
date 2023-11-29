@@ -19,7 +19,7 @@ export default {
   },
 
   checkFundsBalanceAvailable(obj) {
-    return ApiPayment().get()(
+    return ApiPayment().get(
       `/api/payments/checkFundsBalanceAvailable`,
       obj
     )

@@ -181,8 +181,12 @@ export default {
     All: "Tất cả",
     TotalKLGD: "Tổng KLGD",
     HHAccepted: "HH Nhận",
+    NetworkIsNoAvailable:
+      "Mạng không sẵn sàng để chuyển tiền vui lòng chọn mạng khác hoặc loại tiền tệ khác",
   },
   en: {
+    NetworkIsNoAvailable:
+      "Network is not available for money transfer please choose another network or another currency",
     HHAccepted: "HH accepted",
     TotalKLGD: "Total KLGD",
     All: "All",
