@@ -17,6 +17,13 @@ export default {
       obj
     );
   },
+
+  checkFundsBalanceAvailable(obj) {
+    return ApiPayment().get()(
+      `/api/payments/checkFundsBalanceAvailable`,
+      obj
+    )
+  },
   
   requestCheckBalanceFromUsers(obj) {
     return ApiPayment().post(`/api/payments/requestCheckBalanceFromUsers`, obj);

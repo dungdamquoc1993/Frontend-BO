@@ -15,8 +15,10 @@
             <span class="text-money">
               {{
                 isAcc
-                ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}`)
-                : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}`)
+                ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive,
+                  2)}`)
+                : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo,
+                  2)}`)
               }}
             </span>
             <span class="float-right">
@@ -29,7 +31,8 @@
             <span style="font-size: 12px; color: #d6d6d6">{{ $t('RealAccount') || "Tài khoản Thực" }}</span>
             <div class="balance cursor-pointer" @click="changeAccount(1)">
               <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
-                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}` }}
+                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive,
+                  2)}` }}
               </span>
               <span class="reloadBalance absolute" style="right: 10px; z-index: 99999" @click="clickShowPopTrans()">
                 <feather-icon icon="LinkIcon" class="cursor-pointer w-4"></feather-icon>
@@ -41,7 +44,8 @@
             <span style="font-size: 12px; color: #d6d6d6">{{ $t('DemoAccount') || "Tài khoản Demo" }}</span>
             <div class="balance cursor-pointer" @click="changeAccount(0)">
               <span style="color: #e8e8e8; font-weight: bold; font-size: 16px">
-                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}` }}
+                {{ isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo,
+                  2)}` }}
               </span>
               <span class="reloadBalance absolute z-10" style="right: 10px">
                 <feather-icon icon="RefreshCwIcon" @click.stop="reloadBalanceDemo()"
@@ -54,7 +58,8 @@
     </div>
     <div class="con-img ml-3 mr-3">
       <vs-button color="success" icon-pack="feather" icon="icon-dollar-sign" type="relief"
-        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()">{{ $t('QuickRecharge') || 'Nạp nhanh' }}</vs-button>
+        @click="(popupActiveNapNhanh = true), getBalanceWalletClick()">{{ $t('QuickRecharge') || 'Nạp nhanh'
+        }}</vs-button>
       <!-- <vs-button type="line" icon-pack="feather" :color="colorNT" icon="icon-dollar-sign" @click.stop="viewNapTien()">Nạp nhanh</vs-button> -->
     </div>
     <!--<div class="con-img ml-3">
@@ -78,7 +83,7 @@
                 d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z" />
               <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
             </svg>
-            <span style="color: #fff; font-size: 16px;">{{ $t('Lang')}}</span>
+            <span style="color: #fff; font-size: 16px;">{{ $t('Lang') }}</span>
           </div>
           <div class="relative">
             <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownLanguage()">
@@ -101,7 +106,7 @@
           <div class="flex items-center gap-1">
             <img style="width: 24px; height: 24px;"
               src="../../../../assets/images/wallet/currency-exchange-svgrepo-com.svg" />
-            <span style="color: #fff; font-size: 16px;">{{ $t('Currency')}}</span>
+            <span style="color: #fff; font-size: 16px;">{{ $t('Currency') }}</span>
           </div>
           <div class="relative">
             <vs-button color="#38495d" type="filled" class="text-left p-0 bg-[#011022]" @click="closeDropdownCurrency()">
@@ -196,13 +201,23 @@
       </vs-dropdown-menu>
     </vs-dropdown>-->
     <vs-popup class="qDeposit" :title="$t('Wallet')" :active.sync="popupActiveNapNhanh">
-      <div :class="{'ld-loading': ldForm}">
+      <div :class="{ 'ld-loading': ldForm }">
         <div class="loading">
           <div class="loading__ring">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+              y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+              <path
+                d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z">
+              </path>
+            </svg>
           </div>
           <div class="loading__ring">
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+              y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+              <path
+                d="M85.5,42c-0.2-0.8-0.5-1.7-0.8-2.5c-0.3-0.9-0.7-1.6-1-2.3c-0.3-0.7-0.6-1.3-1-1.9c0.3,0.5,0.5,1.1,0.8,1.7  c0.2,0.7,0.6,1.5,0.8,2.3s0.5,1.7,0.8,2.5c0.8,3.5,1.3,7.5,0.8,12c-0.4,4.3-1.8,9-4.2,13.4c-2.4,4.2-5.9,8.2-10.5,11.2  c-1.1,0.7-2.2,1.5-3.4,2c-0.5,0.2-1.2,0.6-1.8,0.8s-1.3,0.5-1.9,0.8c-2.6,1-5.3,1.7-8.1,1.8l-1.1,0.1L53.8,84c-0.7,0-1.4,0-2.1,0  c-1.4-0.1-2.9-0.1-4.2-0.5c-1.4-0.1-2.8-0.6-4.1-0.8c-1.4-0.5-2.7-0.9-3.9-1.5c-1.2-0.6-2.4-1.2-3.7-1.9c-0.6-0.3-1.2-0.7-1.7-1.1  l-0.8-0.6c-0.3-0.1-0.6-0.4-0.8-0.6l-0.8-0.6L31.3,76l-0.2-0.2L31,75.7l-0.1-0.1l0,0l-1.5-1.5c-1.2-1-1.9-2.1-2.7-3.1  c-0.4-0.4-0.7-1.1-1.1-1.7l-1.1-1.7c-0.3-0.6-0.6-1.2-0.9-1.8c-0.2-0.5-0.6-1.2-0.8-1.8c-0.4-1.2-1-2.4-1.2-3.7  c-0.2-0.6-0.4-1.2-0.5-1.9c-0.1-0.6-0.2-1.2-0.3-1.8c-0.3-1.2-0.3-2.4-0.4-3.7c-0.1-1.2,0-2.5,0.1-3.7c0.2-1.2,0.3-2.4,0.6-3.5  c0.1-0.6,0.3-1.1,0.4-1.7l0.1-0.8l0.3-0.8c1.5-4.3,3.8-8,6.5-11c0.8-0.8,1.4-1.5,2.1-2.1c0.9-0.9,1.4-1.3,2.2-1.8  c1.4-1.2,2.9-2,4.3-2.8c2.8-1.5,5.5-2.3,7.7-2.8s4-0.7,5.2-0.6c0.6-0.1,1.1,0,1.4,0s0.4,0,0.4,0h0.1c2.7,0.1,5-2.2,5-5  c0.1-2.7-2.2-5-5-5c-0.2,0-0.2,0-0.3,0c0,0-0.2,0.1-0.6,0.1c-0.4,0-1,0-1.8,0.1c-1.6,0.1-4,0.4-6.9,1.2c-2.9,0.8-6.4,2-9.9,4.1  c-1.8,1-3.6,2.3-5.4,3.8C26,21.4,25,22.2,24.4,23c-0.2,0.2-0.4,0.4-0.6,0.6c-0.2,0.2-0.5,0.4-0.6,0.7c-0.5,0.4-0.8,0.9-1.3,1.4  c-3.2,3.9-5.9,8.8-7.5,14.3l-0.3,1l-0.2,1.1c-0.1,0.7-0.3,1.4-0.4,2.1c-0.3,1.5-0.4,2.9-0.5,4.5c0,1.5-0.1,3,0.1,4.5  c0.2,1.5,0.2,3,0.6,4.6c0.1,0.7,0.3,1.5,0.4,2.3c0.2,0.8,0.5,1.5,0.7,2.3c0.4,1.6,1.1,3,1.7,4.4c0.3,0.7,0.7,1.4,1.1,2.1  c0.4,0.8,0.8,1.4,1.2,2.1c0.5,0.7,0.9,1.4,1.4,2s0.9,1.3,1.5,1.9c1.1,1.3,2.2,2.7,3.3,3.5l1.7,1.6c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0  c0,0,0,0,0,0l0.1,0.1l0.1,0.1h0.2l0.5,0.4l1,0.7c0.4,0.2,0.6,0.5,1,0.7l1.1,0.6c0.8,0.4,1.4,0.9,2.1,1.2c1.4,0.7,2.9,1.5,4.4,2  c1.5,0.7,3.1,1,4.6,1.5c1.5,0.3,3.1,0.7,4.7,0.8c1.6,0.2,3.1,0.2,4.7,0.2c0.8,0,1.6-0.1,2.4-0.1l1.2-0.1l1.1-0.1  c3.1-0.4,6.1-1.3,8.9-2.4c0.8-0.3,1.4-0.6,2.1-0.9s1.3-0.7,2-1.1c1.3-0.7,2.6-1.7,3.7-2.5c0.5-0.4,1-0.9,1.6-1.3l0.8-0.6l0.2-0.2  c0,0,0.1-0.1,0.1-0.1c0.1-0.1,0,0,0,0v0.1l0.1-0.1l0.4-0.4c0.5-0.5,1-1,1.5-1.5c0.3-0.3,0.5-0.5,0.8-0.8l0.7-0.8  c0.9-1.1,1.8-2.2,2.5-3.3c0.4-0.6,0.7-1.1,1.1-1.7c0.3-0.7,0.6-1.2,0.9-1.8c2.4-4.9,3.5-9.8,3.7-14.4C87.3,49.7,86.6,45.5,85.5,42z">
+              </path>
+            </svg>
           </div>
         </div>
       </div>
@@ -215,7 +230,7 @@
             <div class="wrapper">
               <div class="flex items-center justify-center gap-5">
                 <div class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Money')}}</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Money') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(true)">
                       <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
@@ -232,10 +247,11 @@
                   </div>
                 </div>
                 <div v-if="walletIsSelect.children" class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network')}}</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort
+                      }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
@@ -299,8 +315,10 @@
                     <span style="font-size: 16px;">
                       {{
                         isAcc
-                        ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) : `$${this.formatPrice(blObj.blLive, 2)}`)
-                        : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) : `$${this.formatPrice(blObj.blDemo, 2)}`)
+                        ? (isCurrency == 'VND' ? this.formatPriceVND(blObj.blLive * 24000) :
+                          `$${this.formatPrice(blObj.blLive, 2)}`)
+                        : (isCurrency == 'VND' ? this.formatPriceVND(blObj.blDemo * 24000) :
+                          `$${this.formatPrice(blObj.blDemo, 2)}`)
                       }}
                     </span>
                   </div>
@@ -308,7 +326,7 @@
               </div>
               <div class="flex items-center justify-center gap-5">
                 <div class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">cc</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Money') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown wallShow"
                       @click="closeDropdown(true)">
@@ -331,10 +349,11 @@
                   </div>
                 </div>
                 <div v-if="walletIsSelect.children" class="flex flex-col">
-                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network')}}</span>
+                  <span class="text-[14px] text-[#b1bad3] font-semibold">{{ $t('Network') }}</span>
                   <div class="relative">
                     <vs-button color="#38495d" type="filled" class="text-left btn-dropdown" @click="closeDropdown(false)">
-                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort }}</span>
+                      <span class="white mr-2">{{ networkIsSelect.nameShort || walletIsSelect.children[0].nameShort
+                      }}</span>
                       <feather-icon class="material-icons" icon="ChevronDownIcon" svgClasses="w-4 h-4" />
                     </vs-button>
                     <div class="listWallShow listWallNetwork" :class="{ active: showPopNetwork }">
@@ -351,7 +370,7 @@
                   <div class="flex items-center pb-1">
                     <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
                     <span class="inline-block font-semibold text-[14px] text-[#2f4553] ml-1">
-                      <span>{{ walletIsSelect.name || listWallet[0].name }} {{ $t('Address')}}</span>
+                      <span>{{ walletIsSelect.name || listWallet[0].name }} {{ $t('Address') }}</span>
                     </span>
                     <div class="asterisk-wrapper svelte-41a1vp">
                       <span class="text-red inline-flex justify-start text-[14px] font-normal ml-1">*</span>
@@ -391,7 +410,7 @@
                   </div>
                   <div class="input-button-wrap inline-flex flex-shrink-0">
                     <button class="btn-max" type="button" @click="handleMaxMoney">
-                      <span class="inline-flex">{{ $t('Max')}}</span>
+                      <span class="inline-flex">{{ $t('Max') }}</span>
                     </button>
                   </div>
                 </div>
@@ -402,13 +421,13 @@
               <p class="text-withdraw">
                 {{ $t('MinimumWithdrawAmount') }}
                 <span>
-                  2.50000000
-                  <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                  10 USD
+                  <!-- <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" /> -->
                 </span>.
                 {{ $t('TransactionProcessingFee') }}
                 <span>
-                  1.00000000
-                  <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" />
+                  1 USD
+                  <!-- <img style="width: 14px; height: 14px;" :src="walletIsSelect.icon || listWallet[0].icon" /> -->
                 </span>
                 {{ $t('FromYourRemainingBalance') }}
               </p>
@@ -419,18 +438,19 @@
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
               <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto"
-                style="background-color: #f0b90b;">
+                style="background-color: #f0b90b;" target="_blank">
                 <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/binace.svg" />
               </a>
               <a href="https://www.bybit.com/fiat/trade/otc/?actionType=1&token=USDT&fiat=VND&paymentMethod"
-                class="btn-crypto" style="background-color: #fff;">
+                class="btn-crypto" style="background-color: #fff;" target="_blank">
                 <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/bybit.png" />
               </a>
               <a href="https://www.okx.com/vi/p2p-markets/vnd/buy-usdt" class="btn-crypto"
-                style="background-color: #cf4444;">
+                style="background-color: #cf4444;" target="_blank">
                 <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/okx.svg" />
               </a>
-              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;">
+              <a href="https://www.kucoin.com/vi/otc/buy/USDT-VND" class="btn-crypto" style="background-color: #c4ffc4;"
+                target="_blank">
                 <img style="height: 20px; object-fit: cover;" src="../../../../assets/images/wallet/kucoin.svg" />
               </a>
             </div>
@@ -988,9 +1008,10 @@ export default {
           break;
       }
       this.createQRCode(this.addressPayment);
-      const coinName = this.walletIsSelect.children
-        ? this.walletIsSelect.children[0].nameShort
-        : this.walletIsSelect.name || this.listWallet[0].name;
+      // const coinName = this.walletIsSelect.children
+      //   ? this.walletIsSelect.children[0].nameShort
+      //   : this.walletIsSelect.name || this.listWallet[0].name;
+      const coinName = this.walletIsSelect.name
       this.calculateMoney(coinName);
     },
 
@@ -1012,8 +1033,7 @@ export default {
       this.networkIsSelect = val;
       this.showPopNetwork = false;
       this.showPopWalSL = false;
-      const coinName = val.nameShort || this.walletIsSelect.children[0].nameShort;
-      this.calculateMoney(coinName);
+      // const coinName = val.nameShort || this.walletIsSelect.children[0].nameShort;
     },
 
     closeDropdown(isPopwal) {
@@ -1055,7 +1075,7 @@ export default {
     getBalanceWalletClick() {
       // alert(`line 652 src/pages/trade/navbar/components/Profile.vue show modal nạp rút tiền`)
       this.createQRCode(this.addressPayment);
-      return 
+      return
       // AuthenticationService.getBalanceWallet().then((res) => {
       //   if (res.data.success) {
       //     let mU = res.data.data.usdt;
@@ -1088,7 +1108,7 @@ export default {
     },
 
     formatPriceVND(value) {
-      return value.toLocaleString('en-US', {style : 'currency', currency : 'VND'});
+      return value.toLocaleString('en-US', { style: 'currency', currency: 'VND' });
     },
 
     isNumber(value) {
@@ -1159,42 +1179,53 @@ export default {
     },
 
     calculateMoney(coinName) {
-      axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
-        .then((res) => {
-          const value = new BigNumber(res.data[0][4]).toString();
-          switch (coinName) {
-            case 'BTC':
-            case 'BNB':
-              this.transfromMoney = (this.money / value).toFixed(8);
-              break;
-            case 'ETH':
-            case 'MATIC':
-              this.transfromMoney = (this.money / value).toFixed(18);
-              break;
-            default:
-              this.transfromMoney = this.money;
-              break;
-          }
-        })
+      if (!["USDT", "USDC"].includes(coinName.toUpperCase())) {
+        axios.get(`https://api.binance.com/api/v3/klines?symbol=${coinName}USDT&interval=1m&limit=1`)
+          .then((res) => {
+            const value = new BigNumber(res.data[0][4]).toString();
+            switch (coinName) {
+              case 'BTC':
+              case 'BNB':
+                this.transfromMoney = (this.money / value).toFixed(8);
+                break;
+              case 'ETH':
+              case 'MATIC':
+                this.transfromMoney = (this.money / value).toFixed(18);
+                break;
+              default:
+                this.transfromMoney = this.money;
+                break;
+            }
+          })
+      } else this.transfromMoney = this.money
     },
 
     handleCalculateMoney(e) {
       this.money = e.target.value;
-      const coinName = this.walletIsSelect.children
-        ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
-        : this.walletIsSelect.name || this.listWallet[0].name;
+      // const coinName = this.walletIsSelect.children
+      //   ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
+      //   : this.walletIsSelect.name || this.listWallet[0].name;
+      const coinName = this.walletIsSelect.name ? this.walletIsSelect.name : this.listWallet[0].name
       this.calculateMoney(coinName);
     },
 
     async handleWithdrawCryto() {
+      if (this.ldForm) return
+      const getNetwork = () => {
+        if (this.walletIsSelect.name) {
+          return ["BTC", "ETH", "BNB", "MATIC"].includes(this.walletIsSelect.name) ? this.walletIsSelect.name : this.networkIsSelect.nameShort ? this.networkIsSelect.nameShort : this.listWallet[2].children[0].nameShort
+        } else {
+          return this.listWallet[0].name
+        }
+      }
       if (this.userInfo) {
         this.ldForm = true;
         const data = {
           userId: this.userInfo.id,
-          network: this.walletIsSelect.name || this.listWallet[0].name,
+          network: getNetwork(),
           tokenName: this.walletIsSelect.name || this.listWallet[0].name,
           userAddress: this.userAddress,
-          amountWithdrawInUsd: this.transfromMoney.toString(),
+          amountWithdrawInUsd: this.money.toString(),
         }
         await AuthenticationService.withdrawCryptoForUser(data)
           .then((res) => {
@@ -1208,7 +1239,7 @@ export default {
               });
             } else {
               this.$vs.notify({
-                text: "Rút tiền thất bại",
+                text: `Rút tiền thất bại: ${res.data.message}`,
                 color: "danger",
                 position: "top-right",
                 iconPack: "feather",
@@ -1232,30 +1263,31 @@ export default {
       this.money = this.isAcc
         ? this.blObj.blLive.toString()
         : this.blObj.blDemo.toString();
-      const coinName = this.walletIsSelect.children
-        ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
-        : this.walletIsSelect.name || this.listWallet[0].name;
+      // const coinName = this.walletIsSelect.children
+      //   ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
+      //   : this.walletIsSelect.name || this.listWallet[0].name;
+      const coinName = this.walletIsSelect.name
       this.calculateMoney(coinName);
     },
     copyAddress() {
       const thisIns = this;
 
-      this.$copyText(this.addressPayment).then(function() {
-          thisIns.$vs.notify({
-            text: 'Đã sao chép vào bộ nhớ',
-            color: 'success',
-            iconPack: 'feather',
-            position: 'top-right',
-            icon: 'icon-check-circle'
-          })
-      }, function() {
-          thisIns.$vs.notify({
-            text: 'Lỗi sao chép',
-            color: 'danger',
-            iconPack: 'feather',
-            position: 'top-right',
-            icon: 'icon-alert-circle'
-          })
+      this.$copyText(this.addressPayment).then(function () {
+        thisIns.$vs.notify({
+          text: 'Đã sao chép vào bộ nhớ',
+          color: 'success',
+          iconPack: 'feather',
+          position: 'top-right',
+          icon: 'icon-check-circle'
+        })
+      }, function () {
+        thisIns.$vs.notify({
+          text: 'Lỗi sao chép',
+          color: 'danger',
+          iconPack: 'feather',
+          position: 'top-right',
+          icon: 'icon-alert-circle'
+        })
       })
     }
   },
