@@ -22,7 +22,7 @@
 
     <!-- Customizer Content -->
     <vs-sidebar
-      click-not-close
+      click-close
       hidden-background
       position-right
       v-model="active"

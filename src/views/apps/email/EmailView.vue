@@ -10,7 +10,7 @@
 
 <template>
     <div>
-        <vs-sidebar click-not-close parent="#email-app" :hidden-background="true" class="full-vs-sidebar email-view-sidebar items-no-padding" v-model="isSidebarActive" position-right>
+        <vs-sidebar click-close parent="#email-app" :hidden-background="true" class="full-vs-sidebar email-view-sidebar items-no-padding" v-model="isSidebarActive" position-right>
             <div class="mail-sidebar-content px-0 sm:pb-6 h-full" v-if="currentMail">
                 <div class="flex flex-wrap items-center email-header justify-between md:px-8 px-6 sm:pb-2 sm: pt-6 d-theme-dark-bg">
                     <div class="flex mb-4">
