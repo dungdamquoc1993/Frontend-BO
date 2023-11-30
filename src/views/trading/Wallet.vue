@@ -397,12 +397,12 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>
       <div class="icon-wallet">
         <img src="../../assets/images/wallet/wallet-svgrepo-com.svg" alt="Wallet">
       </div>
-      <vs-tabs alignment="center">
-        <vs-tab :label="$t('Recharge')">
+      <vs-tabs v-model="selectedTab" alignment="center">
+        <vs-tab :label="$t('Recharge')" @click="selectTab('Recharge')" id="rechargeTab">
           <div class="con-tab-ejemplo">
             <div class="wrapper">
               <div class="flex items-center justify-center gap-5">
@@ -482,7 +482,7 @@
             </div>
           </div>
         </vs-tab>
-        <vs-tab :label="$t('Withdraw')">
+        <vs-tab :label="$t('Withdraw')" @click="selectTab('Withdraw')" id="withdrawTab">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5">
               <div class="flex items-center justify-center gap-5">
@@ -593,7 +593,8 @@
                   </div>
                 </div>
               </label>
-              <p v-if="!activeBalance" class="txt-balance-red uppercase font-semibold">{{ $t('NetworkIsNoAvailable') }}</p>
+              <p v-if="!activeBalance" class="txt-balance-red uppercase font-semibold">{{ $t('NetworkIsNoAvailable') }}
+              </p>
               <button class="btn-crypto" @click="handleWithdrawCryto">
                 <span>{{ $t('Withdraw') }}</span>
               </button>
@@ -613,7 +614,7 @@
             </div>
           </div>
         </vs-tab>
-        <vs-tab :label="$t('BuyCrypto')">
+        <vs-tab :label="$t('BuyCrypto')" @click="selectTab('BuyCrypto')" id="buyCryptoTab">
           <div class="con-tab-ejemplo">
             <div class="flex flex-col gap-5 items-center justify-center">
               <a href="https://p2p.binance.com/vi/trade/all-payments/USDT?fiat=VND" class="btn-crypto"
@@ -698,6 +699,7 @@ export default {
   },
   data() {
     return {
+      selectedTab: '',
       typeShow: "",
       timeShow: "",
       valueShow: "",
@@ -822,7 +824,7 @@ export default {
         },
       ],
       walletIsSelect: {},
-      networkIsSelect: {},
+      networkIsSelect: "",
       addressPayment: '',
       isAcc: 0,
       userInfo: {},
@@ -849,7 +851,26 @@ export default {
     },
   },
   methods: {
+    selectTab(tabName) {
+      this.selectedTab = tabName
+      if (tabName == 'Withdraw') {
+        this.isFundsBalanceAvailable()
+      }
+    },
+
     showPopTrans() {
+      if (this.selectedTab == 'Withdraw') this.isFundsBalanceAvailable()
+      else if (this.selectedTab == '') {
+        const rechargeTab = document.getElementById('rechargeTab');
+        if (rechargeTab) {
+          rechargeTab.click();
+        }
+      }
+      this.popupTransferActive = true;
+      this.createQRCode(this.addressPayment);
+    },
+
+    isFundsBalanceAvailable() {
       const userInfo = JSON.parse(localStorage.getItem("INFO"));
       if (userInfo) {
         const data = {
@@ -858,26 +879,35 @@ export default {
           }
         }
         this.ldForm = true;
+        const getFundBalanceType = () => {
+          if (!this.walletIsSelect) {
+            return this.listWallet[0].balance
+          }
+          else {
+            if (!this.networkIsSelect) return this.walletIsSelect.balance
+            else return this.networkIsSelect.balance
+          }
+        }
+        const fundBalanceType = getFundBalanceType()
         AuthenticationService.checkFundsBalanceAvailable(data)
           .then((res) => {
             if (res.data) {
               this.ldForm = false;
               this.balanceAvaiable = res.data;
               if (this.balanceAvaiable.success === 1) {
-                this.activeBalance = this.balanceAvaiable.data[this.listWallet[0].balance];
+                this.activeBalance = fundBalanceType
               } else {
                 this.activeBalance = false;
               }
             }
-            
+
           })
           .catch(() => {
             this.ldForm = false;
           })
       }
-      this.popupTransferActive = true;
-      this.createQRCode(this.addressPayment);
     },
+
     popupBill(tr) {
       this.popupBillActive = true;
 
@@ -1389,28 +1419,6 @@ export default {
 
     getBalanceWallet() {
       return
-      // AuthenticationService.getBalanceWallet().then((res) => {
-      //   let d = res.data;
-      //   if (d.success == 3 || d.success == 4) {
-      //     localStorage.removeItem("token");
-      //     this.$router.push("/login").catch(() => { });
-      //     return;
-      //   }
-      //   if (d.success) {
-      //     let mU = d.data.usdt;
-      //     let mE = d.data.eth;
-      //     let mB = d.data.btc;
-      //     let mP = d.data.paypal;
-
-      //     this.balanceUSDT = mU;
-      //     this.balanceETH = mE;
-      //     this.balanceBTC = mB;
-      //     this.balancePaypal = mP;
-
-      //     // mặc định hiển thị tiền đầu vào
-      //     this.getAmount = this.balancePaypal;
-      //   }
-      // });
     },
 
     getSysWallet() {
@@ -1488,13 +1496,45 @@ export default {
     },
 
     selectWallet(val) {
+      const getNetwork = (wallet) => {
+        if (["USDT", "USDC"].includes(wallet.name.toUpperCase())) {
+          if (!this.networkIsSelect) {
+            return wallet.children[0]
+          } else {
+            let networkIsSelect = {}
+            if (wallet.name.toUpperCase() == 'USDT') {
+              switch (this.networkIsSelect.nameShort.toUpperCase()) {
+                case 'ETH': networkIsSelect = this.listWallet[2].children[0];
+                  break;
+                case 'BNB': networkIsSelect = this.listWallet[2].children[1];
+                  break;
+                case 'MATIC': networkIsSelect = this.listWallet[2].children[2]
+              }
+            } else if (wallet.name.toUpperCase() == 'USDC') {
+              switch (this.networkIsSelect.nameShort.toUpperCase()) {
+                case 'ETH': networkIsSelect = this.listWallet[4].children[0];
+                  break;
+                case 'BNB': networkIsSelect = this.listWwallet[4].children[1];
+                  break;
+                case 'MATIC': networkIsSelect = this.listWallet[4].children[2]
+              }
+            } else networkIsSelect = this.networkIsSelect
+            return networkIsSelect
+          }
+        } else {
+          return ""
+        }
+      }
+
       this.walletIsSelect = val;
+      this.networkIsSelect = getNetwork(val)
+
       if (this.balanceAvaiable.success === 1) {
         this.activeBalance = this.balanceAvaiable.data[val.balance];
       } else {
         this.activeBalance = false;
       }
-      
+
       this.showPopWalSL = false;
       this.showPopNetwork = false;
       switch (val.name) {
@@ -1514,9 +1554,6 @@ export default {
           break;
       }
       this.createQRCode(this.addressPayment);
-      // const coinName = this.walletIsSelect.children
-      //   ? this.walletIsSelect.children[0].nameShort
-      //   : this.walletIsSelect.name || this.listWallet[0].name;
       const coinName = this.walletIsSelect.name
       this.calculateMoney(coinName);
     },
@@ -1530,8 +1567,6 @@ export default {
       }
       this.showPopNetwork = false;
       this.showPopWalSL = false;
-      // const coinName = val.nameShort || this.walletIsSelect.children[0].nameShort;
-      // this.calculateMoney(coinName);
     },
 
     closeDropdown(isPopwal) {
@@ -1567,22 +1602,19 @@ export default {
 
     handleCalculateMoney(e) {
       this.money = e.target.value;
-      // const coinName = this.walletIsSelect.children
-      //   ? this.networkIsSelect.nameShort || this.walletIsSelect.children[0].nameShort
-      //   : this.walletIsSelect.name || this.listWallet[0].name;
       const coinName = this.walletIsSelect.name ? this.walletIsSelect.name : this.listWallet[0].name
       this.calculateMoney(coinName);
     },
 
     async handleWithdrawCryto() {
       if (!this.activeBalance) {
-         this.$vs.notify({
-            text: "Vui lòng chọn loại tiền tệ khác và mạng khác để thực hiện rút tiền",
-            color: "danger",
-            position: "top-right",
-            iconPack: "feather",
-            icon: "icon-x-circle",
-          });
+        this.$vs.notify({
+          text: "Vui lòng chọn loại tiền tệ khác và mạng khác để thực hiện rút tiền",
+          color: "danger",
+          position: "top-right",
+          iconPack: "feather",
+          icon: "icon-x-circle",
+        });
       } else {
         const getNetwork = () => {
           if (this.walletIsSelect.name) {
@@ -1591,8 +1623,8 @@ export default {
             )
               ? this.walletIsSelect.name
               : this.networkIsSelect.nameShort
-              ? this.networkIsSelect.nameShort
-              : this.listWallet[2].children[0].nameShort;
+                ? this.networkIsSelect.nameShort
+                : this.listWallet[2].children[0].nameShort;
           } else {
             return this.listWallet[0].name;
           }
@@ -2226,6 +2258,7 @@ export default {
   height: 16px;
   object-fit: cover;
 }
+
 .balance-avaiable {
   position: absolute;
   top: 50%;
@@ -2236,16 +2269,20 @@ export default {
   border-radius: 50%;
   z-index: 999;
 }
+
 .bg-balance-red {
   background-color: rgb(255, 20, 20);
 }
+
 .bg-balance-green {
   background-color: rgb(0, 101, 0);
 }
+
 .txt-balance-red {
   color: rgb(255, 0, 0);
 }
-.parentDisable{
+
+.parentDisable {
   position: fixed;
   top: 0;
   left: 0;
