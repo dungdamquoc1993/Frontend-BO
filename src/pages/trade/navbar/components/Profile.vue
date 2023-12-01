@@ -418,7 +418,7 @@
                   </div>
                 </div>
               </label>
-              <p v-if="!activeBalance" class="txt-balance-red uppercase font-semibold">{{ $t('NetworkIsNoAvailable') }}
+              <p v-if="!activeBalance" class="txt-balance-red font-semibold">{{ $t('NetworkIsNoAvailable') }}
               </p>
               <button class="btn-crypto" @click="handleWithdrawCryto">
                 <span>{{ $t('Withdraw') }}</span>
@@ -1055,9 +1055,9 @@ export default {
 
       this.walletIsSelect = val;
       this.networkIsSelect = getNetwork(val)
-
+      
       if (this.balanceAvaiable.success === 1) {
-        this.activeBalance = this.balanceAvaiable.data[val.balance];
+        this.activeBalance = this.networkIsSelect.balance ? this.balanceAvaiable.data[this.networkIsSelect.balance] : this.balanceAvaiable.data[val.balance]
       } else {
         this.activeBalance = false;
       }
@@ -1177,6 +1177,26 @@ export default {
             userId: userInfo.id
           }
         }
+        // *** temp code *** //
+        const tempData = {
+          success: 1,
+          message: `checkFundsBalanceAvailable success`,
+          data: {
+            btc: false,
+            eth: true,
+            bnb: false,
+            matic: false,
+            usdtEth: true,
+            usdcEth: true,
+            usdtBnb: true,
+            usdcBnb: true,
+            usdtMatic: true,
+            usdcMatic: true,
+          },
+        };
+        this.balanceAvaiable = tempData
+        this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
+        // *** finish temp code *** //
         AuthenticationService.checkFundsBalanceAvailable(data)
           .then((res) => {
             if (res.data) {
@@ -1192,6 +1212,7 @@ export default {
           .catch(() => {
             this.ldForm = false;
           })
+
       }
     },
 
@@ -2064,22 +2085,27 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   left: -60px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 80%;
   z-index: 999;
 }
 
 .bg-balance-red {
   background-color: rgb(255, 20, 20);
+  border: 2px solid #FF7456; /* Đặt border color và border width tùy ý */
 }
 
 .bg-balance-green {
-  background-color: rgb(0, 101, 0);
+  background-color: #1fff20;
+  border: 2px solid #73FFC2; /* Đặt border color và border width tùy ý */
 }
 
 .txt-balance-red {
-  color: rgb(255, 0, 0);
+  color: #FF8181;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .parentDisable {
