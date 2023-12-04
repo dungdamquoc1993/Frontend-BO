@@ -1,6 +1,6 @@
 <template functional>
     <footer class="the-footer flex-wrap justify-between" :class="classes">
-        <span>Bản quyền &copy; {{ new Date().getFullYear() }} <a href="https://192.168.1.48" target="_blank" rel="nofollow">DEV</a></span>
+        <span>Bản quyền &copy; {{ new Date().getFullYear() }} <a href="https://139.59.96.47" target="_blank" rel="nofollow">DEV</a></span>
         <span class="md:flex hidden items-center">
             <span>Được viết bằng thủ công với tất cả</span>
             <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2" />
