@@ -678,7 +678,6 @@
 </template>
 
 <script>
-var connectionNAP = false;
 //import NapTien from '@/pages/trade/slidebar/NapTien.vue'
 //import RutTien from '@/pages/trade/slidebar/RutTienS.vue'
 import NapRutTien from "@/pages/trade/slidebar/NapRutTien.vue";
@@ -686,7 +685,6 @@ import getData from "@/pages/trade/navbar/components/data.json";
 import AuthenticationService from "@/services/AuthenticationService";
 import getSetSys from "@/services/settingSys.json";
 import moment from "moment";
-import SETTINGS from "../../../settings.json";
 import QRCode from "qrcode";
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
@@ -890,25 +888,24 @@ export default {
         }
         const fundBalanceType = getFundBalanceType()
         // *** temp code *** //
-        const tempData = {
-          success: 1,
-          message: `checkFundsBalanceAvailable success`,
-          data: {
-            btc: false,
-            eth: true,
-            bnb: false,
-            matic: false,
-            usdtEth: true,
-            usdcEth: true,
-            usdtBnb: true,
-            usdcBnb: true,
-            usdtMatic: true,
-            usdcMatic: true,
-          },
-        };
-        this.balanceAvaiable = tempData
-        // *** finish temp code *** //
-        this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
+        // const tempData = {
+        //   success: 1,
+        //   message: `checkFundsBalanceAvailable success`,
+        //   data: {
+        //     btc: false,
+        //     eth: true,
+        //     bnb: false,
+        //     matic: false,
+        //     usdtEth: true,
+        //     usdcEth: true,
+        //     usdtBnb: true,
+        //     usdcBnb: true,
+        //     usdtMatic: true,
+        //     usdcMatic: true,
+        //   },
+        // };
+        // this.balanceAvaiable = tempData
+        // this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
         // *** finish temp code *** //
         AuthenticationService.checkFundsBalanceAvailable(data)
           .then((res) => {
@@ -916,12 +913,11 @@ export default {
               this.ldForm = false;
               this.balanceAvaiable = res.data;
               if (this.balanceAvaiable.success === 1) {
-                this.activeBalance = fundBalanceType
+                this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
               } else {
                 this.activeBalance = false;
               }
             }
-
           })
           .catch(() => {
             this.ldForm = false;
@@ -1502,18 +1498,12 @@ export default {
       });
     },
 
-    sendMessage(message) {
-      this.connectionNAP.send(JSON.stringify(message));
-    },
 
     getInfoUser() {
-      this.sendMessage({
-        type: "accountDetail",
-        data: { email: getData.email },
-      });
+      
     },
     onWindowLoad() {
-      this.getInfoUser();
+      // this.getInfoUser();
     },
 
     selectWallet(val) {
@@ -1746,36 +1736,6 @@ export default {
     this.createQRCode(this.addressPayment);
     this.amountAcc = getData.balance;
     this.amountAccLive = getData.blLive;
-
-    if (!connectionNAP) {
-      connectionNAP = true;
-      this.connectionNAP = new WebSocket(SETTINGS.BASE_URL_SOCKET_NAP);
-
-      this.connectionNAP.onopen = function () {
-        //console.log("Successfully connected to the echo websocket server...")
-        this.onWindowLoad();
-      }.bind(this);
-
-      this.connectionNAP.onmessage = function (event) {
-        let data = JSON.parse(event.data);
-
-        if (data.type === "mess") {
-          let dl = data.data;
-
-          this.amountAcc += dl.usd * 1;
-          getData.balance += dl.usd * 1;
-          this.balanceUSDT += dl.usd * 1;
-
-          return this.$vs.notify({
-            text: dl.mess,
-            color: dl.style,
-            position: "top-right",
-            iconPack: "feather",
-            icon: "icon-x-circle",
-          });
-        }
-      }.bind(this);
-    }
 
     this.getAddressF();
     let acc = localStorage.getItem("BO_BALANCE_TYPE");
@@ -2293,12 +2253,14 @@ export default {
 
 .bg-balance-red {
   background-color: rgb(255, 20, 20);
-  border: 2px solid #FF7456; /* Đặt border color và border width tùy ý */
+  border: 2px solid #FF7456;
+  /* Đặt border color và border width tùy ý */
 }
 
 .bg-balance-green {
   background-color: #1fff20;
-  border: 2px solid #73FFC2; /* Đặt border color và border width tùy ý */
+  border: 2px solid #73FFC2;
+  /* Đặt border color và border width tùy ý */
 }
 
 .txt-balance-red {

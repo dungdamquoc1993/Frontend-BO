@@ -395,6 +395,8 @@ export default {
 
 
     sendMessage(message) {
+      const token = localStorage.getItem('token')
+      message.token = token
       this.connection.send(JSON.stringify(message));
     },
 

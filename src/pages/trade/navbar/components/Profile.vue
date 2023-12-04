@@ -1055,7 +1055,7 @@ export default {
 
       this.walletIsSelect = val;
       this.networkIsSelect = getNetwork(val)
-      
+
       if (this.balanceAvaiable.success === 1) {
         this.activeBalance = this.networkIsSelect.balance ? this.balanceAvaiable.data[this.networkIsSelect.balance] : this.balanceAvaiable.data[val.balance]
       } else {
@@ -1178,24 +1178,24 @@ export default {
           }
         }
         // *** temp code *** //
-        const tempData = {
-          success: 1,
-          message: `checkFundsBalanceAvailable success`,
-          data: {
-            btc: false,
-            eth: true,
-            bnb: false,
-            matic: false,
-            usdtEth: true,
-            usdcEth: true,
-            usdtBnb: true,
-            usdcBnb: true,
-            usdtMatic: true,
-            usdcMatic: true,
-          },
-        };
-        this.balanceAvaiable = tempData
-        this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
+        // const tempData = {
+        //   success: 1,
+        //   message: `checkFundsBalanceAvailable success`,
+        //   data: {
+        //     btc: false,
+        //     eth: true,
+        //     bnb: false,
+        //     matic: false,
+        //     usdtEth: true,
+        //     usdcEth: true,
+        //     usdtBnb: true,
+        //     usdcBnb: true,
+        //     usdtMatic: true,
+        //     usdcMatic: true,
+        //   },
+        // };
+        // this.balanceAvaiable = tempData
+        // this.activeBalance = this.balanceAvaiable.data[`${fundBalanceType}`];
         // *** finish temp code *** //
         AuthenticationService.checkFundsBalanceAvailable(data)
           .then((res) => {
@@ -1212,7 +1212,6 @@ export default {
           .catch(() => {
             this.ldForm = false;
           })
-
       }
     },
 
@@ -2093,12 +2092,14 @@ export default {
 
 .bg-balance-red {
   background-color: rgb(255, 20, 20);
-  border: 2px solid #FF7456; /* Đặt border color và border width tùy ý */
+  border: 2px solid #FF7456;
+  /* Đặt border color và border width tùy ý */
 }
 
 .bg-balance-green {
   background-color: #1fff20;
-  border: 2px solid #73FFC2; /* Đặt border color và border width tùy ý */
+  border: 2px solid #73FFC2;
+  /* Đặt border color và border width tùy ý */
 }
 
 .txt-balance-red {

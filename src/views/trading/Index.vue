@@ -1395,9 +1395,8 @@ export default {
                 //idPlayer: this.thisIDPlayer
             }
 
-
-            this.sendMessage({ type: 'bet', data: obj })
-
+            const token = localStorage.getItem('tokenUser');
+            this.sendMessage({ type: 'bet', data: obj, token: token })
 
             let ss = this.$store.session
             let timeGet = new Date().getTime();
@@ -1966,7 +1965,8 @@ export default {
 
             getData.isAccount ? uidAcc = uidLive : uidAcc = uidDemo
 
-            this.sendMessage({ type: 'accountDetail', data: { uid: uidAcc, email: getData.email } });
+            const token = localStorage.getItem('tokenUser');
+            this.sendMessage({ type: 'accountDetail', data: { uid: uidAcc, email: getData.email }, token: token });
 
             let notify = JSON.parse(localStorage.getItem('stateOpen'));
             if (notify) {
