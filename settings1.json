@@ -1,0 +1,7 @@
+{
+    "BASE_URL_PAYMENT": "http://192.168.1.48:4000/",
+    "BASE_URL": "http://192.168.1.48:3000/",
+    "BASE_URL_SOCKET": "ws://192.168.1.48:2096",
+    "BASE_URL_SOCKET_SYS": "ws://192.168.1.48:2087",
+    "BASE_URL_SOCKET_NAP": "ws://192.168.1.48:2083"
+}
