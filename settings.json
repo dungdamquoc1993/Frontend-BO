@@ -1,8 +1,3 @@
 {
-    "BASE_URL": "https://revailol.online/",
-    "BASE_URL_PAYMENT": "https://pay.revailol.online/",
-    "BASE_URL_SOCKET": "wss://trade.revailol.online/",
-    "BASE_URL_SOCKET_SYS": "wss://sys.revailol.online/",
-    
-    "BASE_URL_SOCKET_NAP": "wss://revailol.online:2083"
+
 }
